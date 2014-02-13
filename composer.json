@@ -1,5 +1,5 @@
 {
-    "name": "outeredge/edge-magento-base-module",
+    "name": "outeredge/edge-magento-module-base",
     "type": "magento-module",
     "description": "Base Module by outer/edge",
     "license": "MIT",
@@ -15,7 +15,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:outeredge/edge-magento-base-module.git"
+            "url": "git@github.com:outeredge/edge-magento-module-base.git"
         }
     ],
     "extra": {
