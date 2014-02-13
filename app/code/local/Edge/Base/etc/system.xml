@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sections>
+        <design>
+            <groups>
+                <header>
+                    <fields>
+                        <logo_image translate="label">
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">assets</upload_dir>
+                            <base_url type="media" scope_info="1">assets</base_url>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo_image>
+                    </fields>
+                </header>
+            </groups>
+        </design>
+    </sections>
+</config>

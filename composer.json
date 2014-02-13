@@ -1,0 +1,26 @@
+{
+    "name": "outeredge/edge-magento-base-module",
+    "type": "magento-module",
+    "description": "Base Module by outer/edge",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "outer/edge",
+            "email": "support@outeredgeuk.com"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:outeredge/edge-magento-base-module.git"
+        }
+    ],
+    "extra": {
+        "map": [
+            ["app", "app"]
+        ]
+    }
+}
