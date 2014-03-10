@@ -21,6 +21,7 @@
     "extra": {
         "map": [
             ["app/code/local/Edge/Base", "app/code/local/Edge/Base"],
+            ["app/design/adminhtml/default/edge", "app/design/adminhtml/default/edge"],
             ["app/etc/modules/Edge_Base.xml", "app/etc/modules/Edge_Base.xml"]
         ]
     }
