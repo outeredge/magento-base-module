@@ -21,11 +21,18 @@
                     <account_navigation>Edge_Base_Block_Customer_Account_Navigation</account_navigation>
                 </rewrite>
             </customer>
-            <adminhtml>
-                <rewrite>
-                    <page>Edge_Base_Block_Adminhtml_Page</page>
-                </rewrite>
-            </adminhtml>
         </blocks>
     </global>
+    <stores>
+    <admin>
+        <design>
+            <package>
+                <name>default</name>
+            </package>
+            <theme>
+                <default>edge</default>
+            </theme>
+        </design>
+    </admin>
+    </stores>
 </config>
