@@ -24,15 +24,12 @@
         </blocks>
     </global>
     <stores>
-    <admin>
-        <design>
-            <package>
-                <name>default</name>
-            </package>
-            <theme>
-                <default>edge</default>
-            </theme>
-        </design>
-    </admin>
+        <admin>
+            <design>
+                <theme>
+                    <default>edge</default>
+                </theme>
+            </design>
+        </admin>
     </stores>
 </config>
