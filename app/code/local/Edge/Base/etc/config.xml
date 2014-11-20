@@ -29,6 +29,13 @@
                 </rewrite>
             </catalog>
         </helpers>
+        <models>
+            <core>
+                <rewrite>
+                    <store>Edge_Base_Model_Store</store>
+                </rewrite>
+            </core>
+        </models>
     </global>
     <stores>
         <admin>
