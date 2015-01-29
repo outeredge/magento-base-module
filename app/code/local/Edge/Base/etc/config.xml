@@ -5,15 +5,6 @@
             <version>1.0.0</version>
         </Edge_Base>
     </modules>
-    <frontend>
-        <layout>
-            <updates>
-                <edge>
-                    <file>edge.xml</file>
-                </edge>
-            </updates>
-        </layout>
-    </frontend>
     <global>
         <blocks>
             <customer>
