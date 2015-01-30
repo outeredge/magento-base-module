@@ -33,6 +33,18 @@
             </core>
         </models>
     </global>
+    <frontend>
+        <events>
+            <controller_action_layout_render_before>
+                <observers>
+                    <edge_action_layout_render_observer>
+                        <class>Edge_Base_Model_Observer</class>
+                        <method>homePageCanonicalUrl</method>
+                    </edge_action_layout_render_observer>
+                </observers>
+            </controller_action_layout_render_before> 
+        </events>
+    </frontend>
     <stores>
         <admin>
             <design>
