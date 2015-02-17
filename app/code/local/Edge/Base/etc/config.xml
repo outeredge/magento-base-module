@@ -19,6 +19,9 @@
             </page>
         </blocks>
         <helpers>
+            <edge>
+                <class>Edge_Base_Helper</class>
+            </edge>
             <catalog>
                 <rewrite>
                     <product_compare>Edge_Base_Helper_Catalog_Product_Compare</product_compare>
@@ -42,7 +45,7 @@
                         <method>homePageCanonicalUrl</method>
                     </edge_action_layout_render_observer>
                 </observers>
-            </controller_action_layout_render_before> 
+            </controller_action_layout_render_before>
         </events>
     </frontend>
     <stores>
