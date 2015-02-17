@@ -36,9 +36,14 @@
             </core>
             <widget>
                 <rewrite>
-                    <template_filter>Edge_Base_Model_Template_Filter</template_filter>
+                    <template_filter>Edge_Base_Model_Template_Widget</template_filter>
                 </rewrite>
             </widget>
+            <catalog>
+                <rewrite>
+                    <template_filter>Edge_Base_Model_Template_Catalog</template_filter>
+                </rewrite>
+            </catalog>
         </models>
     </global>
     <frontend>
