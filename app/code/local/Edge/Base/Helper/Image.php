@@ -2,7 +2,7 @@
 
 class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
 {
-    protected $_scheduleModify;
+    protected $_scheduleModify = false;
 
     protected $_width  = null;
     protected $_height = null;
@@ -30,11 +30,14 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
         }
 
         if ($this->_scheduleModify) {
-            return $this->_getModifiedImage($file);
+            $imageUrl = $this->_getModifiedImage($file);
+        } else {
+            $imageUrl = Mage::getBaseUrl('media') . $file;
         }
 
-        $mediaUrl = Mage::getBaseUrl('media');
-        $imageUrl = $mediaUrl . $file;
+        // Remove the helper from registry
+        // Ensures non singleton
+        Mage::unregister('_helper/edge/image');
 
         return $imageUrl;
     }
