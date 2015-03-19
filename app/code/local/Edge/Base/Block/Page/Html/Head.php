@@ -94,8 +94,11 @@ class Edge_Base_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
                     $params = !empty($item['params']) ? $item['params'] : '';
 
                     foreach ($lines[$if] as $type => $data) {
+                        $dataArray = array();
 
                         if ($type === 'other') {
+                            $dataArray = $data;
+
                             switch ($item['type']) {
                                 case 'js_css':
                                 case 'skin_css':
@@ -119,14 +122,8 @@ class Edge_Base_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
                                     break;
                             }
                         } else {
-                            $itemHtml = $item['name'];
-                        }
-
-                        $dataArray = array();
-                        if ($type === 'other') {
-                            $dataArray = $data;
-                        } else {
                             $dataArray = empty($data[$params]) ? array() : $data[$params];
+                            $itemHtml = $item['name'];
                         }
 
                         if (isset($dataArray[$after])) {
