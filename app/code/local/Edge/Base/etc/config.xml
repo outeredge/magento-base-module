@@ -44,6 +44,11 @@
                     <template_filter>Edge_Base_Model_Template_Catalog</template_filter>
                 </rewrite>
             </catalog>
+            <sitemap>
+                <rewrite>
+                    <sitemap>Edge_Base_Model_Sitemap_Sitemap</sitemap>
+                </rewrite>
+            </sitemap>
         </models>
     </global>
     <frontend>
