@@ -93,7 +93,8 @@ class Edge_Base_Model_Sitemap_Sitemap extends Mage_Sitemap_Model_Sitemap
          * Hookable event for adding custom urls to sitemap
          */
         Mage::dispatchEvent('sitemap_generation_before', array(
-            'io' => $io
+            'io' => $io,
+            'store_id' => $storeId
         ));
 
         $io->streamWrite('</urlset>');
