@@ -23,8 +23,13 @@ class Edge_Base_Model_Store extends Mage_Core_Model_Store
 
     public function getConfig($path)
     {
-        if (Mage::getIsDeveloperMode() && $path === 'web/url/redirect_to_base') {
-            return null;
+        if (Mage::getIsDeveloperMode()) {
+            switch ($path) {
+                case 'web/secure/use_in_frontend':
+                case 'web/secure/use_in_adminhtml':
+                case 'web/url/redirect_to_base':
+                    return null;
+            }
         }
         return parent::getConfig($path);
     }
