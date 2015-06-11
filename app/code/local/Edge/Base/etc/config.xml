@@ -32,6 +32,7 @@
             <core>
                 <rewrite>
                     <store>Edge_Base_Model_Store</store>
+                    <file_storage>Edge_Base_Model_File_Storage</file_storage>
                 </rewrite>
             </core>
             <widget>
