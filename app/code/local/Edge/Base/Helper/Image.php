@@ -11,6 +11,7 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
     protected $_keepAspectRatio;
     protected $_keepFrame;
     protected $_constrainOnly;
+    protected $_backgroundColor;
 
     protected $_crop;
 
@@ -81,6 +82,9 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
             }
             if ($this->_constrainOnly) {
                 $image->constrainOnly($this->_constrainOnly);
+            }
+            if ($this->_backgroundColor) {
+                $image->backgroundColor($this->_backgroundColor);
             }
 
             $originalAspectRatio = $image->getOriginalWidth() / $image->getOriginalHeight();
@@ -162,6 +166,12 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
     public function setCrop($crop)
     {
         $this->_crop = $crop;
+        return $this;
+    }
+
+    public function setBackgroundColor($backgroundColor)
+    {
+        $this->_backgroundColor = $backgroundColor;
         return $this;
     }
 }
