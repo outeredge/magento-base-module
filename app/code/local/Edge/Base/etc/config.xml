@@ -27,6 +27,11 @@
                     <product_compare>Edge_Base_Helper_Catalog_Product_Compare</product_compare>
                 </rewrite>
             </catalog>
+            <core>
+                <rewrite>
+                    <file_storage_database>Edge_Base_Helper_File_Storage_Database</file_storage_database>
+                </rewrite>
+            </core>
         </helpers>
         <models>
             <core>
