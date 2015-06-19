@@ -57,6 +57,15 @@
             </sitemap>
         </models>
     </global>
+    <default>
+        <system>
+            <media_storage_configuration>
+                <allowed_resources>
+                    <sales_image_folder>sales</sales_image_folder>
+                </allowed_resources>
+            </media_storage_configuration>
+        </system>
+    </default>
     <frontend>
         <events>
             <controller_action_layout_render_before>
