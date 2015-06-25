@@ -24,6 +24,10 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
         }
 
         $imageDir = $mediaDir . $file;
+        if (!file_exists($imageDir)){
+            // If the file does not exist, create it from the database
+            Mage::helper('core/file_storage_database')->saveFileToFilesystem($imageDir);
+        }
 
         if ($this->_scheduleModify) {
             $imageUrl = $this->_getModifiedImage($file);
