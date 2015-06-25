@@ -17,14 +17,6 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
 
     public function getImage($file)
     {
-        $mediaDir = Mage::getBaseDir('media');
-
-        if (($file) && (0 !== strpos($file, '/', 0))) {
-            $mediaDir = $mediaDir . '/';
-        }
-
-        $imageDir = $mediaDir . $file;
-
         if ($this->_scheduleModify) {
             $imageUrl = $this->_getModifiedImage($file);
         } else {
