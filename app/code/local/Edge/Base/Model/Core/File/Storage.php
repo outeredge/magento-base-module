@@ -1,6 +1,6 @@
 <?php
 
-class Edge_Base_Model_File_Storage extends Mage_Core_Model_File_Storage
+class Edge_Base_Model_Core_File_Storage extends Mage_Core_Model_File_Storage
 {
     public function synchronize($storage)
     {
