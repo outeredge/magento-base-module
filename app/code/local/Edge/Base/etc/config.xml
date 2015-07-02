@@ -34,10 +34,16 @@
             </core>
         </helpers>
         <models>
+            <cms>
+                <rewrite>
+                    <wysiwyg_images_storage>Edge_Base_Model_Cms_Wysiwyg_Images_Storage</wysiwyg_images_storage>
+                </rewrite>
+            </cms>
             <core>
                 <rewrite>
-                    <store>Edge_Base_Model_Store</store>
-                    <file_storage>Edge_Base_Model_File_Storage</file_storage>
+                    <store>Edge_Base_Model_Core_Store</store>
+                    <file_storage>Edge_Base_Model_Core_File_Storage</file_storage>
+                    <file_storage_database>Edge_Base_Model_Core_File_Storage_Database</file_storage_database>
                 </rewrite>
             </core>
             <widget>
@@ -55,6 +61,11 @@
                     <sitemap>Edge_Base_Model_Sitemap_Sitemap</sitemap>
                 </rewrite>
             </sitemap>
+            <core_resource>
+                <rewrite>
+                    <file_storage_database>Edge_Base_Model_Resource_Core_File_Storage_Database</file_storage_database>
+                </rewrite>
+            </core_resource>
         </models>
     </global>
     <default>
@@ -70,10 +81,10 @@
         <events>
             <controller_action_layout_render_before>
                 <observers>
-                    <edge_action_layout_render_observer>
-                        <class>Edge_Base_Model_Observer</class>
+                    <edge_action_layout_render_observer_home>
+                        <class>Edge_Base_Model_Observer_Home</class>
                         <method>homePageCanonicalUrl</method>
-                    </edge_action_layout_render_observer>
+                    </edge_action_layout_render_observer_home>
                 </observers>
             </controller_action_layout_render_before>
         </events>

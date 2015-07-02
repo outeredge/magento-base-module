@@ -1,6 +1,6 @@
 <?php
 
-class Edge_Base_Model_Store extends Mage_Core_Model_Store
+class Edge_Base_Model_Core_Store extends Mage_Core_Model_Store
 {
     public function getBaseUrl($type = self::URL_TYPE_LINK, $secure = null)
     {
