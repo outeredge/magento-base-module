@@ -3,39 +3,22 @@
 class Edge_Base_Model_Core_File_Storage_Database extends Mage_Core_Model_File_Storage_Database
 {
     /**
-     * Rename files in database
-     *
-     * @param  string $oldFilePath
-     * @param  string $newFilePath
-     * @return Mage_Core_Model_File_Storage_Database
+     * Get resource instance
+     * outer/edge - Connection name was set on first request only
+     *              Ensure connection name is always set
+     * @return Mage_Core_Model_Mysql4_Abstract
      */
-    public function renameFile($oldFilePath, $newFilePath)
+    protected function _getResource()
     {
-        $this->_getResource()->renameFile(
-            basename($oldFilePath),
-            dirname($oldFilePath),
-            basename($newFilePath),
-            dirname($newFilePath)
-        );
-
-        $newPath = dirname($newFilePath);
-        $directory = Mage::getModel('core/file_storage_directory_database')->loadByPath($newPath);
-
-        if (!$directory->getId()) {
-            $directory = $this->getDirectoryModel()->createRecursive($newPath);
+        $connectionName = $this->getConnectionName();
+        if (empty($connectionName)) {
+            $connectionName = $this->getConfigConnectionName();
         }
 
-        $this->loadByFilename($newFilePath);
-        if ($this->getId()) {
-            $this->setDirectoryId($directory->getId())->save();
+        $resource = parent::_getResource();
+        $resource->setConnectionName($connectionName);
 
-            // outer/edge Quick Fix
-            // Separate Database connection stops the directory_id being updated
-            $db = Mage::getSingleton('core/resource')->getConnection($this->getConfigConnectionName());
-            $db->update('core_file_storage', array('directory_id' => $directory->getId()), "file_id = {$this->getId()}");
-        }
-
-        return $this;
+        return $resource;
     }
 
     /**
