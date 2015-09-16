@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+
+    <adminhtml_classfinder_index>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>edge/base/classfinder.js</name>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="edge/adminhtml_classFinder" name="edge.base.classfinder"/>
+        </reference>
+    </adminhtml_classfinder_index>
+
+</layout>

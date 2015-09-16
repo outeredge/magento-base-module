@@ -16,6 +16,8 @@
         "map": [
             ["app/code/local/Edge/Base", "app/code/local/Edge/Base"],
             ["app/etc/modules/Edge_Base.xml", "app/etc/modules/Edge_Base.xml"],
+            ["app/design/adminhtml/default/default/layout/edge/base.xml", "app/design/adminhtml/default/default/layout/edge/base.xml"],
+            ["skin/adminhtml/default/default/edge/base", "skin/adminhtml/default/default/edge/base"],
             ["skin/adminhtml/default/edge", "skin/adminhtml/default/edge"]
         ]
     }

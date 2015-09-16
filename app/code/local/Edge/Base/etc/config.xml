@@ -7,6 +7,9 @@
     </modules>
     <global>
         <blocks>
+            <edge>
+                <class>Edge_Base_Block</class>
+            </edge>
             <customer>
                 <rewrite>
                     <account_navigation>Edge_Base_Block_Customer_Account_Navigation</account_navigation>
@@ -89,6 +92,26 @@
             </controller_action_layout_render_before>
         </events>
     </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <edge before="Mage_Adminhtml">Edge_Base_Adminhtml</edge>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <edge>
+                    <file>edge/base.xml</file>
+                </edge>
+            </updates>
+        </layout>
+    </adminhtml>
     <stores>
         <admin>
             <design>
