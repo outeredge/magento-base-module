@@ -17,8 +17,13 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
 
     public function getImage($file)
     {
-        if (!file_exists(Mage::getBaseDir('media') . DS . $file)) {
+        $imageDirPath = Mage::getBaseDir('media') . DS . $file;
+        if (!file_exists($imageDirPath)) {
             Mage::helper('core/file_storage')->processStorageFile($file);
+
+            if (Mage::getIsDeveloperMode() && !file_exists($imageDirPath)) {
+                $this->_scheduleModify = false;
+            }
         }
 
         if ($this->_scheduleModify) {
