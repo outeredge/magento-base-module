@@ -44,10 +44,10 @@ class Edge_Base_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
                 $lines[$itemIf]['other'][$itemName] = sprintf('<link%s href="%s" />', $params, $href);
                 break;
             case 'external_js':
-                $lines[$itemIf]['other'][$itemName] = sprintf('<script type="text/javascript" src="%s"></script>', $href);
+                $lines[$itemIf]['other'][$itemName] = sprintf('<script type="text/javascript" src="%s"%s></script>', $href, $params);
                 break;
             case 'script':
-                $lines[$itemIf]['other'][$itemName] = sprintf('<script type="text/javascript">%s</script>', $href);
+                $lines[$itemIf]['other'][$itemName] = sprintf('<script type="text/javascript"%s>%s</script>', $params, $href);
                 break;
         }
     }
