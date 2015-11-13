@@ -44,7 +44,7 @@ class Edge_Base_Helper_Adminhtml_Form extends Mage_Core_Helper_Abstract
                         window.'.$id.' = new WysiwygWidget.chooser("'.$id.'","'.$this->_getChooserUrl($id).'",{buttons:{open:"Select Product...",close:"Close"}})
                         $("'.$id.'value").advaiceContainer = "'.$id.'advice-container";
                         window.'.$id.'.setElementValue = function(value){
-                            this.getElement().value = value.replace("product/","");
+                            this.getElement().value = value.replace("product/","").split("/")[0];
                         }
                     }
                     if (document.loaded){
