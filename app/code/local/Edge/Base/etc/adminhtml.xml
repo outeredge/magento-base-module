@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <tools>
+                                <children>
+                                    <class_finder translate="title">
+                                        <title>Class Finder</title>
+                                        <sort_order>2000</sort_order>
+                                    </class_finder>
+                                </children>
+                            </tools>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
     <menu>
         <system>
             <children>

@@ -2,6 +2,11 @@
 
 class Edge_Base_Adminhtml_ClassFinderController extends Mage_Adminhtml_Controller_Action
 {
+    protected function _isAllowed()
+    {        
+        return Mage::getSingleton('admin/session')->isAllowed('system/tools/class_finder');
+    }
+    
     public function indexAction()
     {
         $this->loadLayout();
