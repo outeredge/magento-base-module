@@ -1,4 +1,4 @@
 edge-magento-module-base
 ========================
 
-Edge Magento Module Base
+Edge Magento 2 Module Base

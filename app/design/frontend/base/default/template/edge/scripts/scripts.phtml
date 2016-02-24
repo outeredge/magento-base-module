@@ -1,3 +1,0 @@
-<?php foreach ($this->getScripts() as $script): ?>
-    <script<?php echo $script->getName() ? ' src="' . $script->getName() . '"' : '' ?><?php echo $script->getParams() ?>><?php echo $script->getScript() ? $script->getScript() : '' ?></script>
-<?php endforeach; ?>
