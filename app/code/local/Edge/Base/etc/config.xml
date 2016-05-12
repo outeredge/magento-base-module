@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Edge_Base>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Edge_Base>
     </modules>
     <global>
@@ -69,6 +69,11 @@
                     <file_storage_database>Edge_Base_Model_Resource_Core_File_Storage_Database</file_storage_database>
                 </rewrite>
             </core_resource>
+            <reports_resource>
+                <rewrite>
+                    <quote_collection>Edge_Base_Model_Resource_Quote_Collection</quote_collection>
+                </rewrite>
+            </reports_resource>
         </models>
     </global>
     <default>
