@@ -2,7 +2,6 @@
     "name": "outeredge/magento-module-base",
     "description": "Magento2 Base Module by outer/edge",
     "type": "magento2-module",
-    "version": "0.0.1",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
