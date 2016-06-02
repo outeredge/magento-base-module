@@ -1,5 +1,5 @@
 <?php
-namespace Edge\Base\Helper;
+namespace OuterEdge\Base\Helper;
 
 use Magento\Framework\Model\Context;
 use Magento\Framework\App\State;

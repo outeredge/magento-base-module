@@ -1,10 +1,10 @@
 <?php
-namespace Edge\Base\App\Area;
+namespace OuterEdge\Base\App\Area;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\DeploymentConfig;
 use Magento\Backend\App\Config;
-use Edge\Base\Helper\Data;
+use OuterEdge\Base\Helper\Data;
 
 class FrontNameResolver extends \Magento\Backend\App\Area\FrontNameResolver
 {

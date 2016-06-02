@@ -1,4 +1,4 @@
-edge-magento-module-base
+outeredge-magento-module-base
 ========================
 
-Edge Magento 2 Module Base
+OuterEdge Magento 2 Module Base

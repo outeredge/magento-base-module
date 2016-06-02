@@ -1,5 +1,5 @@
 <?php
-namespace Edge\Base\Block\Page;
+namespace OuterEdge\Base\Block\Page;
 
 /**
  * Copyright footer block

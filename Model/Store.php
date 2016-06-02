@@ -1,5 +1,5 @@
 <?php
-namespace Edge\Base\Model;
+namespace OuterEdge\Base\Model;
 
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\State;

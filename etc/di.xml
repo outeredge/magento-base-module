@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <preference for="Magento\Store\Model\Store" type="Edge\Base\Model\Store" />
-    <preference for="Magento\Backend\App\Area\FrontNameResolver" type="Edge\Base\App\Area\FrontNameResolver" />
-    <preference for="Magento\Backend\Block\Page\Copyright" type="Edge\Base\Block\Page\Copyright" />
+    <preference for="Magento\Store\Model\Store" type="OuterEdge\Base\Model\Store" />
+    <preference for="Magento\Backend\App\Area\FrontNameResolver" type="OuterEdge\Base\App\Area\FrontNameResolver" />
+    <preference for="Magento\Backend\Block\Page\Copyright" type="OuterEdge\Base\Block\Page\Copyright" />
 </config>

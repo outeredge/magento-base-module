@@ -1,6 +1,6 @@
 {
-    "name": "edge-magento2/module-base",
-    "description": "Edge Magento2 Module Base",
+    "name": "outeredge/magento-module-base",
+    "description": "Magento2 Base Module by outer/edge",
     "type": "magento2-module",
     "version": "0.0.1",
     "license": [
@@ -15,7 +15,7 @@
         "map": [
             [
                 "*",
-                "Edge/Base"
+                "OuterEdge/Base"
             ]
         ]
     }
