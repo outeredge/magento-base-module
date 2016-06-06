@@ -1,5 +1,5 @@
 {
-    "name": "outeredge/magento-module-base",
+    "name": "outeredge/magento-base-module",
     "description": "Magento2 Base Module by outer/edge",
     "type": "magento2-module",
     "license": [
