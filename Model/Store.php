@@ -23,8 +23,9 @@ class Store extends Store
             if ($this->isDeveloper) {
 
                 $dbBaseUrl = $this->_config->getValue(Store::XML_PATH_UNSECURE_BASE_URL, ScopeInterface::SCOPE_STORE);
-                $baseUrl = parent::getBaseUrl($type, $secure);
-                $url = str_replace($dbBaseUrl, "http://" . $_SERVER['HTTP_HOST'] . "/", $baseUrl);
+                $baseUrl   = parent::getBaseUrl($type, $secure);
+                $host      = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : parse_url(trim($dbBaseUrl), PHP_URL_HOST);
+                $url       = str_replace($dbBaseUrl, "http://$host/", $baseUrl);
 
                 $this->_baseUrlCache[$cacheKey] = $url;
             }
