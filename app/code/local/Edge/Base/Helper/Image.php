@@ -8,7 +8,7 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
 
     protected $_width  = null;
     protected $_height = null;
-    protected $_quality = 100;
+    protected $_quality = 95;
 
     protected $_keepAspectRatio;
     protected $_keepFrame;
