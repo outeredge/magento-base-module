@@ -3,6 +3,8 @@
 class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
 {
     protected $_scheduleModify = false;
+    
+    protected $_verienImage = null;
 
     protected $_width  = null;
     protected $_height = null;
@@ -45,10 +47,15 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
 
     protected function _getModifiedImage($file)
     {
+        $mediaUrl = Mage::getBaseUrl('media');
         $mediaDir = Mage::getBaseDir('media') . DS;
         $filePath = $mediaDir . $file;
+        $this->_verienImage = new Varien_Image($filePath);
 
         if ($this->_width || $this->_height) {
+            if($this->_returnOriginal($filePath, $file)) {
+                return $mediaUrl . $file;
+            }
             if (!$this->_width) {
                 $this->_width = $this->_height;
             }
@@ -56,8 +63,6 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
                 $this->_height = $this->_width;
             }
         }
-
-        $mediaUrl = Mage::getBaseUrl('media');
 
         $fileParts = explode('/', $file);
         $fileName = array_pop($fileParts);
@@ -71,7 +76,7 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
 
         if (!file_exists($modifiedUrl)) {
 
-            $image = new Varien_Image($filePath);
+            $image = $this->_verienImage;
             $image->quality($this->_quality);
 
             if ($this->_keepAspectRatio) {
@@ -115,6 +120,24 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
         }
 
         return $mediaUrl . $modifiedPath . $fileName;
+    }
+    
+    protected function _returnOriginal($filePath){            
+            if($this->_width && $this->_height) {
+                if($this->_verienImage->getOriginalWidth() == $this->_width && $this->_verienImage->getOriginalHeight() == $this->_height) {
+                    return true;
+                }
+            }
+            elseif ($this->_width && $this->_keepAspectRatio) {
+                if($this->_verienImage->getOriginalWidth() == $this->_width) {
+                    return true;
+                }
+            }
+            elseif ($this->_height && $this->_keepAspectRatio) {
+                if($this->_verienImage->getOriginalHeight() == $this->_height) {
+                    return true;
+                }
+            }        
     }
 
     public function setSize($width, $height=null)
