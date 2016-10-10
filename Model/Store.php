@@ -4,9 +4,9 @@ namespace OuterEdge\Base\Model;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\State;
 use Magento\Framework\UrlInterface;
-use Magento\Store\Model\Store;
+use Magento\Store\Model\Store as MagentoStore;
 
-class Store extends Store
+class Store extends MagentoStore
 {
     protected $isDeveloper = false;
 
