@@ -3,40 +3,47 @@
 namespace OuterEdge\Base\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
+use Magento\Framework\View\Asset\Repository;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use DOMDocument;
 
 class Image extends AbstractHelper
 {
     /**
-     * @var \Magento\Framework\View\Asset\Repository
+     * @var Repository
      */
     protected $_assetRepo;
 
     /**
-     * @var \Magento\Framework\App\Filesystem\DirectoryList
+     * @var DirectoryList
      */
     protected $_directoryList;
 
     /**
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Framework\View\Asset\Repository $assetRepository
-     * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
+     * @param Context $context
+     * @param Repository $assetRepository
+     * @param DirectoryList $directoryList
      */
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Framework\View\Asset\Repository $assetRepository,
-        \Magento\Framework\App\Filesystem\DirectoryList $directoryList
+        Context $context,
+        Repository $assetRepository,
+        DirectoryList $directoryList
     ) {
-        parent::__construct($context);
         $this->_assetRepo = $assetRepository;
         $this->_directoryList = $directoryList;
+        parent::__construct($context);
     }
 
     public function getSvg($name)
     {
         $image = $this->_directoryList->getPath(DirectoryList::STATIC_VIEW) . '/' . $this->_assetRepo->getStaticViewFileContext()->getPath() . '/' . $name;
-        if (file_exists($image)) {
-            return file_get_contents($image);
+        $imageInfo = pathinfo($image);
+        $fileExists = new \Zend_Validate_File_Exists($imageInfo['dirname']);
+        if ($fileExists->isValid($imageInfo['basename'])) {
+            $doc = new DOMDocument();
+            $doc->load($image);
+            return $doc->saveHTML();
         }
         return '';
     }
