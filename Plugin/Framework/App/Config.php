@@ -17,14 +17,19 @@ class Config
     protected $_state;
 
     /**
+     * @var Filesystem
+     */
+    protected $_filesystem;
+
+    /**
      * @var bool
      */
     protected $_isDeveloperMode;
 
     /**
-     * @var Filesystem
+     * @var string
      */
-    protected $_filesystem;
+    protected $_httpHost;
 
     /**
      * @param State $state
@@ -50,15 +55,15 @@ class Config
                 case stristr($path, Store::XML_PATH_UNSECURE_BASE_URL):
                 case stristr($path, Store::XML_PATH_SECURE_BASE_LINK_URL):
                 case stristr($path, Store::XML_PATH_UNSECURE_BASE_LINK_URL):
-                    return 'http://' . $_SERVER['HTTP_HOST'] . '/';
+                    return 'http://' . $this->getHttpHost($proceed) . '/';
 
                 case stristr($path, Store::XML_PATH_SECURE_BASE_STATIC_URL):
                 case stristr($path, Store::XML_PATH_UNSECURE_BASE_STATIC_URL):
-                    return 'http://' . $_SERVER['HTTP_HOST'] . '/' . $this->_filesystem->getUri(DirectoryList::STATIC_VIEW);
+                    return 'http://' . $this->getHttpHost($proceed) . '/' . $this->_filesystem->getUri(DirectoryList::STATIC_VIEW);
 
                 case stristr($path, Store::XML_PATH_SECURE_BASE_MEDIA_URL):
                 case stristr($path, Store::XML_PATH_UNSECURE_BASE_MEDIA_URL):
-                    return 'http://' . $_SERVER['HTTP_HOST'] . '/' . $this->_filesystem->getUri(DirectoryList::MEDIA);
+                    return 'http://' . $this->getHttpHost($proceed) . '/' . $this->_filesystem->getUri(DirectoryList::MEDIA);
 
                 default:
                     return $proceed($configType, $path, $default);
@@ -73,5 +78,18 @@ class Config
             $this->_isDeveloperMode = $this->_state->getMode() === State::MODE_DEVELOPER;
         }
         return $this->_isDeveloperMode;
+    }
+
+    protected function getHttpHost($proceed)
+    {
+        if (!$this->_httpHost) {
+            if (isset($_SERVER['HTTP_HOST'])) {
+                $this->_httpHost = $_SERVER['HTTP_HOST'];
+            } else {
+                $dbBaseUrl = $proceed('system', 'default/' . Store::XML_PATH_UNSECURE_BASE_URL);
+                $this->_httpHost = parse_url(trim($dbBaseUrl), PHP_URL_HOST);
+            }
+        }
+        return $this->_httpHost;
     }
 }
