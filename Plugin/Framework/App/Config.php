@@ -8,6 +8,7 @@ use Magento\Framework\Filesystem;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Store\Model\Store;
 use Magento\Backend\App\Area\FrontNameResolver;
+use Zend\Uri\UriFactory;
 
 class Config
 {
@@ -87,7 +88,8 @@ class Config
                 $this->_httpHost = $_SERVER['HTTP_HOST'];
             } else {
                 $dbBaseUrl = $proceed('system', 'default/' . Store::XML_PATH_UNSECURE_BASE_URL);
-                $this->_httpHost = parse_url(trim($dbBaseUrl), PHP_URL_HOST);
+                $uri = UriFactory::factory($dbBaseUrl);
+                $this->_httpHost = $uri->getHost();
             }
         }
         return $this->_httpHost;
