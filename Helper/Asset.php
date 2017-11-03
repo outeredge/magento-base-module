@@ -14,7 +14,7 @@ class Asset extends AbstractHelper
      */
     private $assetRepository;
 
-    /*
+    /**
      * @var array
      */
     private $assetCache = [];
