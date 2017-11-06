@@ -11,6 +11,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\Image\Adapter\Gd2;
+use Magento\MediaStorage\Helper\File\Storage\Database;
 
 class Image extends AbstractHelper
 {
@@ -23,6 +24,11 @@ class Image extends AbstractHelper
      * @var AdapterFactory
      */
     protected $imageFactory;
+    
+    /**
+     * @var Database
+     */
+    protected $coreFileStorageDatabase;
 
     /**
      * @var StoreManagerInterface
@@ -38,16 +44,19 @@ class Image extends AbstractHelper
      * @param Context $context
      * @param Filesystem $filesystem
      * @param AdapterFactory $imageFactory
+     * @param Database $coreFileStorageDatabase
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Context $context,
         Filesystem $filesystem,
         AdapterFactory $imageFactory,
+        Database $coreFileStorageDatabase,
         StoreManagerInterface $storeManager
     ) {
         $this->filesystem = $filesystem;
         $this->imageFactory = $imageFactory;
+        $this->coreFileStorageDatabase = $coreFileStorageDatabase;
         $this->storeManager = $storeManager;
         parent::__construct($context);
     }
@@ -70,7 +79,6 @@ class Image extends AbstractHelper
      * @param int|null $width
      * @param int|null $height
      * @param array $options
-     *
      * @return Gd2
      */
     protected function setup($image, $width = null, $height = null, $options = [])
@@ -92,14 +100,16 @@ class Image extends AbstractHelper
      * @param int|null $width
      * @param int|null $height
      * @param array $options
-     *
      * @return string
      */
     public function resize($image, $width = null, $height = null, $options = [])
     {
-        $resizedImage = 'resized/' . $width . 'x' . $height . '/' . $image;
+        if (!$this->fileExists($image)) {
+            return $this->getMediaImageUrl($image);
+        }
         
-        if (!$this->getMediaDirectory()->isFile($resizedImage)) {
+        $resizedImage = 'resized/' . $width . 'x' . $height . '/' . $image;
+        if (!$this->fileExists($resizedImage)) {
             $imageResize = $this->setup($image, $width, $height, $options);
             $imageResize->resize($width, $height);
             $imageResize->save($this->getMediaDirectory()->getAbsolutePath($resizedImage));
@@ -115,14 +125,16 @@ class Image extends AbstractHelper
      * @param int $width
      * @param int $height
      * @param array $options
-     *
      * @return string
      */
     public function crop($image, $width, $height, $options = [])
     {
+        if (!$this->fileExists($image)) {
+            return $this->getMediaImageUrl($image);
+        }
+
         $croppedImage = 'cropped/' . $width . 'x' . $height . '/' . $image;
-        
-        if (!$this->getMediaDirectory()->isFile($croppedImage)) {
+        if (!$this->fileExists($croppedImage)) {
             $imageCrop = $this->setup($image, $width, $height, array_merge($options, ['constrainOnly' => false, 'keepAspectRatio' => true, 'keepFrame' => false]));
             
             $originalAspectRatio = $imageCrop->getOriginalWidth() / $imageCrop->getOriginalHeight();
@@ -146,8 +158,32 @@ class Image extends AbstractHelper
         return $this->getMediaImageUrl($croppedImage);
     }
     
-    public function getMediaImageUrl($image)
+    /**
+     * Get media image url
+     *
+     * @param string $image
+     * @return string 
+     */
+    protected function getMediaImageUrl($image)
     {
         return $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $image;
+    }
+    
+    /**
+     * First check this file on FS
+     * If it doesn't exist - try to download it from DB
+     *
+     * @param string $filename
+     * @return bool
+     */
+    protected function fileExists($filename)
+    {
+        if ($this->getMediaDirectory()->isFile($filename)) {
+            return true;
+        } else {
+            return $this->coreFileStorageDatabase->saveFileToFilesystem(
+                $this->getMediaDirectory()->getAbsolutePath($filename)
+            );
+        }
     }
 }
