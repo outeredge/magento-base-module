@@ -97,13 +97,15 @@ class Image extends AbstractHelper
      */
     public function resize($image, $width = null, $height = null, $options = [])
     {
-        $imageResize = $this->setup($image, $width, $height, $options);
-        $imageResize->resize($width, $height);
-        
         $resizedImage = 'resized/' . $width . 'x' . $height . '/' . $image;
-        $imageResize->save($this->getMediaDirectory()->getAbsolutePath($resizedImage));
         
-        return $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resizedImage;
+        if (!$this->getMediaDirectory()->isFile($resizedImage)) {
+            $imageResize = $this->setup($image, $width, $height, $options);
+            $imageResize->resize($width, $height);
+            $imageResize->save($this->getMediaDirectory()->getAbsolutePath($resizedImage));
+        }
+        
+        return $this->getMediaImageUrl($resizedImage);
     }
     
     /**
@@ -118,26 +120,34 @@ class Image extends AbstractHelper
      */
     public function crop($image, $width, $height, $options = [])
     {
-        $imageCrop = $this->setup($image, $width, $height, array_merge($options, ['constrainOnly' => false, 'keepAspectRatio' => true, 'keepFrame' => false]));
+        $croppedImage = 'cropped/' . $width . 'x' . $height . '/' . $image;
         
-        $originalAspectRatio = $imageCrop->getOriginalWidth() / $imageCrop->getOriginalHeight();
-        $aspectRatio = $width / $height;
-        
-        if ($aspectRatio < $originalAspectRatio) {
-            $cropWidth = ceil($height * $originalAspectRatio);
-            $cropHorizontal = ($cropWidth - $width) / 2;
-            $imageCrop->resize($cropWidth, $height);
-            $imageCrop->crop(0, $cropHorizontal, $cropHorizontal, 0);
-        } else {
-            $cropHeight = ceil($width / $originalAspectRatio);
-            $cropVertical = ($cropHeight - $height) / 2;
-            $imageCrop->resize($width, $cropHeight);
-            $imageCrop->crop($cropVertical, 0, 0, $cropVertical);
+        if (!$this->getMediaDirectory()->isFile($croppedImage)) {
+            $imageCrop = $this->setup($image, $width, $height, array_merge($options, ['constrainOnly' => false, 'keepAspectRatio' => true, 'keepFrame' => false]));
+            
+            $originalAspectRatio = $imageCrop->getOriginalWidth() / $imageCrop->getOriginalHeight();
+            $aspectRatio = $width / $height;
+            
+            if ($aspectRatio < $originalAspectRatio) {
+                $cropWidth = ceil($height * $originalAspectRatio);
+                $cropHorizontal = ($cropWidth - $width) / 2;
+                $imageCrop->resize($cropWidth, $height);
+                $imageCrop->crop(0, $cropHorizontal, $cropHorizontal, 0);
+            } else {
+                $cropHeight = ceil($width / $originalAspectRatio);
+                $cropVertical = ($cropHeight - $height) / 2;
+                $imageCrop->resize($width, $cropHeight);
+                $imageCrop->crop($cropVertical, 0, 0, $cropVertical);
+            }
+            
+            $imageCrop->save($this->getMediaDirectory()->getAbsolutePath($croppedImage));
         }
         
-        $croppedImage = 'cropped/' . $width . 'x' . $height . '/' . $image;
-        $imageCrop->save($this->getMediaDirectory()->getAbsolutePath($croppedImage));
-        
-        return $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $croppedImage;
+        return $this->getMediaImageUrl($croppedImage);
+    }
+    
+    public function getMediaImageUrl($image)
+    {
+        return $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $image;
     }
 }
