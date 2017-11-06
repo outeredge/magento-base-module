@@ -65,12 +65,12 @@ class Image extends AbstractHelper
     
     /**
      * Setup the image object ready for resizing/cropping
-     * 
+     *
      * @param string $image
      * @param int|null $width
      * @param int|null $height
      * @param array $options
-     * 
+     *
      * @return Gd2
      */
     protected function setup($image, $width = null, $height = null, $options = [])
@@ -82,18 +82,17 @@ class Image extends AbstractHelper
                 $imageResize->$method($value);
             }
         }
-        die(get_class($imageResize));
         return $imageResize;
     }
     
     /**
      * Resize an image
-     * 
+     *
      * @param string $image
      * @param int|null $width
      * @param int|null $height
      * @param array $options
-     * 
+     *
      * @return string
      */
     public function resize($image, $width = null, $height = null, $options = [])
@@ -109,12 +108,12 @@ class Image extends AbstractHelper
     
     /**
      * Crop an image
-     * 
+     *
      * @param string $image
      * @param int $width
      * @param int $height
      * @param array $options
-     * 
+     *
      * @return string
      */
     public function crop($image, $width, $height, $options = [])
