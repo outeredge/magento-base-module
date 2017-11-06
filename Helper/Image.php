@@ -162,7 +162,7 @@ class Image extends AbstractHelper
      * Get media image url
      *
      * @param string $image
-     * @return string 
+     * @return string
      */
     protected function getMediaImageUrl($image)
     {
