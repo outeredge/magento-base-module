@@ -73,6 +73,19 @@ class Image extends AbstractHelper
     }
     
     /**
+     * Get an image url
+     * Saves file to FS if exists in database and not FS
+     *
+     * @param string $image
+     * @return string
+     */
+    public function get($image)
+    {
+        $this->fileExists($image);
+        return $this->getMediaImageUrl($image);
+    }
+    
+    /**
      * Setup the image object ready for resizing/cropping
      *
      * @param string $image
@@ -164,7 +177,7 @@ class Image extends AbstractHelper
      * @param string $image
      * @return string
      */
-    protected function getMediaImageUrl($image)
+    public function getMediaImageUrl($image)
     {
         return $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $image;
     }
@@ -176,7 +189,7 @@ class Image extends AbstractHelper
      * @param string $filename
      * @return bool
      */
-    protected function fileExists($filename)
+    public function fileExists($filename)
     {
         if ($this->getMediaDirectory()->isFile($filename)) {
             return true;
