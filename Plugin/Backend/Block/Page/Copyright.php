@@ -20,15 +20,16 @@ class Copyright
 
         $img = $doc->createElement('img');
         $img->setAttribute('src', $subject->getViewFileUrl('OuterEdge_Base::images/logo-outeredge.png'));
-
+        $img->setAttribute('title', 'Supported by outer/edge');
+        
         $a = $doc->createElement('a');
-        $a->setAttribute('href', 'http://outeredgeuk.com/');
+        $a->setAttribute('href', 'https://outeredgeuk.com/');
         $a->setAttribute('target', '_blank');
         $a->setAttribute('title', __('outer/edge'));
         $a->appendChild($img);
-
-        $doc->appendChild($doc->createElement('br'));
-        $doc->appendChild($a);
+        
+        $br = $doc->insertBefore($doc->createElement('br'), $doc->childNodes->item(0));
+        $doc->insertBefore($a, $br);
 
         return $doc->saveHTML();
     }
