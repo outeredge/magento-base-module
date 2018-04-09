@@ -1,0 +1,8 @@
+<?php /** @var \OuterEdge\Base\Block\Html\Notices $block */ ?>
+<?php if ($block->hasErrors()): ?>
+    <div class="message global edge" id="notice-edge-block">
+        <div class="content">
+            <p><?= nl2br($block->getErrorMessages()); ?></p>
+        </div>
+    </div>
+<?php endif; ?>
