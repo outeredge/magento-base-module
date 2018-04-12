@@ -38,7 +38,7 @@ class DbStatusValidator extends MagentoDbStatusValidator
     {
         if (version_compare($this->productMetadata->getVersion(), '2.2.0') == -1) {
             try {
-                parent::aroundDispatch($subject, $proceed, $request);
+                return parent::aroundDispatch($subject, $proceed, $request);
             } catch (LocalizedException $ex) {
                 $this->errors = $ex->getMessage();
             }
