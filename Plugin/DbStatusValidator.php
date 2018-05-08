@@ -29,10 +29,6 @@ class DbStatusValidator extends MagentoDbStatusValidator
 
     public function beforeDispatch(FrontController $subject, RequestInterface $request)
     {
-        if () {
-            
-        }
-        
         if (version_compare($this->productMetadata->getVersion(), '2.2.0') != -1 &&
             $this->appState->getMode() != State::MODE_PRODUCTION
         ) {
