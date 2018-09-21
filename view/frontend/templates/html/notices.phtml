@@ -2,7 +2,7 @@
 <?php if ($block->hasErrors()): ?>
     <div class="message global edge" id="notice-edge-block">
         <div class="content">
-            <p><?= nl2br($block->getErrorMessages()); ?></p>
+            <pre><?= $block->getErrorMessages(); ?></pre>
         </div>
     </div>
 <?php endif; ?>
