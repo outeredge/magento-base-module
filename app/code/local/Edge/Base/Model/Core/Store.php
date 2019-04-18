@@ -7,12 +7,20 @@ class Edge_Base_Model_Core_Store extends Mage_Core_Model_Store
         $cacheKey = $type . '/' . (is_null($secure) ? 'null' : ($secure ? 'true' : 'false'));
         if (!isset($this->_baseUrlCache[$cacheKey])) {
 
-            if(Mage::getIsDeveloperMode()){
-                // Relative Base URL
+            if (Mage::getIsDeveloperMode()) {
+                // Use current host as base URL
+
+                if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+                   (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+                    $protocol = 'https://';
+                } else {
+                    $protocol = 'http://';
+                }
 
                 $dbBaseUrl = Mage::getStoreConfig('web/unsecure/base_url');
                 $baseUrl = parent::getBaseUrl($type, $secure);
-                $url = str_replace($dbBaseUrl, "http://" . $_SERVER['HTTP_HOST'] . "/", $baseUrl);
+
+                $url = str_replace($dbBaseUrl, $protocol . $_SERVER['HTTP_HOST'] . "/", $baseUrl);
 
                 $this->_baseUrlCache[$cacheKey] = $url;
             }
