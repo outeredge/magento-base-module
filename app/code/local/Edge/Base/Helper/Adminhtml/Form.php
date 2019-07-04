@@ -59,7 +59,7 @@ class Edge_Base_Helper_Adminhtml_Form extends Mage_Core_Helper_Abstract
 
     protected function _getChooserUrl($id)
     {
-        return Mage::getUrl('store_admin/catalog_product_widget/chooser', array(
+        return Mage::getUrl('adminhtml/catalog_product_widget/chooser', array(
             'uniq_id' => $id,
             'key'     => Mage::getSingleton('core/session')->getFormKey()
         ));
