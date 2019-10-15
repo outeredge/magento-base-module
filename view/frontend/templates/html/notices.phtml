@@ -2,7 +2,9 @@
 <?php if ($block->hasErrors()): ?>
     <div class="message global edge" id="notice-edge-block">
         <div class="content">
-            <pre><?= $block->getErrorMessages(); ?></pre>
+            <?php foreach ($block->getErrorMessages() as $error) : ?>
+                <pre><?= $error; ?></pre>
+            <?php endforeach; ?>
         </div>
     </div>
 <?php endif; ?>

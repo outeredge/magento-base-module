@@ -14,10 +14,10 @@ use Magento\Framework\Module\Plugin\DbStatusValidator as MagentoDbStatusValidato
 
 class DbStatusValidator extends MagentoDbStatusValidator
 {
-    protected $errors;
+    protected $errors = [];
 
     protected $productMetadata;
-    
+
     protected $appState;
 
     public function __construct(FrontendCacheInterface $cache, DbVersionInfo $dbVersionInfo, ProductMetadataInterface $productMetadata, State $appState)
@@ -35,7 +35,7 @@ class DbStatusValidator extends MagentoDbStatusValidator
             try {
                 parent::beforeDispatch($subject, $request);
             } catch (LocalizedException $ex) {
-                $this->errors = $ex->getMessage();
+                $this->errors[] = $ex->getMessage();
             }
         }
     }
@@ -48,7 +48,7 @@ class DbStatusValidator extends MagentoDbStatusValidator
             try {
                 return parent::aroundDispatch($subject, $proceed, $request);
             } catch (LocalizedException $ex) {
-                $this->errors = $ex->getMessage();
+                $this->errors[] = $ex->getMessage();
             }
         }
 

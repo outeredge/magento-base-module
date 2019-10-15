@@ -14,6 +14,12 @@
         <plugin name="install" disabled="true"/>
     </type>
     <type name="Magento\Framework\App\FrontController">
-        <plugin name="OuterEdge_Base::install" type="OuterEdge\Base\Plugin\DbStatusValidator"/>
+        <plugin name="OuterEdge_Base::install" type="OuterEdge\Base\Plugin\DbStatusValidator" sortOrder="40"/>
+    </type>
+    <type name="Magento\Framework\App\FrontControllerInterface">
+        <plugin name="configHash" disabled="true"/>
+    </type>
+    <type name="Magento\Framework\App\FrontControllerInterface">
+        <plugin name="OuterEdge_Base::configHash" type="OuterEdge\Base\Plugin\ConfigChangeDetector" sortOrder="50"/>
     </type>
 </config>
