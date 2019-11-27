@@ -24,7 +24,7 @@ class Image extends AbstractHelper
      * @var AdapterFactory
      */
     protected $imageFactory;
-    
+
     /**
      * @var Database
      */
@@ -39,7 +39,7 @@ class Image extends AbstractHelper
      * @var Read
      */
     protected $mediaDirectory;
-    
+
     /**
      * @param Context $context
      * @param Filesystem $filesystem
@@ -60,7 +60,7 @@ class Image extends AbstractHelper
         $this->storeManager = $storeManager;
         parent::__construct($context);
     }
-    
+
     /**
      * @return Read
      */
@@ -71,20 +71,21 @@ class Image extends AbstractHelper
         }
         return $this->mediaDirectory;
     }
-    
+
     /**
      * Get an image url
      * Saves file to FS if exists in database and not FS
      *
-     * @param string $image
+     * @param string $filename
      * @return string
      */
-    public function get($image)
+    public function get($filename)
     {
+        $image = $this->prepareFilename($filename);
         $this->fileExists($image);
         return $this->getMediaImageUrl($image);
     }
-    
+
     /**
      * Setup the image object ready for resizing/cropping
      *
@@ -105,43 +106,47 @@ class Image extends AbstractHelper
         }
         return $imageResize;
     }
-    
+
     /**
      * Resize an image
      *
-     * @param string $image
+     * @param string $filename
      * @param int|null $width
      * @param int|null $height
      * @param array $options
      * @return string
      */
-    public function resize($image, $width = null, $height = null, $options = [])
+    public function resize($filename, $width = null, $height = null, $options = [])
     {
+        $image = $this->prepareFilename($filename);
+
         if (!$this->fileExists($image)) {
             return $this->getMediaImageUrl($image);
         }
-        
+
         $resizedImage = 'resized/' . $width . 'x' . $height . '/' . $image;
         if (!$this->fileExists($resizedImage)) {
             $imageResize = $this->setup($image, $width, $height, $options);
             $imageResize->resize($width, $height);
             $imageResize->save($this->getMediaDirectory()->getAbsolutePath($resizedImage));
         }
-        
+
         return $this->getMediaImageUrl($resizedImage);
     }
-    
+
     /**
      * Crop an image
      *
-     * @param string $image
+     * @param string $filename
      * @param int $width
      * @param int $height
      * @param array $options
      * @return string
      */
-    public function crop($image, $width, $height, $options = [])
+    public function crop($filename, $width, $height, $options = [])
     {
+        $image = $this->prepareFilename($filename);
+
         if (!$this->fileExists($image)) {
             return $this->getMediaImageUrl($image);
         }
@@ -149,10 +154,10 @@ class Image extends AbstractHelper
         $croppedImage = 'cropped/' . $width . 'x' . $height . '/' . $image;
         if (!$this->fileExists($croppedImage)) {
             $imageCrop = $this->setup($image, $width, $height, array_merge($options, ['constrainOnly' => false, 'keepAspectRatio' => true, 'keepFrame' => false]));
-            
+
             $originalAspectRatio = $imageCrop->getOriginalWidth() / $imageCrop->getOriginalHeight();
             $aspectRatio = $width / $height;
-            
+
             if ($aspectRatio < $originalAspectRatio) {
                 $cropWidth = ceil($height * $originalAspectRatio);
                 $cropHorizontal = ($cropWidth - $width) / 2;
@@ -164,24 +169,13 @@ class Image extends AbstractHelper
                 $imageCrop->resize($width, $cropHeight);
                 $imageCrop->crop($cropVertical, 0, 0, $cropVertical);
             }
-            
+
             $imageCrop->save($this->getMediaDirectory()->getAbsolutePath($croppedImage));
         }
-        
+
         return $this->getMediaImageUrl($croppedImage);
     }
-    
-    /**
-     * Get media image url
-     *
-     * @param string $image
-     * @return string
-     */
-    public function getMediaImageUrl($image)
-    {
-        return $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $image;
-    }
-    
+
     /**
      * First check this file on FS
      * If it doesn't exist - try to download it from DB
@@ -191,6 +185,8 @@ class Image extends AbstractHelper
      */
     public function fileExists($filename)
     {
+        $filename = $this->prepareFilename($filename);
+
         if ($this->getMediaDirectory()->isFile($filename)) {
             return true;
         } else {
@@ -198,5 +194,27 @@ class Image extends AbstractHelper
                 $this->getMediaDirectory()->getAbsolutePath($filename)
             );
         }
+    }
+
+    /**
+     * Get media image front-end url
+     *
+     * @param string|null $filename
+     * @return string
+     */
+    public function getMediaImageUrl($filename)
+    {
+        return $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $filename;
+    }
+
+    /**
+     * Prepare filename for handling by stripping any web path (i.e. when non-relative is passed tp helper)
+     *
+     * @param string $urlorfilename
+     * @return string relative path
+     */
+    protected function prepareFilename($urlorfilename)
+    {
+        return str_replace($this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA), '', $urlorfilename);
     }
 }
