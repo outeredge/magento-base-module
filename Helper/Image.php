@@ -7,10 +7,10 @@ use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\Read;
 use Magento\Framework\Image\AdapterFactory;
+use Magento\Framework\Image\Adapter\ConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\UrlInterface;
-use Magento\Framework\Image\Adapter\Gd2;
 use Magento\MediaStorage\Helper\File\Storage\Database;
 
 class Image extends AbstractHelper
@@ -24,6 +24,11 @@ class Image extends AbstractHelper
      * @var AdapterFactory
      */
     protected $imageFactory;
+
+    /**
+     * @var ConfigInterface
+     */
+    protected $config;
 
     /**
      * @var Database
@@ -46,18 +51,21 @@ class Image extends AbstractHelper
      * @param AdapterFactory $imageFactory
      * @param Database $coreFileStorageDatabase
      * @param StoreManagerInterface $storeManager
+     * @param ConfigInterface $config
      */
     public function __construct(
         Context $context,
         Filesystem $filesystem,
         AdapterFactory $imageFactory,
         Database $coreFileStorageDatabase,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        ConfigInterface $config
     ) {
         $this->filesystem = $filesystem;
         $this->imageFactory = $imageFactory;
         $this->coreFileStorageDatabase = $coreFileStorageDatabase;
         $this->storeManager = $storeManager;
+        $this->config = $config;
         parent::__construct($context);
     }
 
@@ -93,11 +101,11 @@ class Image extends AbstractHelper
      * @param int|null $width
      * @param int|null $height
      * @param array $options
-     * @return Gd2
+     * @return \Magento\Framework\Image\Adapter\AdapterInterface
      */
     protected function setup($image, $width = null, $height = null, $options = [])
     {
-        $imageResize = $this->imageFactory->create();
+        $imageResize = $this->imageFactory->create($this->config->getAdapterAlias());
         $imageResize->open($this->getMediaDirectory()->getAbsolutePath($image));
         if (!empty($options)) {
             foreach ($options as $method => $value) {
