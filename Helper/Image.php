@@ -2,15 +2,17 @@
 
 namespace OuterEdge\Base\Helper;
 
+use Magento\Catalog\Model\Product\Image as ProductImage;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\Read;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\Framework\Image\Adapter\ConfigInterface;
-use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\UrlInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\MediaStorage\Helper\File\Storage\Database;
 
 class Image extends AbstractHelper
@@ -46,12 +48,18 @@ class Image extends AbstractHelper
     protected $mediaDirectory;
 
     /**
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
      * @param Context $context
      * @param Filesystem $filesystem
      * @param AdapterFactory $imageFactory
      * @param Database $coreFileStorageDatabase
      * @param StoreManagerInterface $storeManager
      * @param ConfigInterface $config
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         Context $context,
@@ -59,13 +67,15 @@ class Image extends AbstractHelper
         AdapterFactory $imageFactory,
         Database $coreFileStorageDatabase,
         StoreManagerInterface $storeManager,
-        ConfigInterface $config
+        ConfigInterface $config,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->filesystem = $filesystem;
         $this->imageFactory = $imageFactory;
         $this->coreFileStorageDatabase = $coreFileStorageDatabase;
         $this->storeManager = $storeManager;
         $this->config = $config;
+        $this->scopeConfig = $scopeConfig;
         parent::__construct($context);
     }
 
@@ -105,14 +115,18 @@ class Image extends AbstractHelper
      */
     protected function setup($image, $width = null, $height = null, $options = [])
     {
-        $imageResize = $this->imageFactory->create($this->config->getAdapterAlias());
-        $imageResize->open($this->getMediaDirectory()->getAbsolutePath($image));
-        if (!empty($options)) {
-            foreach ($options as $method => $value) {
-                $imageResize->$method($value);
-            }
+        $imageAdapter = $this->imageFactory->create($this->config->getAdapterAlias());
+        $imageAdapter->open($this->getMediaDirectory()->getAbsolutePath($image));
+
+        $options = array_merge([
+            'quality' => (int) $this->scopeConfig->getValue(ProductImage::XML_PATH_JPEG_QUALITY)
+        ], $options);
+
+        foreach ($options as $method => $value) {
+            $imageAdapter->$method($value);
         }
-        return $imageResize;
+
+        return $imageAdapter;
     }
 
     /**
