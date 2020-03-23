@@ -49,7 +49,12 @@ class Edge_Base_Helper_Image extends Mage_Core_Helper_Abstract
     {
         $mediaUrl = Mage::getBaseUrl('media');
         $mediaDir = Mage::getBaseDir('media') . DS;
+
         $filePath = $mediaDir . $file;
+        if(!file_exists($filePath)){
+            return;
+        }
+
         $this->_verienImage = new Varien_Image($filePath);
 
         if ($this->_width || $this->_height) {
