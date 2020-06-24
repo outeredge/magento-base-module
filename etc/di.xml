@@ -7,9 +7,6 @@
             </argument>
         </arguments>
     </type>
-    <type name="Magento\Backend\Block\Page\Copyright">
-        <plugin name="OuterEdge_Base::pageCopyrightPlugin" type="OuterEdge\Base\Plugin\Backend\Block\Page\Copyright"/>
-    </type>
     <type name="Magento\Framework\App\FrontController">
         <plugin name="install" disabled="true"/>
     </type>
