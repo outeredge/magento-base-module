@@ -14,7 +14,6 @@
         }
     ],
     "require": {
-        "outeredge/magento-backend-theme": "^1.0.0",
         "outeredge/magento-limitrole-module": "^1.0.0",
         "outeredge/magento-layout-module": "^3.2.0"
     },
