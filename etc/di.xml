@@ -1,12 +1,5 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <type name="Magento\Theme\Model\View\Design">
-        <arguments>
-            <argument name="themes" xsi:type="array">
-                <item name="adminhtml" xsi:type="string">OuterEdge/backend</item>
-            </argument>
-        </arguments>
-    </type>
     <type name="Magento\Framework\App\FrontController">
         <plugin name="install" disabled="true"/>
     </type>
