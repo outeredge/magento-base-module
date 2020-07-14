@@ -237,6 +237,16 @@ class Image extends AbstractHelper
      */
     protected function prepareFilename($urlorfilename)
     {
-        return str_replace($this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA), '', $urlorfilename);
+        $mediaUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
+
+        if (stristr($urlorfilename, '://')) {
+            return str_ireplace($mediaUrl, '', $urlorfilename);
+        }
+
+        return str_ireplace(
+            DIRECTORY_SEPARATOR . basename($mediaUrl) . DIRECTORY_SEPARATOR,
+            DIRECTORY_SEPARATOR,
+            $urlorfilename
+        );
     }
 }
