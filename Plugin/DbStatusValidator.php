@@ -29,30 +29,13 @@ class DbStatusValidator extends MagentoDbStatusValidator
 
     public function beforeDispatch(FrontController $subject, RequestInterface $request)
     {
-        if (version_compare($this->productMetadata->getVersion(), '2.2.0') != -1 &&
-            $this->appState->getMode() != State::MODE_PRODUCTION
-        ) {
+        if ($this->appState->getMode() != State::MODE_PRODUCTION) {
             try {
                 parent::beforeDispatch($subject, $request);
             } catch (LocalizedException $ex) {
                 $this->errors[] = $ex->getMessage();
             }
         }
-    }
-
-    public function aroundDispatch(FrontController $subject, Closure $proceed, RequestInterface $request)
-    {
-        if (version_compare($this->productMetadata->getVersion(), '2.2.0') == -1 &&
-            $this->appState->getMode() != State::MODE_PRODUCTION
-        ) {
-            try {
-                return parent::aroundDispatch($subject, $proceed, $request);
-            } catch (LocalizedException $ex) {
-                $this->errors[] = $ex->getMessage();
-            }
-        }
-
-        return $proceed($request);
     }
 
     public function hasErrors()
