@@ -8,9 +8,6 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <block class="Magento\Framework\View\Element\Template" name="outeredge-logo" as="outeredge-logo" template="OuterEdge_Base::page/copyright.phtml" />
-        <block class="Magento\Framework\View\Element\Template" name="outeredge-login-logo" as="outeredge-login-logo" template="OuterEdge_Base::page/copyright.phtml" />
-
-        <move element="outeredge-login-logo" destination="login.footer" before="-"/>
         <move element="outeredge-logo" destination="legal.copyright" before="-"/>
     </body>
 </page>
