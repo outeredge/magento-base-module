@@ -240,13 +240,11 @@ class Image extends AbstractHelper
         $mediaUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
 
         if (stristr($urlorfilename, '://')) {
-            return str_ireplace($mediaUrl, '', $urlorfilename);
+            $urlorfilename = str_ireplace($mediaUrl, '', $urlorfilename);
         }
 
-        return str_ireplace(
-            DIRECTORY_SEPARATOR . basename($mediaUrl) . DIRECTORY_SEPARATOR,
-            DIRECTORY_SEPARATOR,
-            $urlorfilename
-        );
+        $mediaPath = DIRECTORY_SEPARATOR . basename($mediaUrl) . DIRECTORY_SEPARATOR;
+
+        return ltrim(stristr($urlorfilename, $mediaPath), $mediaPath);
     }
 }
