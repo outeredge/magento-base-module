@@ -245,6 +245,10 @@ class Image extends AbstractHelper
 
         $mediaPath = DIRECTORY_SEPARATOR . basename($mediaUrl) . DIRECTORY_SEPARATOR;
 
-        return ltrim(stristr($urlorfilename, $mediaPath), $mediaPath);
+        if (stristr($urlorfilename, '://')) {
+            return ltrim(stristr($urlorfilename, $mediaPath), $mediaPath);
+        }
+
+        return str_ireplace($mediaPath, DIRECTORY_SEPARATOR, $urlorfilename);
     }
 }
