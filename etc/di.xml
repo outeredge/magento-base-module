@@ -12,4 +12,7 @@
     <type name="Magento\Framework\App\FrontControllerInterface">
         <plugin name="OuterEdge_Base::configHash" type="OuterEdge\Base\Plugin\ConfigChangeDetector" sortOrder="50"/>
     </type>
+    <type name="Magento\Framework\App\Config">
+        <plugin name="OuterEdge_Base::appConfigPlugin" type="OuterEdge\Base\Plugin\Framework\App\Config"/>
+    </type>
 </config>
