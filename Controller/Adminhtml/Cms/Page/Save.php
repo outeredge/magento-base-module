@@ -60,7 +60,6 @@ class Save extends \Magento\Cms\Controller\Adminhtml\Page\Save
                 $data['banner_image'] = $data['banner_image'][0]['name'];
             }
 
-
             $model->setData($data);
 
             $this->_eventManager->dispatch(
