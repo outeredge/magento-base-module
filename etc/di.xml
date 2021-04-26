@@ -15,4 +15,7 @@
     <type name="Magento\Framework\App\Config">
         <plugin name="OuterEdge_Base::appConfigPlugin" type="OuterEdge\Base\Plugin\Framework\App\Config"/>
     </type>
+    <type name="Magento\Widget\Model\Widget">
+        <plugin name="encodeWidgetQuotes" type="OuterEdge\Widget\Model\Widget" sortOrder="1" disabled="false"/>
+    </type>
 </config>
