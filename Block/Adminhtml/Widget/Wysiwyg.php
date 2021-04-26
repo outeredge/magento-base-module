@@ -68,45 +68,6 @@ Class Wysiwyg extends Template
         $tinymceconfig['toolbar2'] = str_replace($pluginstoremove, '', $tinymceconfig['toolbar2']);
         $tinymceconfig['plugins'] = str_replace($pluginstoremove, '', $tinymceconfig['plugins']);
 
-        $tinymceconfig['templates'] = [
-            [
-                "title" => "Image Right",
-                "description" => "Row with image on right",
-                "content" => '
-                    <section class="leftright-row">
-                        <div class="leftright__item">
-                            <div class="leftright__content">
-                                <h2>Title here</h2>         
-                                <p>Content Here</p>
-                            </div>
-                        </div>
-                        <div class="leftright__item leftright--image">
-                            <picture>
-                                <img src="placeholder" />
-                            </picture>
-                        </div>
-                    </section>'
-            ],
-            [
-                "title" => "Image Left",
-                "description" => "Row with image on left",
-                "content" => '
-                    <section class="leftright-row">
-                        <div class="leftright__item leftright--image">
-                            <picture>
-                                <img src="placeholder" />
-                            </picture>
-                        </div>
-                        <div class="leftright__item">
-                            <div class="leftright__content">
-                                <h2>Title here</h2>         
-                                <p>Content Here</p>
-                            </div>
-                        </div>
-                    </section>'
-            ]
-        ];
-
         $config->addData(['settings' => $tinymceconfig]);
 
         $editor->setConfig($config);
