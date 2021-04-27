@@ -1,5 +1,5 @@
 <?php
-namespace OuterEdge\Widget\Block\Adminhtml\Widget;
+namespace OuterEdge\Block\Adminhtml\Widget;
 
 use Magento\Framework\Data\Form\Element\AbstractElement as Element;
 use Magento\Backend\Block\Template\Context as TemplateContext;
