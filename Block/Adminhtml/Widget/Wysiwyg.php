@@ -1,6 +1,6 @@
 <?php
 
-namespace OuterEdge\Block\Adminhtml\Widget;
+namespace OuterEdge\Base\Block\Adminhtml\Widget;
 
 use Magento\Backend\Block\Template;
 
