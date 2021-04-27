@@ -1,6 +1,6 @@
 <?php
 
-namespace OuterEdge\Widget\Model;
+namespace OuterEdge\Model;
 
 use Magento\Widget\Model\Widget as BaseWidget;
 
