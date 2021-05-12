@@ -86,7 +86,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     public function getMediaUrl()
     {
         $mediaUrl = $this->storeManager->getStore()
-            ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'cms/bannerimage/tmp/';
+            ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'cms/bannerimage/';
         return $mediaUrl;
     }
 }

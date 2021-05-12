@@ -9,7 +9,7 @@
 
     <virtualType name="banner_image" type="Magento\Catalog\Model\ImageUploader">
         <arguments>
-            <argument name="baseTmpPath" xsi:type="string">cms/bannerimage/tmp</argument>
+            <argument name="baseTmpPath" xsi:type="string">cms/bannerimage</argument>
             <argument name="basePath" xsi:type="string">cms/bannerimage</argument>
             <argument name="allowedExtensions" xsi:type="array">
                 <item name="jpg" xsi:type="string">jpg</item>
