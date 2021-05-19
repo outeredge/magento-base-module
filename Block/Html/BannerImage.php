@@ -29,6 +29,10 @@ class BannerImage extends \Magento\Cms\Block\Page
     {
         $url = $this->_filterProvider->getPageFilter()->filter($this->getPage()->getBannerImage());
 
+        if (empty($url)) {
+            return '';
+        }
+        
         $fullImageUrl = $this->_helper->get('cms/bannerimage/' . $url);
 
         $html = "<img class='cms-banner-image' src='$fullImageUrl' />";
