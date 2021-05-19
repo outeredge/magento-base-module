@@ -33,7 +33,9 @@ class BannerImage extends \Magento\Cms\Block\Page
 
         $html = "<img class='cms-banner-image' src='$fullImageUrl' />";
 
-        return $html;
+        if (!empty($url)) {
+            return $html;
+        }
     }
 
     public function getImageUrl()
