@@ -22,6 +22,13 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'type' =>\Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     'comment' => 'Banner Image'
                 ]);
+
+            $connection->addColumn('cms_page','banner_text',
+                [
+                    'type' =>\Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    'comment' => 'Banner Text'
+                ]);
+                
             $installer->endSetup();
         }
 

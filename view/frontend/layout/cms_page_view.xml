@@ -2,7 +2,13 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="OuterEdge\Base\Block\Html\BannerImage" name="cms.page.banner.image" after="cms_page" />
+            <container name="cms.page.banner.container" htmlTag="section" htmlClass="cms-banner__container">
+                <block class="OuterEdge\Base\Block\Html\BannerImage" name="cms.page.banner.image"/>
+                <container name="cms.page.banner.text.container" htmlTag="div" htmlClass="cms-banner__content">
+                    <block class="OuterEdge\Base\Block\Html\Banner" name="cms.page.banner.text" after="-" />
+                </container>
+            </container>
         </referenceContainer>
+        <move element="cms.page.banner.container" destination="page.wrapper" before="main.content"/>  
     </body>
 </page>
