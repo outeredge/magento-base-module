@@ -13,16 +13,10 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/davidwindell/googlecloudstorage"
-        }
-    ],
     "require": {
         "outeredge/magento-limitrole-module": "^1.0.0",
         "outeredge/magento-layout-module": "^3.2.0",
-        "auroraextensions/googlecloudstorage": "dev-patch-1"
+        "outeredge/googlecloudstorage": "dev-outeredge"
     },
     "require-dev": {
         "magento-ecg/coding-standard": "~3.0",
