@@ -237,18 +237,23 @@ class Image extends AbstractHelper
      */
     protected function prepareFilename($urlorfilename)
     {
-        $mediaUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
-
-        if (stristr($urlorfilename, '://')) {
-            $urlorfilename = str_ireplace($mediaUrl, '', $urlorfilename);
-        }
-
+        $mediaUrl  = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         $mediaPath = DIRECTORY_SEPARATOR . basename($mediaUrl) . DIRECTORY_SEPARATOR;
-
-        if (stristr($urlorfilename, '://')) {
-            return ltrim(stristr($urlorfilename, $mediaPath), $mediaPath);
+        
+        if (strpos($urlorfilename, '://') !== false) {
+            if (strpos($urlorfilename, $mediaUrl)) {
+                // strip the known Magento media URL from the filename
+                $urlorfilename = str_ireplace($mediaUrl, '', $urlorfilename);
+            } elseif (strpos($urlorfilename, $mediaPath) !== false) {
+                // trim everything up to and including the media URL's final path
+                return ltrim(stristr($urlorfilename, $mediaPath), $mediaPath);
+            } elseif (strpos($urlorfilename, '/media/') !== false) {
+                // trim everything up to and including /media/
+                return ltrim(stristr($urlorfilename, '/media/'), '/media/');
+            }
         }
 
+        // trim the known media path from whatever is left
         return str_ireplace($mediaPath, DIRECTORY_SEPARATOR, $urlorfilename);
     }
 }
