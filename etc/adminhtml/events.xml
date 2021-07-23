@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="cms_page_prepare_save">
+        <observer name="save_image_on_cms_page" instance="OuterEdge\Base\Observer\SaveImage" />
+    </event>
+</config>
