@@ -240,6 +240,9 @@ class Image extends AbstractHelper
         $mediaUrl  = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         $mediaPath = DIRECTORY_SEPARATOR . basename($mediaUrl) . DIRECTORY_SEPARATOR;
         
+        // remove any double slashes (except for ://)
+        $urlorfilename = str_replace(':/','://', trim(preg_replace('/\/+/', '/', $urlorfilename), '/'));
+        
         if (strpos($urlorfilename, '://') !== false) {
             if (strpos($urlorfilename, $mediaUrl)) {
                 // strip the known Magento media URL from the filename
