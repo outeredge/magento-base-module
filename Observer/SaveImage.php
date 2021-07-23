@@ -28,24 +28,23 @@ class SaveImage implements ObserverInterface
     }
 
 	public function execute(Observer $observer)
-	{
-		$model = $observer->getData('page');
+	{   
+        $model = $observer->getData('page');
         $request = $observer->getData('request');
         $data = $request->getPostValue();
-
-        // Add custom image field to data
-        if (isset($data['banner_image']) && is_array($data['banner_image'])){
-            $data['banner_image'] = $data['banner_image'][0]['name'];
         
+        // Add custom image field to data
+        if (isset($data['banner_image']) && is_array($data['banner_image'])) {
+            $data['banner_image'] = $data['banner_image'][0]['name'];
+            
             $model->setData($data);
-
+            
             try {
                 $this->pageRepository->save($model);
             } catch (\Throwable $e) {
                 $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the page.'));
             }
         }
-
-		return $this;
-	}
+        return $this;
+    }
 }
