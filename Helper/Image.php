@@ -249,10 +249,18 @@ class Image extends AbstractHelper
                 $urlorfilename = str_ireplace($mediaUrl, '', $urlorfilename);
             } elseif (strpos($urlorfilename, $mediaPath) !== false) {
                 // trim everything up to and including the media URL's final path
-                return ltrim(stristr($urlorfilename, $mediaPath), $mediaPath);
+                $return = stristr($urlorfilename, $mediaPath);
+                if (0 === strpos($return, $mediaPath)) {
+                    $return = substr($return, strlen($mediaPath));
+                }
+                return $return;
             } elseif (strpos($urlorfilename, '/media/') !== false) {
                 // trim everything up to and including /media/
-                return ltrim(stristr($urlorfilename, '/media/'), '/media/');
+                $return = stristr($urlorfilename, '/media/');
+                if (0 === strpos($return, '/media/')) {
+                    $return = substr($return, strlen('/media/'));
+                }
+                return $return;
             }
         }
 
