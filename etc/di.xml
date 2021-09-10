@@ -18,7 +18,5 @@
     <type name="Magento\Widget\Model\Widget">
         <plugin name="encodeWidgetQuotes" type="OuterEdge\Base\Model\Widget" sortOrder="1" disabled="false"/>
     </type>
-    <type name="Magento\Framework\App\Cache\State">
-        <plugin name="preventPersist" type="OuterEdge\Base\Plugin\Framework\App\Cache\State" sortOrder="1" disabled="false"/>
-    </type>
+    <preference for="Magento\Framework\App\Cache\StateInterface" type="OuterEdge\Base\Framework\App\Cache\State" />
 </config>
