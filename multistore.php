@@ -12,8 +12,11 @@ foreach ($files as $file) {
 }
 
 if (empty($_SERVER['MAGE_RUN_CODE']) && php_sapi_name() === 'cli') {
-    $_SERVER['MAGE_RUN_CODE'] = $validStores[readline('Select store (' . implode(', ', $validStores) . '): ')];
-    $_SERVER['MAGE_RUN_TYPE'] = 'store';
+    $input = readline('Select store (' . implode(', ', $validStores) . '): ');
+    if (!empty($validStores[$input])) {
+        $_SERVER['MAGE_RUN_CODE'] = $validStores[$input];
+        $_SERVER['MAGE_RUN_TYPE'] = 'store';
+    }
     return;
 }
 
