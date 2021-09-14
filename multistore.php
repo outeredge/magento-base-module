@@ -1,6 +1,6 @@
 <?php
 
-$files = glob('app/etc/env.php.*');
+$files = glob(__DIR__ . '/../../../app/etc/env.php.*');
 if (empty($files)) {
     return;
 }
