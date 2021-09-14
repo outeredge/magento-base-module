@@ -8,7 +8,9 @@ if (empty($files)) {
 $validStores = ['default' => 'default*'];
 foreach ($files as $file) {
     $code = substr(strrchr($file, '.'), 1);
-    $validStores[$code] = $code;
+    if ($code != 'production') {
+        $validStores[$code] = $code;
+    }
 }
 
 if (empty($_SERVER['MAGE_RUN_CODE']) && php_sapi_name() === 'cli') {
