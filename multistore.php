@@ -1,7 +1,7 @@
 <?php
 
 $files = glob(__DIR__ . '/../../../app/etc/env.php.*');
-if (empty($files)) {
+if (empty($files) || empty($_SERVER['CONFIG__DEFAULT__WEB__SECURE__BASE_URL'])) {
     return;
 }
 
