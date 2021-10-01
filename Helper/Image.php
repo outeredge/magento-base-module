@@ -245,10 +245,10 @@ class Image extends AbstractHelper
         $urlorfilename = str_replace(':/','://', trim(preg_replace('/\/+/', '/', $urlorfilename), '/'));
         
         if (strpos($urlorfilename, '://') !== false) {
-            if (strpos($urlorfilename, $mediaUrl)) {
+            if (strpos($urlorfilename, $mediaUrl) !== false) {
                 // strip the known Magento media URL from the filename
                 $urlorfilename = str_ireplace($mediaUrl, '', $urlorfilename);
-            } elseif (strpos($urlorfilename, $mediaUrlBase)) {
+            } elseif (strpos($urlorfilename, $mediaUrlBase) !== false) {
                 // strip the default URL from the filename
                 $urlorfilename = str_ireplace($mediaUrlBase, '', $urlorfilename);
             } elseif (strpos($urlorfilename, $mediaPath) !== false) {
