@@ -14,7 +14,7 @@
 return [
     'service_manager' => [
         'aliases' => [
-            \Magento\Framework\App\DeploymentConfig\Writer::class => \OuterEdge\Base\Framework\App\DeploymentConfig\Writer::class
+            'Magento\Framework\App\DeploymentConfig\Writer' => 'OuterEdge\Base\Framework\App\DeploymentConfig\Writer'
         ]
     ]
 ];
