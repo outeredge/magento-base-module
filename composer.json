@@ -16,7 +16,7 @@
     "require": {
         "outeredge/magento-limitrole-module": "^1.0.0",
         "outeredge/magento-layout-module": "^3.2.0",
-        "outeredge/googlecloudstorage": "^1.2.0.9",
+        "outeredge/googlecloudstorage": "^1.2.0.10",
         "elgentos/masquerade": "^0.3.5"
     },
     "require-dev": {
