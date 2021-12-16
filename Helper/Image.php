@@ -8,12 +8,12 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Filesystem;
-use Magento\Framework\Filesystem\Directory\Read;
+use Magento\Framework\Filesystem\Directory\Write;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\Framework\Image\Adapter\ConfigInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\MediaStorage\Helper\File\Storage\Database;
+use Magento\MediaStorage\Model\File\Storage\SynchronizationFactory;
 
 class Image extends AbstractHelper
 {
@@ -33,9 +33,9 @@ class Image extends AbstractHelper
     protected $config;
 
     /**
-     * @var Database
+     * @var SynchronizationFactory
      */
-    protected $coreFileStorageDatabase;
+    protected $synchronizationFactory;
 
     /**
      * @var StoreManagerInterface
@@ -43,7 +43,7 @@ class Image extends AbstractHelper
     protected $storeManager;
 
     /**
-     * @var Read
+     * @var Write
      */
     protected $mediaDirectory;
 
@@ -56,7 +56,7 @@ class Image extends AbstractHelper
      * @param Context $context
      * @param Filesystem $filesystem
      * @param AdapterFactory $imageFactory
-     * @param Database $coreFileStorageDatabase
+     * @param SynchronizationFactory $synchronizationFactory
      * @param StoreManagerInterface $storeManager
      * @param ConfigInterface $config
      * @param ScopeConfigInterface $scopeConfig
@@ -65,14 +65,14 @@ class Image extends AbstractHelper
         Context $context,
         Filesystem $filesystem,
         AdapterFactory $imageFactory,
-        Database $coreFileStorageDatabase,
+        SynchronizationFactory $synchronizationFactory,
         StoreManagerInterface $storeManager,
         ConfigInterface $config,
         ScopeConfigInterface $scopeConfig
     ) {
         $this->filesystem = $filesystem;
         $this->imageFactory = $imageFactory;
-        $this->coreFileStorageDatabase = $coreFileStorageDatabase;
+        $this->synchronizationFactory = $synchronizationFactory;
         $this->storeManager = $storeManager;
         $this->config = $config;
         $this->scopeConfig = $scopeConfig;
@@ -80,12 +80,12 @@ class Image extends AbstractHelper
     }
 
     /**
-     * @return Read
+     * @return Write
      */
     protected function getMediaDirectory()
     {
         if (!$this->mediaDirectory) {
-            $this->mediaDirectory = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA);
+            $this->mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
         }
         return $this->mediaDirectory;
     }
@@ -205,17 +205,18 @@ class Image extends AbstractHelper
      * @param string $filename
      * @return bool
      */
-    public function fileExists($filename)
+    public function fileExists($filename, $sync = true)
     {
         $filename = $this->prepareFilename($filename);
 
         if ($this->getMediaDirectory()->isFile($filename)) {
             return true;
-        } else {
-            return $this->coreFileStorageDatabase->saveFileToFilesystem(
-                $this->getMediaDirectory()->getAbsolutePath($filename)
-            );
+        } elseif ($sync) {
+            $this->synchronizationFactory->create(['directory' => $this->getMediaDirectory()])->synchronize($filename);
+            return $this->fileExists($filename, false);
         }
+
+        return false;
     }
 
     /**
@@ -240,10 +241,10 @@ class Image extends AbstractHelper
         $mediaUrlBase = $this->storeManager->getStore(0)->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         $mediaUrl     = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         $mediaPath    = DIRECTORY_SEPARATOR . basename($mediaUrl) . DIRECTORY_SEPARATOR;
-        
+
         // remove any double slashes (except for ://)
         $urlorfilename = str_replace(':/','://', trim(preg_replace('/\/+/', '/', $urlorfilename), '/'));
-        
+
         if (strpos($urlorfilename, '://') !== false) {
             if (strpos($urlorfilename, $mediaUrl) !== false) {
                 // strip the known Magento media URL from the filename
