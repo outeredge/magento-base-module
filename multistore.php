@@ -44,7 +44,7 @@ $_SERVER['MAGE_RUN_TYPE'] = 'store';
 if (strstr($_SERVER['REQUEST_URI'], '_admin')) {
     $newRequestUri = str_replace('/' . $storeCode . '/', '', $requestUri);
 } else {
-    $newRequestUri = str_replace('/' . $storeCode, '', $requestUri);
+    $newRequestUri = str_replace('/' . $storeCode . '/', '/', $requestUri);
 }
 
 $_SERVER['REQUEST_URI'] = $newRequestUri;
