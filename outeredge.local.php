@@ -7,7 +7,7 @@
 
         "scripts": {
             "pre-autoload-dump": [
-                "cp vendor/outeredge/magento-base-module/outeredge.local.php setup/config/autoload/",
+                "mkdir -p setup/config/autoload && cp vendor/outeredge/magento-base-module/outeredge.local.php setup/config/autoload/",
                 ...
 */
 
