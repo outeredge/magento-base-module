@@ -236,7 +236,7 @@ class Image extends AbstractHelper
      * @param string $urlorfilename
      * @return string relative path
      */
-    protected function prepareFilename($urlorfilename)
+    public function prepareFilename($urlorfilename)
     {
         $mediaUrlBase = $this->storeManager->getStore(0)->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         $mediaUrl     = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
@@ -270,6 +270,6 @@ class Image extends AbstractHelper
         }
 
         // trim the known media path from whatever is left
-        return str_ireplace($mediaPath, DIRECTORY_SEPARATOR, $urlorfilename);
+        return str_ireplace($mediaPath, DIRECTORY_SEPARATOR, strstr($urlorfilename, $mediaPath));
     }
 }
