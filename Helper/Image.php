@@ -270,6 +270,17 @@ class Image extends AbstractHelper
         }
 
         // trim the known media path from whatever is left
-        return str_ireplace($mediaPath, DIRECTORY_SEPARATOR, strstr($urlorfilename, $mediaPath));
+        if (strpos($urlorfilename, $mediaPath)) {
+            $urlorfilename = str_ireplace($mediaPath, DIRECTORY_SEPARATOR, strstr($urlorfilename, $mediaPath));
+        }
+
+        if (strpos($urlorfilename, DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR)) {
+            $urlorfilename = str_ireplace(
+                DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR,
+                strstr($urlorfilename, DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR)
+            );
+        }
+
+        return $urlorfilename;
     }
 }
