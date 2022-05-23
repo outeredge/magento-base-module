@@ -60,7 +60,6 @@
         "magento/module-inventory-in-store-pickup-webapi-extension": "*",
         "magento/module-marketplace": "*",
         "magento/module-new-relic-reporting": "*",
-        "magento/module-payment-graph-ql": "*",
         "magento/module-re-captcha-store-pickup": "*",
         "magento/module-sample-data": "*",
         "magento/module-send-friend": "*",
