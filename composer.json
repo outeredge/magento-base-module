@@ -14,10 +14,10 @@
         }
     ],
     "require": {
-        "outeredge/magento-limitrole-module": "^1.0.0",
-        "outeredge/magento-layout-module": "^3.2.0",
-        "outeredge/googlecloudstorage": "^1.2.0.17",
-        "outeredge/magento-bulk-actions": "^1.0.0",
+        "outeredge/magento-limitrole-module": "^1.0",
+        "outeredge/magento-layout-module": "^3.2",
+        "outeredge/googlecloudstorage": "^2.0",
+        "outeredge/magento-bulk-actions": "^1.0",
         "community-engineering/language-en_gb": "~0.0.10"
     },
     "require-dev": {
