@@ -1,6 +1,6 @@
 {
     "name": "outeredge/magento-base-module",
-    "description": "Magento Base Module by outer/edge",
+    "description": "Magento 2 Base Module by outer/edge",
     "type": "magento2-module",
     "license": [
         "MIT"
@@ -17,7 +17,8 @@
         "outeredge/magento-limitrole-module": "^1.0.0",
         "outeredge/magento-layout-module": "^3.2.0",
         "outeredge/googlecloudstorage": "^1.2.0.17",
-        "outeredge/magento-bulk-actions": "^1.0.0"        
+        "outeredge/magento-bulk-actions": "^1.0.0",
+        "community-engineering/language-en_gb": "~0.0.10"
     },
     "require-dev": {
         "magento-ecg/coding-standard": "~3.0",
