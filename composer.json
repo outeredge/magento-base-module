@@ -35,6 +35,7 @@
         "magento/module-analytics": "*",
         "magento/module-catalog-analytics": "*",
         "magento/module-customer-analytics": "*",
+        "magento/module-page-builder-admin-analytics": "*",
         "magento/module-page-builder-analytics": "*",
         "magento/module-quote-analytics": "*",
         "magento/module-review-analytics": "*",
@@ -71,7 +72,8 @@
         "magento/module-ups": "*",
         "magento/module-usps": "*",
         "magento/module-version": "*",
-        "temando/module-shipping-remover": "*"
+        "temando/module-shipping-remover": "*",
+        "yotpo/magento2-module-yotpo-reviews": "*"
     },
     "suggest": {
         "yireo/magento2-replace-graphql": "To remove GraphQL modules when not in use"
