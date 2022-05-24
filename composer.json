@@ -35,7 +35,6 @@
         "magento/module-analytics": "*",
         "magento/module-catalog-analytics": "*",
         "magento/module-customer-analytics": "*",
-        "magento/module-page-builder-admin-analytics": "*",
         "magento/module-page-builder-analytics": "*",
         "magento/module-quote-analytics": "*",
         "magento/module-review-analytics": "*",
