@@ -77,7 +77,7 @@
         "yotpo/magento2-module-yotpo-reviews": "*"
     },
     "suggest": {
-        "yireo/magento2-replace-graphql": "To remove GraphQL modules when not in use"
+        "outeredge/magento-disable-graphql": "To remove GraphQL modules when not in use"
     },
     "autoload": {
         "files": [
