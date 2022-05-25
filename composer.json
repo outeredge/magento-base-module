@@ -43,8 +43,6 @@
         "magento/module-robots": "*",
         "magento/module-sales-analytics": "*",
         "magento/module-wishlist-analytics": "*",
-        "magento/module-dhl": "*",
-        "magento/module-fedex": "*",
         "magento/module-google-optimizer": "*",
         "magento/module-inventory-in-store-pickup": "*",
         "magento/module-inventory-in-store-pickup-admin-ui": "*",
@@ -70,8 +68,6 @@
         "magento/module-swagger": "*",
         "magento/module-swagger-webapi": "*",
         "magento/module-swagger-webapi-async": "*",
-        "magento/module-ups": "*",
-        "magento/module-usps": "*",
         "magento/module-version": "*",
         "temando/module-shipping-remover": "*",
         "yotpo/magento2-module-yotpo-reviews": "*"
