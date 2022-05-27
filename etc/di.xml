@@ -1,17 +1,5 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <type name="Magento\Framework\App\FrontController">
-        <plugin name="install" disabled="true"/>
-    </type>
-    <type name="Magento\Framework\App\FrontController">
-        <plugin name="OuterEdge_Base::install" type="OuterEdge\Base\Plugin\DbStatusValidator" sortOrder="40"/>
-    </type>
-    <type name="Magento\Framework\App\FrontControllerInterface">
-        <plugin name="configHash" disabled="true"/>
-    </type>
-    <type name="Magento\Framework\App\FrontControllerInterface">
-        <plugin name="OuterEdge_Base::configHash" type="OuterEdge\Base\Plugin\ConfigChangeDetector" sortOrder="50"/>
-    </type>
     <type name="Magento\Framework\App\Config">
         <plugin name="OuterEdge_Base::appConfigPlugin" type="OuterEdge\Base\Plugin\Framework\App\Config"/>
     </type>
