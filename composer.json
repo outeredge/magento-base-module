@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "magento/product-community-edition": "~2.4.3",
+        "magento/product-community-edition": ">=2.4.4",
         "outeredge/magento-limitrole-module": "^1.0",
         "outeredge/magento-layout-module": "^3.2",
         "outeredge/googlecloudstorage": "^2.0",
