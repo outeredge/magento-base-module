@@ -26,7 +26,7 @@ class Writer extends DeploymentConfig\Writer
     /**
      * Avoid config.php being modified when modules are enabled/disabled in env.php
      */
-    public function saveConfig(array $data, $override = false, $pool = null, array $comments = [])
+    public function saveConfig(array $data, $override = false, $pool = null, array $comments = [], bool $lock = false)
     {
         $callingFunction = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1]['function'] ?? null;
 
@@ -42,6 +42,6 @@ class Writer extends DeploymentConfig\Writer
             }
         }
 
-        parent::saveConfig($data, $override, $pool, $comments);
+        parent::saveConfig($data, $override, $pool, $comments, $lock);
     }
 }
