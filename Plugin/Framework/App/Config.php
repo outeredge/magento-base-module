@@ -34,7 +34,7 @@ class Config
         $scopeCode = null
     ) {
         if (($path == Store::XML_PATH_SECURE_BASE_MEDIA_URL || $path == Store::XML_PATH_UNSECURE_BASE_MEDIA_URL)
-            && ($scope != ScopeInterface::SCOPE_STORE || $scopeCode == Store::ADMIN_CODE)
+            && ($scope != ScopeInterface::SCOPE_STORE || $scopeCode == Store::ADMIN_CODE || ($scope == 'default' || $scopeCode == 'default'))           
         ) {
             try {
                 if($this->state->getAreaCode() == Area::AREA_ADMINHTML) {
