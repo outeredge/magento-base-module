@@ -41,7 +41,6 @@
         "magento/module-page-builder-analytics": "*",
         "magento/module-quote-analytics": "*",
         "magento/module-review-analytics": "*",
-        "magento/module-robots": "*",
         "magento/module-sales-analytics": "*",
         "magento/module-wishlist-analytics": "*",
         "magento/module-google-optimizer": "*",
