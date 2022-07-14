@@ -13,7 +13,10 @@ foreach ($files as $file) {
     }
 }
 
-if (empty($_SERVER['MAGE_RUN_CODE']) && php_sapi_name() === 'cli') {
+if (empty($_SERVER['MAGE_RUN_CODE'])
+    && stristr($_SERVER['PHP_SELF'], 'bin/magento')
+    && php_sapi_name() === 'cli'
+) {
     $input = readline('Select store (' . implode(', ', $validStores) . '): ');
     if (!empty($validStores[$input])) {
         $_SERVER['MAGE_RUN_CODE'] = $validStores[$input];
