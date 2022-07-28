@@ -33,11 +33,13 @@ class Config
         $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
         $scopeCode = null
     ) {
-        if (($path == Store::XML_PATH_SECURE_BASE_MEDIA_URL || $path == Store::XML_PATH_UNSECURE_BASE_MEDIA_URL)
-            && ($scope != ScopeInterface::SCOPE_STORE || $scopeCode == Store::ADMIN_CODE || ($scope == 'default' || $scopeCode == 'default'))           
-        ) {
+        if ($path != Store::XML_PATH_SECURE_BASE_MEDIA_URL && $path != Store::XML_PATH_UNSECURE_BASE_MEDIA_URL) {
+            return $proceed($path, $scope, $scopeCode);
+        }
+
+        if ($scope != ScopeInterface::SCOPE_STORE || $scopeCode == Store::ADMIN_CODE || stristr($_SERVER['REQUEST_URI'], 'media_gallery_listing')) {
             try {
-                if($this->state->getAreaCode() == Area::AREA_ADMINHTML) {
+                if ($this->state->getAreaCode() == Area::AREA_ADMINHTML) {
                     return null;
                 }
             } catch (LocalizedException $ex) {
