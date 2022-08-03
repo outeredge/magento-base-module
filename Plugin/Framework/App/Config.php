@@ -37,7 +37,7 @@ class Config
             return $proceed($path, $scope, $scopeCode);
         }
 
-        if ($scope != ScopeInterface::SCOPE_STORE || $scopeCode == Store::ADMIN_CODE || stristr($_SERVER['REQUEST_URI'], 'media_gallery_listing')) {
+        if ($scope != ScopeInterface::SCOPE_STORE || $scopeCode == Store::ADMIN_CODE || (isset($_SERVER['REQUEST_URI']) && stristr($_SERVER['REQUEST_URI'], 'media_gallery_listing'))) {
             try {
                 if ($this->state->getAreaCode() == Area::AREA_ADMINHTML) {
                     return null;
