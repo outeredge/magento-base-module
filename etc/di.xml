@@ -21,5 +21,12 @@
     <type name="Magento\Framework\File\Transfer\Adapter\Http">
         <plugin name="outeredge_placeholder_image" type="OuterEdge\Base\Plugin\Framework\File\Transfer\Adapter\Http" sortOrder="10"/>
     </type>
+    <type name="Magento\Framework\DB\Adapter\SqlVersionProvider">
+        <arguments>
+            <argument name="supportedVersionPatterns" xsi:type="array">
+                <item name="MariaDB-(10.2-10.5)" xsi:type="string">^10\.[2-5]\.</item>
+            </argument>
+        </arguments>
+    </type>
     <preference for="Magento\Framework\App\Cache\StateInterface" type="OuterEdge\Base\Framework\App\Cache\State" />
 </config>
