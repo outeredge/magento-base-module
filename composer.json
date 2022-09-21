@@ -68,8 +68,7 @@
         "magento/module-swagger-webapi": "*",
         "magento/module-swagger-webapi-async": "*",
         "magento/module-version": "*",
-        "temando/module-shipping-remover": "*",
-        "yotpo/magento2-module-yotpo-reviews": "*"
+        "temando/module-shipping-remover": "*"
     },
     "suggest": {
         "outeredge/magento-disable-graphql": "To remove GraphQL modules when not in use"
