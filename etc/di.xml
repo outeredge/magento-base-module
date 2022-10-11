@@ -18,5 +18,8 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Framework\View\Page\Config\Renderer">
+        <plugin name="noindex_headers" type="OuterEdge\Base\Plugin\Robots"/>
+    </type>
     <preference for="Magento\Framework\App\Cache\StateInterface" type="OuterEdge\Base\Framework\App\Cache\State" />
 </config>
