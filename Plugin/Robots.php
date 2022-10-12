@@ -57,7 +57,7 @@ class Robots
         }
 
         if ($control) {
-            $this->pageConfig->setMetadata('robots', 'NOINDEX,NOFOLLOW');
+            $this->pageConfig->setRobots('NOINDEX,NOFOLLOW');
         }
     }
 }
