@@ -10,7 +10,8 @@ class Robots
     protected $queryStrings = [
         'dir', 
         'limit', 
-        'order', 
+        'order',
+        'product_list_order',
         '___from_store', 
         '__store'
     ];
