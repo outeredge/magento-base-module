@@ -27,7 +27,11 @@ class BannerImage extends \Magento\Cms\Block\Page
      */
     protected function _toHtml()
     {
-        $url = $this->_filterProvider->getPageFilter()->filter($this->getPage()->getBannerImage());
+        if ($this->getPage()->getBannerImage()) {
+            $url = $this->_filterProvider->getPageFilter()->filter($this->getPage()->getBannerImage());
+        } else {
+            return '';
+        }
 
         if (empty($url)) {
             return '';
