@@ -25,7 +25,7 @@
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="commandexample_somecommand" xsi:type="object">OuterEdge\Base\Console\Command\ConfigChanged</item>
+                <item name="check_config_changed_command" xsi:type="object">OuterEdge\Base\Console\Command\ConfigChanged</item>
             </argument>
         </arguments>
     </type>
