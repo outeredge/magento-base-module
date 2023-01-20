@@ -79,40 +79,28 @@ class ConfigChanged extends Command
             //Read core config data from db
             $connection = $this->resourceConnection->getConnection();
             $table = $connection->getTableName('core_config_data');
-            //ToDo add hours verification
-            $query = "SELECT * FROM $table ORDER BY updated_at DESC LIMIT $lines";
+
+            $query = "SELECT * FROM $table WHERE updated_at > now() - interval $hours hour ORDER BY updated_at DESC LIMIT $lines";
             $dbConfigData = $connection->fetchAll($query);
 
-            //Read env.php file
-            $files = glob(__DIR__ . '/../../../../../app/etc/env.php.*');
-            if (empty($files) || empty($_SERVER['CONFIG__DEFAULT__WEB__SECURE__BASE_URL'])) {
-                throw new LocalizedException(__('Config files not found'));
-            }
-
-            //ToDo check if I need this, on is only env.php file
-            $validStores = ['default' => 'default*'];
-            foreach ($files as $fileConfig) {
-
-                $code = substr(strrchr($fileConfig, '.'), 1);
-                if ($code != 'production') {
-                    $validStores[$code] = $code;
-                }
-            }
-
-            //Get env and config togetther
-            $fileConfig = glob(__DIR__ . '/../../../../../app/etc/config.php');
-            $fileConfig = $fileConfig[0];
+            $fileConfig = __DIR__ . '/../../../../../app/etc/config.php';
             $fileConfigDataArray = include($fileConfig);
             $fileConfigData = $this->flatten($fileConfigDataArray['system']['default']);
+
+            $fileEnv = __DIR__ . '/../../../../../app/etc/env.php';
+            $fileEnvDataArray = include($fileEnv);
+            $fileEnvgData = $this->flatten($fileEnvDataArray['system']['default']);
+
+            $fileConfigsData = array_merge($fileConfigData, $fileEnvgData);
 
             $output->writeln('<info>Recent core_config_data changes.</info>');
             foreach ($dbConfigData as $dbConfig) {
 
                 $dbPatch = $dbConfig['path'];
 
-                if (array_key_exists($dbPatch, $fileConfigData)) {
+                if (array_key_exists($dbPatch, $fileConfigsData)) {
                     $existInEnvFile = true;
-                    $fileConfigSelectedValue = $fileConfigData[$dbPatch];
+                    $fileConfigSelectedValue = $fileConfigsData[$dbPatch];
                     $dbConfigValue = $dbConfig['value'];
 
                     if ($fileConfigSelectedValue != $dbConfigValue) {
@@ -125,7 +113,11 @@ class ConfigChanged extends Command
                 }
 
                 if ($existInEnvFile && $differentFromEnvFile) {
-                    $output->writeln('<error>Need file update: '. $dbPatch . ' :: ' . $dbConfig['value']. '</error>');
+                    $output->writeln(sprintf(
+                        '<error>File need update: %s :: %s </error>',
+                        $dbPatch,
+                        $dbConfig['value']
+                    ));
                 }
 
                 $output->writeln('<info>'.$dbPatch . ' :: ' . $dbConfig['value'].'</info>');
