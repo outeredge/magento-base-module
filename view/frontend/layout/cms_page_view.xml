@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="head.additional">
+            <container name="canonical.url.cms.page.container">
+                <block class="Magento\Framework\View\Element\Text" name="canonical.url.cms.page">
+                    <arguments>
+                        <argument name="text" xsi:type="helper" helper="OuterEdge\Base\Helper\Canonical::getCanonicalForCmsPage"/>
+                    </arguments>
+                </block>
+            </container>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="OuterEdge\Base\Block\Html\BannerImage" name="cms.page.banner.image" after="cms_page" />
+        </referenceContainer>
+    </body>
+</page>
