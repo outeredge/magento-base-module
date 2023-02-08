@@ -10,8 +10,5 @@
                 </block>
             </container>
         </referenceBlock>
-        <referenceContainer name="content">
-            <block class="OuterEdge\Base\Block\Html\BannerImage" name="cms.page.banner.image" after="cms_page" />
-        </referenceContainer>
     </body>
 </page>
