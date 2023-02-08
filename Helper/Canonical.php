@@ -32,9 +32,8 @@ class Canonical extends AbstractHelper
     public function getCanonicalForCmsPage(): string
     {
         if ($this->scopeConfig->getValue('web/default/cms_home_page') == $this->cmsPage->getIdentifier()) {
-            return '<link rel="canonical" href="' . trim($this->scopeConfig->getValue('web/unsecure/base_url'),'/') . '" />';
-        }
-        elseif ($this->cmsPage->getId()) {
+            return '<link rel="canonical" href="' . rtrim($this->scopeConfig->getValue('web/unsecure/base_url'),'/') . '" />';
+        } elseif ($this->cmsPage->getId()) {
             return '<link rel="canonical" href="' . $this->scopeConfig->getValue('web/unsecure/base_url') . $this->cmsPage->getIdentifier() . '" />';
         }
 
