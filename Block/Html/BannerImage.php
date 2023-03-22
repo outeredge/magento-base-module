@@ -44,7 +44,7 @@ class BannerImage extends \Magento\Cms\Block\Page
         return $html;
     }
 
-    public function getImageUrl(
+    public function getImageUrl()
     {
         $bannerImage = $this->getPage()->getBannerImage();
 
