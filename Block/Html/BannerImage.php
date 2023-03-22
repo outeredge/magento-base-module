@@ -36,7 +36,7 @@ class BannerImage extends \Magento\Cms\Block\Page
         if (empty($url)) {
             return '';
         }
-        
+
         $fullImageUrl = $this->_helper->get('cms/bannerimage/' . $url);
 
         $html = "<img class='cms-banner-image' src='$fullImageUrl' />";
@@ -44,8 +44,14 @@ class BannerImage extends \Magento\Cms\Block\Page
         return $html;
     }
 
-    public function getImageUrl()
+    public function getImageUrl(
     {
-        return $this->_filterProvider->getPageFilter()->filter($this->getPage()->getBannerImage());
+        $bannerImage = $this->getPage()->getBannerImage();
+
+        if (empty($bannerImage)) {
+            return null;
+        }
+
+        return $this->_filterProvider->getPageFilter()->filter($bannerImage);
     }
 }
