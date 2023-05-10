@@ -21,9 +21,6 @@
         "outeredge/magento-bulk-actions": "^1.0",
         "outeredge/magento-language-en_gb-module": "^1.0"
     },
-    "require-dev": {
-        "outeredge/coding-standards": "^2.0"
-    },
     "suggest": {
         "outeredge/magento-disable-common": "To remove commonly unused modules"
         "outeredge/magento-disable-graphql": "To remove GraphQL modules when not in use"
