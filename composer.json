@@ -22,7 +22,7 @@
         "outeredge/magento-language-en_gb-module": "^1.0"
     },
     "suggest": {
-        "outeredge/magento-disable-common": "To remove commonly unused modules"
+        "outeredge/magento-disable-common": "To remove commonly unused modules",
         "outeredge/magento-disable-graphql": "To remove GraphQL modules when not in use"
     },
     "autoload": {
