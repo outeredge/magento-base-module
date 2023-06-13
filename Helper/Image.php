@@ -182,7 +182,7 @@ class Image extends AbstractHelper
 
             if ($aspectRatio < $originalAspectRatio) {
                 $cropWidth = ceil($height * $originalAspectRatio);
-                $cropHorizontal = intval(($cropWidth - $width) / 2);
+                $cropHorizontal = ceil(($cropWidth - $width) / 2);
                 $imageCrop->resize($cropWidth, $height);
                 $imageCrop->crop(0, $cropHorizontal, $cropHorizontal, 0);
             } else {
