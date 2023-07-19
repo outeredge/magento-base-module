@@ -6,6 +6,7 @@ namespace OuterEdge\Base\Console\Command;
 
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,7 +15,6 @@ use Magento\Framework\App\ResourceConnection;
 class ConfigChanged extends Command
 {
     private const HOURS = 'hours';
-
     private const LINES = 'lines';
 
     protected $resourceConnection;
@@ -29,19 +29,23 @@ class ConfigChanged extends Command
 
     protected function configure(): void
     {
-        $this->setName('config:changed:command');
-        $this->setDescription('List recent core_config_data changes');
+        $this->setName('outeredge:config');
+        $this->setDescription('Lists recent core_config_data changes');
+
         $this->addOption(
             self::HOURS,
             null,
             InputOption::VALUE_REQUIRED,
-            'Hours'
+            'Hours since last changed',
+            24
         );
+
         $this->addOption(
             self::LINES,
             null,
             InputOption::VALUE_REQUIRED,
-            'Lines'
+            'Number of lines to show',
+            100
         );
 
         parent::configure();
@@ -61,19 +65,8 @@ class ConfigChanged extends Command
         $existInEnvFile = false;
         $differentFromEnvFile = false;
 
-        if ($hours = $input->getOption(self::HOURS)) {
-            $output->writeln('<info>Provided hours is `' . $hours . '`</info>');
-        } else {
-            $hours = 240;
-            $output->writeln('<info>Default hours is `' . $hours . '`</info>');
-        }
-
-        if ($lines = $input->getOption(self::LINES)) {
-            $output->writeln('<info>Provided lines is `' . $lines . '`</info>');
-        } else {
-            $lines = 25;
-            $output->writeln('<info>Default lines is `' . $lines . '`</info>');
-        }
+        $hours = $input->getOption(self::HOURS);
+        $lines = $input->getOption(self::LINES);
 
         try {
             //Read core config data from db
@@ -83,47 +76,55 @@ class ConfigChanged extends Command
             $query = "SELECT * FROM $table WHERE updated_at > now() - interval $hours hour ORDER BY updated_at DESC LIMIT $lines";
             $dbConfigData = $connection->fetchAll($query);
 
+            $config = [];
+
             $fileConfig = __DIR__ . '/../../../../../app/etc/config.php';
-            $fileConfigDataArray = include($fileConfig);
-            $fileConfigData = $this->flatten($fileConfigDataArray['system']['default']);
+            if (file_exists($fileConfig)) {
+                $fileConfigDataArray = include($fileConfig);
+                $fileConfigData = isset($fileConfigDataArray['system']['default']) ? $this->flatten($fileConfigDataArray['system']['default']) : [];
+                $config = $fileConfigData;
+            }
 
             $fileEnv = __DIR__ . '/../../../../../app/etc/env.php';
-            $fileEnvDataArray = include($fileEnv);
-            $fileEnvgData = $this->flatten($fileEnvDataArray['system']['default']);
+            if (file_exists($fileEnv)) {
+                $fileEnvDataArray = include($fileEnv);
+                $fileEnvgData = isset($fileEnvDataArray['system']['default']) ? $this->flatten($fileEnvDataArray['system']['default']) : [];
+                $config = array_merge($config, $fileEnvgData);
+            }
 
-            $fileConfigsData = array_merge($fileConfigData, $fileEnvgData);
+            $table = new Table($output);
+            $table->setHeaders(['Path', 'Value (Database)', 'Value (config/env.php)'])
+                  ->setColumnMaxWidth(0, 50)
+                  ->setColumnMaxWidth(1, 50)
+                  ->setColumnMaxWidth(2, 50);
 
-            $output->writeln('<info>Recent core_config_data changes.</info>');
             foreach ($dbConfigData as $dbConfig) {
+                $dbPath = $dbConfig['path'];
 
-                $dbPatch = $dbConfig['path'];
+                $fileConfigSelectedValue = null;
+                $differentFromEnvFile    = false;
+                $existInEnvFile          = false;
 
-                if (array_key_exists($dbPatch, $fileConfigsData)) {
-                    $existInEnvFile = true;
-                    $fileConfigSelectedValue = $fileConfigsData[$dbPatch];
+                if (array_key_exists($dbPath, $config)) {
+                    $existInEnvFile           = true;
+                    $fileConfigSelectedValue  = $config[$dbPath];
                     $dbConfigValue = $dbConfig['value'];
 
                     if ($fileConfigSelectedValue != $dbConfigValue) {
                         $differentFromEnvFile = true;
-                    } else {
-                        $differentFromEnvFile = false;
                     }
-                } else {
-                    $existInEnvFile = false;
                 }
 
-                if ($existInEnvFile && $differentFromEnvFile) {
-                    $output->writeln(sprintf(
-                        '<error>File need update: %s :: %s </error>',
-                        $dbPatch,
-                        $dbConfig['value']
-                    ));
+                if ($differentFromEnvFile) {
+                    $dbPath = '<comment>' . $dbPath . '</comment>';
+                } elseif ($existInEnvFile) {
+                    $dbPath = '<info>' . $dbPath . '</info>';
                 }
 
-                $output->writeln('<info>'.$dbPatch . ' :: ' . $dbConfig['value'].'</info>');
+                $table->addRow([$dbPath, $dbConfig['value'], $fileConfigSelectedValue]);
             }
 
-            $output->writeln('<info>Completed.</info>');
+            $table->render();
         } catch (LocalizedException $e) {
             $output->writeln(sprintf(
                 '<error>%s</error>',
@@ -135,13 +136,12 @@ class ConfigChanged extends Command
         return $exitCode;
     }
 
-    private function flatten($array, $prefix = '') {
-        $result = array();
+    protected function flatten(array $array, $prefix = '') {
+        $result = [];
         foreach($array as $key=>$value) {
             if(is_array($value)) {
                 $result = $result + $this->flatten($value, $prefix . $key . '/');
-            }
-            else {
+            } else {
                 $result[$prefix . $key] = $value;
             }
         }
