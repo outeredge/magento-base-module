@@ -22,4 +22,11 @@
         <plugin name="noindex_headers" type="OuterEdge\Base\Plugin\Robots"/>
     </type>
     <preference for="Magento\Framework\App\Cache\StateInterface" type="OuterEdge\Base\Framework\App\Cache\State" />
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="check_config_changed_command" xsi:type="object">OuterEdge\Base\Console\Command\ConfigChanged</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
