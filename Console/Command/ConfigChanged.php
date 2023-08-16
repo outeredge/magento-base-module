@@ -121,7 +121,11 @@ class ConfigChanged extends Command
                     $dbPath = '<info>' . $dbPath . '</info>';
                 }
 
-                $table->addRow([$dbPath, $dbConfig['value'], $fileConfigSelectedValue]);
+                $table->addRow([
+                    $dbPath,
+                    ($dbConfig['value'] ?? 'null'),
+                    ($fileConfigSelectedValue ?? 'null')
+                ]);
             }
 
             $table->render();
