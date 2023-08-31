@@ -13,7 +13,8 @@ class Robots
         'order',
         'product_list_order',
         '___from_store', 
-        '__store'
+        '__store',
+        'referer'
     ];
 
     /**
