@@ -8,9 +8,10 @@ use Magento\Framework\View\Page\Config\Renderer;
 class Robots
 {
     protected $queryStrings = [
-        'dir', 
-        'limit', 
+        'dir',
+        'limit',
         'order',
+        'cat',
         'product_list_order',
         '___from_store', 
         '__store',
