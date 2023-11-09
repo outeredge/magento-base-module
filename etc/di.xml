@@ -17,6 +17,7 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="check_config_changed_command" xsi:type="object">OuterEdge\Base\Console\Command\ConfigChanged</item>
+                <item name="nuke_command" xsi:type="object">OuterEdge\Base\Console\Command\Nuke</item>
             </argument>
         </arguments>
     </type>
