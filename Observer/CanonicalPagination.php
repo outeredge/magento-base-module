@@ -32,6 +32,10 @@ class CanonicalPagination implements ObserverInterface
 
         /** @var \Magento\Catalog\Block\Product\ListProduct $productListBlock */
         $productListBlock = $observer->getEvent()->getLayout()->getBlock('category.products.list');
+        if (!$productListBlock) {
+            return $this;
+        }
+
         /** @var \Magento\Catalog\Block\Product\ProductList\Toolbar $toolbarBlock */
         $toolbarBlock = $productListBlock->getToolbarBlock();
 
