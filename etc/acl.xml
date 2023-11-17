@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="OuterEdge_Base::create" title="OE Create" sortOrder="1" >
+                    <resource id="OuterEdge_Base::create_order" title="OE Create Sales Orders" sortOrder="1" ></resource>
+                    <resource id="OuterEdge_Base::create_product" title="OE Create Product" sortOrder="1" ></resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
