@@ -187,7 +187,7 @@ class Image extends AbstractHelper
                 $imageCrop->crop(0, $cropHorizontal, $cropHorizontal, 0);
             } else {
                 $cropHeight = ceil($width / $originalAspectRatio);
-                $cropVertical = ($cropHeight - $height) / 2;
+                $cropVertical = ceil(($cropHeight - $height) / 2);
                 $imageCrop->resize($width, $cropHeight);
                 $imageCrop->crop($cropVertical, 0, 0, $cropVertical);
             }
