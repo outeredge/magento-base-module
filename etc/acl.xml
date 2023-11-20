@@ -5,7 +5,11 @@
             <resource id="Magento_Backend::admin">
                 <resource id="OuterEdge_Base::create" title="OE Create" sortOrder="1" >
                     <resource id="OuterEdge_Base::create_order" title="OE Create Sales Orders" sortOrder="1" ></resource>
-                    <resource id="OuterEdge_Base::create_product" title="OE Create Product" sortOrder="1" ></resource>
+                    <resource id="OuterEdge_Base::create_product" title="OE Create Product" sortOrder="2" ></resource>
+                </resource>
+                <resource id="OuterEdge_Base::site_status" title="OE API - site status monitoring" translate="title" sortOrder="110">
+                    <resource id="OuterEdge_Base::site_status_indexer" title="Get Index Status"  translate="title" sortOrder="1" />
+                    <resource id="OuterEdge_Base::site_status_config" title="Set description" translate="title" sortOrder="2" />
                 </resource>
             </resource>
         </resources>
