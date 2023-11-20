@@ -21,4 +21,7 @@
             </argument>
         </arguments>
     </type>
+
+    <!--API-->
+    <preference for="OuterEdge\Base\Api\SiteStatusRepositoryInterface" type="OuterEdge\Base\Model\Api\SiteStatusRepository"/>
 </config>
