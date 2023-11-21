@@ -54,13 +54,39 @@ class SiteStatusRepository implements SiteStatusRepositoryInterface
             }
 
             $return = [
-                'indexer' => $this->consoleOutputIndexer->fetch(),
-                'configs' => $this->consoleOutputConfig->fetch()
+                'indexer' => $this->parseOutput($this->consoleOutputIndexer->fetch()),
+                'configs' => $this->parseOutput($this->consoleOutputConfig->fetch())
             ];
 
         } catch (\Exception $e) {
             return json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
         return json_encode(['success' => true, 'message' => $return]);
+    }
+
+    private function parseOutput($output)
+    {
+        $rawLines = explode(PHP_EOL, $output);
+        $data = $headers = [];
+        $i = 0;
+        foreach ($rawLines as $rowKey => $rawLine) {
+            if (str_contains($rawLine, '+-')) {
+                continue;
+            }
+            if ($rowKey == 1) {
+                $headers = explode('|', $rawLine);
+                continue;
+            }
+
+            $parts = explode('|', $rawLine);
+            foreach ($parts as $key => $part) {
+                if (!empty($part)) {
+                    $data[$i][strtolower(trim($headers[$key]))] = $part;
+                }
+            }
+            $i++;
+        }
+
+        return $data;
     }
 }
