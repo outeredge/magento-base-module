@@ -5,7 +5,7 @@
         <service class="OuterEdge\Base\Api\SiteStatusRepositoryInterface" method="getData" />
         <resources>
             <!--ToDo remove ref=anonymous to require authentication-->
-            <!--<resource ref="OuterEdge_ProductFinder::api_finders_get" />-->
+            <!--<resource ref="OuterEdge_Base::site_status" />-->
             <resource ref="anonymous" />
         </resources>
     </route>
