@@ -19,7 +19,8 @@
         "outeredge/magento-layout-module": "^3.3",
         "outeredge/googlecloudstorage": "^2.0",
         "outeredge/magento-bulk-actions": "^1.0",
-        "outeredge/magento-language-en_gb-module": "^1.0"
+        "outeredge/magento-language-en_gb-module": "^1.0",
+        "open-telemetry/opentelemetry-logger-monolog": "^1.0.0"
     },
     "suggest": {
         "outeredge/magento-disable-common": "To remove commonly unused modules",
