@@ -7,7 +7,7 @@ use Magento\Framework\Filesystem\DriverInterface;
 use Magento\Framework\Logger\Handler\Exception as ExceptionHandler;
 use Magento\Framework\Logger\Handler\Base;
 
-class System extends Base
+class OpenTelemetry extends Base
 {
     /**
      * @var ExceptionHandler

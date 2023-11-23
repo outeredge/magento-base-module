@@ -32,11 +32,9 @@
     </type>
     <type name="Magento\Framework\Logger\Monolog">
         <arguments>
-            <argument name="name" xsi:type="string">main</argument>
             <argument name="handlers"  xsi:type="array">
-                <item name="system" xsi:type="object">OuterEdge\Base\Logger\Handler\System</item>
-                <!--<item name="debug" xsi:type="object">OuterEdge\Base\Logger\Handler\Debug</item>
-                <item name="syslog" xsi:type="object">OuterEdge\Base\Logger\Handler\Syslog</item>!-->
+                <item name="openTelemetry" xsi:type="object">OuterEdge\Base\Logger\Handler\OpenTelemetry</item>
+                <!--<item name="newRelic" xsi:type="object">NewRelic\Monolog\Enricher\Processor</item>!-->
             </argument>
         </arguments>
     </type>
