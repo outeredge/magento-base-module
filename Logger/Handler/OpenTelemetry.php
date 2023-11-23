@@ -43,15 +43,6 @@ class OpenTelemetry extends Base
      */
     public function write(array $record): void
     {
-        putenv('OTEL_PHP_AUTOLOAD_ENABLED=true');
-        putenv('OTEL_METRICS_EXPORTER=none');
-        putenv('OTEL_LOGS_EXPORTER=otlp');
-        putenv('OTEL_LOGS_PROCESSOR=batch');
-        putenv('OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf');
-        putenv('OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp.eu01.nr-data.net:4318');
-        putenv('OTEL_EXPORTER_OTLP_CLIENT_KEY=NRAK-7ZX2SPADU1KU6LNYYDYP0ZZWKOK');
-        putenv('OTEL_EXPORTER_OTLP_CLIENT_KEY_ID=1EA8E3120801608EC01E11BBDD7A0821D77A35E315B1206A7CB57B1DD29D3199');
-
         $handler = new Handler(
             Globals::loggerProvider(),
             LogLevel::INFO,
