@@ -22,6 +22,8 @@ use Magento\Store\{
 
 class OpenTelemetry extends Base
 {
+    protected $typesToLog = ['EXCEPTION', 'ERROR', 'CRITICAL'];
+
     public function __construct(
         DriverInterface $filesystem,
         protected ExceptionHandler $exceptionHandler,
@@ -60,8 +62,14 @@ class OpenTelemetry extends Base
             return;
         }
 
-        //if (isset($record['context']['exception'])) {
-        if (1) {
+        $errorType = false;
+        foreach ($this->typesToLog as $type) {
+            if ($record['level_name'] == $type) {
+                $errorType = $type;
+            }
+        }
+
+        if ($errorType) {
             $storeName = $this->storeManager->getWebsite()->getCode();
             $magentoVersion = $this->productMetadata->getVersion();
             $domain = $this->storeManager->getStore()->getBaseUrl();
@@ -79,10 +87,10 @@ class OpenTelemetry extends Base
             $eventLogger = new EventLogger($logger, $domain);
 
             $recordLog = (new LogRecord([]))
-                ->setSeverityText('INFO')
+                ->setSeverityText($errorType)
                 ->setSeverityNumber(9);
 
-            $eventLogger->logEvent('exception', $recordLog);
+            $eventLogger->logEvent($errorType, $recordLog);
             $loggerProvider->shutdown();
         }
     }
