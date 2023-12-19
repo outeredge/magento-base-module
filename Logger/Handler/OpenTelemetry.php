@@ -15,10 +15,6 @@ use OpenTelemetry\SDK\Resource\ResourceInfo;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\{
-    Model\ScopeInterface,
-    Model\Store
-};
 
 class OpenTelemetry extends Base
 {
@@ -97,9 +93,6 @@ class OpenTelemetry extends Base
 
     private function isEnabled() {
         return (bool) $this->scopeConfig->isSetFlag(
-            'oe_open_telemetry/settings/enable',
-            ScopeInterface::SCOPE_STORE,
-            Store::DEFAULT_STORE_ID,
-        );
+            'oe_open_telemetry/settings/enable');
     }
 }
