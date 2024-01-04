@@ -1,4 +1,10 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
-
+    <integrations>
+        <integration name="remoteSiteStatus">
+            <email>support@outeredge.agency</email>
+            <endpoint_url></endpoint_url>
+            <identity_link_url></identity_link_url>
+        </integration>
+    </integrations>
 </config>
