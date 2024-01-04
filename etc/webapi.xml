@@ -4,9 +4,7 @@
     <route url="/V1/site_status/get" method="GET">
         <service class="OuterEdge\Base\Api\SiteStatusRepositoryInterface" method="getData" />
         <resources>
-            <!--ToDo remove ref=anonymous to require authentication-->
-            <!--<resource ref="OuterEdge_Base::site_status" />-->
-            <resource ref="anonymous" />
+            <resource ref="OuterEdge_Base::site_status" />
         </resources>
     </route>
 </routes>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <integration name="remoteSiteStatus">
+	    <resources>
+            <resource name="OuterEdge_Base::site_status">
+        </resources>
+    </integration>
+</config>
