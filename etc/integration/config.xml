@@ -2,7 +2,5 @@
 <integrations>
     <integration name="remoteSiteStatus">
         <email>support@outeredge.agency</email>
-        <endpoint_url>https://example.com</endpoint_url>
-        <identity_link_url>https://example.com/identity_link_url</identity_link_url>
     </integration>
 </integrations>
