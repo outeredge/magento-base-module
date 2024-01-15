@@ -15,10 +15,11 @@
     ],
     "require": {
         "magento/product-community-edition": ">=2.4.4",
+        "outeredge/googlecloudstorage": "^2.0",
         "outeredge/magento-limitrole-module": "^1.0",
         "outeredge/magento-layout-module": "^3.3",
-        "outeredge/googlecloudstorage": "^2.0",
         "outeredge/magento-bulk-actions": "^1.0",
+        "outeredge/magento-cookiebot-module": "^1.0",
         "outeredge/magento-language-en_gb-module": "^1.0"
     },
     "suggest": {
