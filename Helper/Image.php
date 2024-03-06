@@ -238,6 +238,10 @@ class Image extends AbstractHelper
      */
     public function prepareFilename($urlorfilename)
     {
+        if (!$urlorfilename) {
+            return false;
+        }
+
         $mediaUrlBase = $this->storeManager->getStore(0)->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         $mediaUrl     = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         $mediaPath    = DIRECTORY_SEPARATOR . basename($mediaUrl) . DIRECTORY_SEPARATOR;
