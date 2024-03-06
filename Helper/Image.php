@@ -239,7 +239,7 @@ class Image extends AbstractHelper
     public function prepareFilename($urlorfilename)
     {
         if (!$urlorfilename) {
-            return false;
+            return '';
         }
 
         $mediaUrlBase = $this->storeManager->getStore(0)->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
