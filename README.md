@@ -9,6 +9,14 @@ outer/edge Magento Base Module
 
 `$ bin/magento outeredge:nuke`
 
+### Cookiebot Declaration
+
+To add the Cookiebot cookie declaration form into your cookie policy CMS page, add the following snippet into the CMS page in the Magento admin:
+
+```
+{{block class="Magento\Framework\View\Element\Template" template="OuterEdge_Base::cookiebot/declaration.phtml"}}
+```
+
 ## Features
 
 This module provides the following useful features for Magento 2:
@@ -31,11 +39,14 @@ This module provides the following useful features for Magento 2:
   - Search results
   - Product review list
 
-### Dev
+### Cookiebot
 
-* Cookiebot features:
   - Don't move cookiebot tags to footer when move JS to footer is enabled
   - Block YouTube cookies unless Cookiebot has given consent
+  - Cookie declaration template for use on cookie policy CMS page
+
+### Dev
+
 * Helper classes:
   - Asset helper - get assets
   - Image helper - get media images and resize, crop etc.
