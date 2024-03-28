@@ -1,0 +1,6 @@
+<?php
+$cookiebotDomainGroupId = $this->helper('OuterEdge\Base\Helper\Config')->getConfig('oe_base/cookiebot/domain_group_id');
+$src = 'https://consent.cookiebot.com/'.$cookiebotDomainGroupId.'/cd.js';
+?>
+
+<script id="CookieDeclaration" src="<?= $src ?>" type="text/javascript" async></script>

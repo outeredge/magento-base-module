@@ -13,7 +13,10 @@
                 <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Cookiebot Features</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>                
+                </field>
+                <field id="domain_group_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Domain Group ID</label>
+                </field>
             </group>
         </section>
     </system>
