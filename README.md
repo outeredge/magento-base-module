@@ -7,7 +7,7 @@ This module provides the following useful features for Magento 2:
 * Additional widget types
   - Image picker
   - Text field
-* Enabled `anchor` button in WYSIWYG 
+* Enabled `anchor` button in WYSIWYG
 * Banner images for CMS pages - adds an option to upload a banner image to all page in `Content > Pages` which can be pulled through to the frontend.
 * `Create` section in admin menu for quick actions:
   - Create new order
@@ -26,11 +26,12 @@ This module provides the following useful features for Magento 2:
 * Forces a 404 HTTP response for placeholder images
 * Adds preconnect headers for google.com/gstatic.com
 
-## Cookiebot
+## Cookiebot & Termly
 
   - Don't move cookiebot tags to footer when move JS to footer is enabled
   - Block YouTube cookies unless Cookiebot has given consent (*Enabled by default*)
-  - Cookie declaration template for use on cookie policy CMS page
+  - Cookiebot declaration template for use on cookie policy CMS page
+  - Import Termly generated Cookie Policy for use on cookie policy CMS page
 
 ## Developer Tools
 
@@ -59,6 +60,14 @@ To add the Cookiebot cookie declaration form into your cookie policy CMS page, a
 {{block class="Magento\Framework\View\Element\Template" template="OuterEdge_Base::cookiebot/declaration.phtml"}}
 ```
 
+### Termly Cookie Policy
+
+To add the Termly cookie policy into your cookie policy CMS page, add the following snippet into the CMS page in the Magento admin:
+
+```
+{{block class="Magento\Framework\View\Element\Template" template="OuterEdge_Base::termly/cookie-policy.phtml"}}
+```
+
 ### Multistore projects
 
 Add `multistore.php` to the top of the `composer.json` autoload/files section to allow separate config files (and thus databases) _per store_ on the same instance/repository:
@@ -71,4 +80,4 @@ Add `multistore.php` to the top of the `composer.json` autoload/files section to
             ...
 ```
 
-* Then create individual env.php files for each, naming them `env.php.STORE_CODE` replacing `STORE_CODE` as applicable. 
+* Then create individual env.php files for each, naming them `env.php.STORE_CODE` replacing `STORE_CODE` as applicable.

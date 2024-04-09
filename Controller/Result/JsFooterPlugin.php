@@ -14,7 +14,7 @@ use Magento\Store\Model\ScopeInterface;
  */
 class JsFooterPlugin
 {
-    const XML_PATH_COOKIEBOT_ENABLE = 'oe_base/cookiebot/enable';
+    const XML_PATH_CMPPROVIDER = 'oe_base/cmp/provider';
 
     private const XML_PATH_DEV_MOVE_JS_TO_BOTTOM = 'dev/js/move_script_to_bottom';
 
@@ -25,7 +25,7 @@ class JsFooterPlugin
 
     public function __construct(private readonly ScopeConfigInterface $scopeConfig)
     {
-        $this->cmpPlatform = self::CMP_COOKIEBOT;
+        $this->cmpPlatform = !empty($this->getCmpPlatform() ? $this->getCmpPlatform() : null);
     }
 
     /**
@@ -48,7 +48,7 @@ class JsFooterPlugin
         $bodyEndTagFound = strrpos($content, $bodyEndTag) !== false;
 
         if ($bodyEndTagFound) {
-            if ($this->isCookieBotEnabled()) {
+            if ($this->cmpPlatform !== null) {
                 $content = $this->applyIframeCookieRestriction($content, 'youtube');
                 $content = $this->applyLiteYouTubeCookieRestriction($content, 'lite-youtube');
             }
@@ -116,10 +116,10 @@ class JsFooterPlugin
         );
     }
 
-    private function isCookieBotEnabled(): bool
+    private function getCmpPlatform(): string
     {
         return $this->scopeConfig->isSetFlag(
-            self::XML_PATH_COOKIEBOT_ENABLE,
+            self::XML_PATH_CMPPROVIDER,
             ScopeInterface::SCOPE_STORE
         );
     }
