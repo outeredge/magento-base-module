@@ -4,12 +4,15 @@ namespace OuterEdge\Base\Model\Config\Source;
 
 class CmpProvider implements \Magento\Framework\Data\OptionSourceInterface
 {
- public function toOptionArray()
- {
-  return [
-    ['value' => '', 'label' => __('None')],
-    ['value' => 'cookiebot', 'label' => __('Cookiebot')],
-    ['value' => 'termly', 'label' => __('Termly')]
-  ];
- }
+    public const CMP_COOKIEBOT = 'cookiebot';
+    public const CMP_TERMLY    = 'termly';
+
+    public function toOptionArray()
+    {
+        return [
+            ['value' => '', 'label' => __('None')],
+            ['value' => self::CMP_COOKIEBOT, 'label' => __('Cookiebot')],
+            ['value' => self::CMP_TERMLY, 'label' => __('Termly')]
+        ];
+    }
 }

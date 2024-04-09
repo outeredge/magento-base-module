@@ -8,6 +8,7 @@ use Magento\Framework\App\Response\HttpInterface as HttpResponseInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\View\Result\Layout;
 use Magento\Store\Model\ScopeInterface;
+use OuterEdge\Base\Model\Config\Source\CmpProvider;
 
 /**
  * Plugin for putting all JavaScript tags to the end of body.
@@ -17,9 +18,6 @@ class JsFooterPlugin
     const XML_PATH_CMPPROVIDER = 'oe_base/cmp/provider';
 
     private const XML_PATH_DEV_MOVE_JS_TO_BOTTOM = 'dev/js/move_script_to_bottom';
-
-    private const CMP_COOKIEBOT = 'cookiebot';
-    private const CMP_TERMLY    = 'termly';
 
     private $cmpPlatform = null;
 
@@ -147,9 +145,9 @@ class JsFooterPlugin
                 continue;
             }
 
-            if ($this->cmpPlatform == self::CMP_COOKIEBOT) {
+            if ($this->cmpPlatform == CmpProvider::CMP_COOKIEBOT) {
                 $newIframe = str_replace(' src=', ' data-cookieconsent="marketing" data-cookieblock-src=', $iframe);
-            } elseif ($this->cmpPlatform == self::CMP_TERMLY) {
+            } elseif ($this->cmpPlatform == CmpProvider::CMP_TERMLY) {
                 $newIframe = str_replace(' src=', ' data-categories="advertising" data-src=', $iframe);
             }
 
@@ -179,9 +177,9 @@ class JsFooterPlugin
                 continue;
             }
 
-            if ($this->cmpPlatform == self::CMP_COOKIEBOT) {
+            if ($this->cmpPlatform == CmpProvider::CMP_COOKIEBOT) {
                 $newElement = str_replace('<lite-youtube', '<lite-youtube class="cookieconsent-optin-marketing"', $element);
-            } elseif ($this->cmpPlatform == self::CMP_TERMLY) {
+            } elseif ($this->cmpPlatform == CmpProvider::CMP_TERMLY) {
                 $newElement = str_replace('<lite-youtube', '<lite-youtube data-categories="advertising"', $element);
             }
 
