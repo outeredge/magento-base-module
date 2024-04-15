@@ -19,11 +19,8 @@ class JsFooterPlugin
 
     private const XML_PATH_DEV_MOVE_JS_TO_BOTTOM = 'dev/js/move_script_to_bottom';
 
-    private $cmpPlatform = null;
-
     public function __construct(private readonly ScopeConfigInterface $scopeConfig)
     {
-        $this->cmpPlatform = !empty($this->getCmpPlatform() ? $this->getCmpPlatform() : null);
     }
 
     /**
@@ -46,7 +43,7 @@ class JsFooterPlugin
         $bodyEndTagFound = strrpos($content, $bodyEndTag) !== false;
 
         if ($bodyEndTagFound) {
-            if ($this->cmpPlatform !== null) {
+            if ($this->getCmpPlatform() !== null) {
                 $content = $this->applyIframeCookieRestriction($content, 'youtube');
                 $content = $this->applyLiteYouTubeCookieRestriction($content, 'lite-youtube');
             }
@@ -145,9 +142,9 @@ class JsFooterPlugin
                 continue;
             }
 
-            if ($this->cmpPlatform == CmpProvider::CMP_COOKIEBOT) {
+            if ($this->getCmpPlatform() == CmpProvider::CMP_COOKIEBOT) {
                 $newIframe = str_replace(' src=', ' data-cookieconsent="marketing" data-cookieblock-src=', $iframe);
-            } elseif ($this->cmpPlatform == CmpProvider::CMP_TERMLY) {
+            } elseif ($this->getCmpPlatform() == CmpProvider::CMP_TERMLY) {
                 $newIframe = str_replace(' src=', ' data-categories="advertising" data-src=', $iframe);
             }
 
@@ -177,9 +174,9 @@ class JsFooterPlugin
                 continue;
             }
 
-            if ($this->cmpPlatform == CmpProvider::CMP_COOKIEBOT) {
+            if ($this->getCmpPlatform() == CmpProvider::CMP_COOKIEBOT) {
                 $newElement = str_replace('<lite-youtube', '<lite-youtube class="cookieconsent-optin-marketing"', $element);
-            } elseif ($this->cmpPlatform == CmpProvider::CMP_TERMLY) {
+            } elseif ($this->getCmpPlatform() == CmpProvider::CMP_TERMLY) {
                 $newElement = str_replace('<lite-youtube', '<lite-youtube data-categories="advertising"', $element);
             }
 
