@@ -5,17 +5,27 @@
             <label>outer/edge</label>
         </tab>
         <section id="oe_base" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Cookiebot Features</label>
+            <label>Cookie Restriction Features</label>
             <tab>outeredge</tab>
             <resource>OuterEdge_Base::CookiebotFeatures</resource>
-            <group id="cookiebot" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Cookiebot</label>
-                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable Cookiebot Features</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <group id="cmp" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Cookie Restriction</label>
+                <field id="provider" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>CMP Provider</label>
+                    <source_model>OuterEdge\Base\Model\Config\Source\CmpProvider</source_model>
                 </field>
-                <field id="domain_group_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Domain Group ID</label>
+                <field id="cookiebot_domain_group_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cookiebot Domain Group ID</label>
+                    <depends>
+                        <field id="provider">cookiebot</field>
+                    </depends>
+                </field>
+                <field id="termly_cookie_policy" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Termly Cookie Policy</label>
+                    <comment>Generate cookie policy in Termly, choose "Add to Website" and copy value from the "URL" option.</comment>
+                    <depends>
+                        <field id="provider">termly</field>
+                    </depends>
                 </field>
             </group>
         </section>

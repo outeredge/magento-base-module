@@ -8,17 +8,15 @@ use Magento\Framework\App\Response\HttpInterface as HttpResponseInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\View\Result\Layout;
 use Magento\Store\Model\ScopeInterface;
+use OuterEdge\Base\Model\Config\Source\CmpProvider;
 
 /**
  * Plugin for putting all JavaScript tags to the end of body.
  */
 class JsFooterPlugin
 {
-    const XML_PATH_COOKIEBOT_ENABLE = 'oe_base/cookiebot/enable';
+    const XML_PATH_CMPPROVIDER = 'oe_base/cmp/provider';
 
-    /**
-     * @var string
-     */
     private const XML_PATH_DEV_MOVE_JS_TO_BOTTOM = 'dev/js/move_script_to_bottom';
 
     public function __construct(private readonly ScopeConfigInterface $scopeConfig)
@@ -45,9 +43,9 @@ class JsFooterPlugin
         $bodyEndTagFound = strrpos($content, $bodyEndTag) !== false;
 
         if ($bodyEndTagFound) {
-            if ($this->isCookieBotEnabled()) {
-                $content = $this->cookieBotIframe($content, 'youtube');
-                $content = $this->cookieBotLiteYoutube($content, 'lite-youtube');
+            if ($this->getCmpPlatform() !== null) {
+                $content = $this->applyIframeCookieRestriction($content, 'youtube');
+                $content = $this->applyLiteYouTubeCookieRestriction($content, 'lite-youtube');
             }
             $scripts = $this->extractScriptTags($content);
             if ($scripts) {
@@ -83,7 +81,7 @@ class JsFooterPlugin
             }
 
             //outer/edge skip Lazysizes & Cookiebot
-            $skipScript = (str_contains($script, 'lazysizes') || str_contains($script, 'cookiebot') || str_contains($script, 'CookieDeclaration'));
+            $skipScript = (str_contains($script, 'lazysizes') || str_contains($script, 'cookiebot') || str_contains($script, 'termly') || str_contains($script, 'CookieDeclaration'));
 
             if ($skipScript) {
                 $scriptOpenPos = strpos($content, $scriptOpen, $scriptClosePos);
@@ -113,10 +111,10 @@ class JsFooterPlugin
         );
     }
 
-    private function isCookieBotEnabled(): bool
+    private function getCmpPlatform(): string
     {
         return $this->scopeConfig->isSetFlag(
-            self::XML_PATH_COOKIEBOT_ENABLE,
+            self::XML_PATH_CMPPROVIDER,
             ScopeInterface::SCOPE_STORE
         );
     }
@@ -127,7 +125,7 @@ class JsFooterPlugin
      *
      * @param string $content
      */
-    private function cookieBotIframe(&$content, $srcContains): string
+    private function applyIframeCookieRestriction(&$content, $srcContains): string
     {
         $iframeOpen = '<iframe';
         $iframeClose = '</iframe>';
@@ -144,7 +142,11 @@ class JsFooterPlugin
                 continue;
             }
 
-            $newIframe = str_replace(' src=', ' data-cookieconsent="marketing" data-cookieblock-src=', $iframe);
+            if ($this->getCmpPlatform() == CmpProvider::CMP_COOKIEBOT) {
+                $newIframe = str_replace(' src=', ' data-cookieconsent="marketing" data-cookieblock-src=', $iframe);
+            } elseif ($this->getCmpPlatform() == CmpProvider::CMP_TERMLY) {
+                $newIframe = str_replace(' src=', ' data-categories="advertising" data-src=', $iframe);
+            }
 
             $content = str_replace($iframe, $newIframe, $content);
             $iframeOpenPos = strpos($content, $iframeOpen); // get new open pos with updated content
@@ -155,7 +157,7 @@ class JsFooterPlugin
         return $content;
     }
 
-    private function cookieBotLiteYoutube(&$content, $srcContains): string
+    private function applyLiteYouTubeCookieRestriction(&$content): string
     {
         $elOpen = '<lite-youtube';
         $elClose = '</lite-youtube>';
@@ -172,7 +174,11 @@ class JsFooterPlugin
                 continue;
             }
 
-            $newElement = str_replace('<lite-youtube', '<lite-youtube class="cookieconsent-optin-marketing"', $element);
+            if ($this->getCmpPlatform() == CmpProvider::CMP_COOKIEBOT) {
+                $newElement = str_replace('<lite-youtube', '<lite-youtube class="cookieconsent-optin-marketing"', $element);
+            } elseif ($this->getCmpPlatform() == CmpProvider::CMP_TERMLY) {
+                $newElement = str_replace('<lite-youtube', '<lite-youtube data-categories="advertising"', $element);
+            }
 
             $content = str_replace($element, $newElement, $content);
             $elOpenPos = strpos($content, $elOpen); // get new open pos with updated content
