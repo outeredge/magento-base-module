@@ -9,5 +9,5 @@ use Magento\Framework\App\Cache\State as MagentoState;
  */
 class State extends MagentoState
 {
-    public function persist() {}
+    public function persist() : void
 }
