@@ -111,7 +111,7 @@ class JsFooterPlugin
         );
     }
 
-    private function getCmpPlatform(): string
+    private function getCmpPlatform(): bool
     {
         return $this->scopeConfig->isSetFlag(
             self::XML_PATH_CMPPROVIDER,
