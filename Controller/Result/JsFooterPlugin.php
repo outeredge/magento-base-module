@@ -111,7 +111,7 @@ class JsFooterPlugin
         );
     }
 
-    private function getCmpPlatform(): string
+    private function getCmpPlatform(): ?string
     {
         return $this->scopeConfig->getValue(
             self::XML_PATH_CMPPROVIDER,
