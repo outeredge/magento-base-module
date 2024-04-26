@@ -135,7 +135,11 @@ class JsFooterPlugin
             $scriptClosePos = strpos($content, $iframeClose, $iframeOpenPos);
             $iframe = substr($content, $iframeOpenPos, $scriptClosePos - $iframeOpenPos + strlen($iframeClose));
 
-            $skipScript = (str_contains($iframe, 'data-cookieblock-src') || str_contains($iframe, $srcContains));
+            $skipScript = (
+                str_contains($iframe, $srcContains)
+                || str_contains($iframe, 'data-cookieconsent')
+                || str_contains($iframe, 'data-categories')
+            );
 
             if ($skipScript) {
                 $iframeOpenPos = strpos($content, $iframeOpen, $scriptClosePos);
@@ -167,7 +171,7 @@ class JsFooterPlugin
             $scriptClosePos = strpos($content, $elClose, $elOpenPos);
             $element = substr($content, $elOpenPos, $scriptClosePos - $elOpenPos + strlen($elClose));
 
-            $skipScript = str_contains($element, 'cookieconsent-optin-marketing');
+            $skipScript = (str_contains($element, 'cookieconsent-optin-marketing') || str_contains($element, 'data-categories'));
 
             if ($skipScript) {
                 $elOpenPos = strpos($content, $elOpen, $scriptClosePos);
