@@ -83,7 +83,12 @@ class JsFooterPlugin
             }
 
             //outer/edge skip Lazysizes & Cookiebot
-            $skipScript = (str_contains($script, 'lazysizes') || str_contains($script, 'cookiebot') || str_contains($script, 'CookieDeclaration'));
+            $skipScript = (
+                str_contains($script, 'lazysizes') 
+                || str_contains($script, 'cookiebot')
+                || str_contains($script, 'CookieDeclaration')
+                || str_contains($script, 'data-head')
+            );
 
             if ($skipScript) {
                 $scriptOpenPos = strpos($content, $scriptOpen, $scriptClosePos);
