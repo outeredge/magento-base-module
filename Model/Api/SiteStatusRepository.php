@@ -2,11 +2,13 @@
 
 namespace OuterEdge\Base\Model\Api;
 
-use OuterEdge\Base\Api\SiteStatusRepositoryInterface;
+use Exception;
 use Magento\Indexer\Console\Command\IndexerStatusCommand;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Input\ArrayInput;
+use OuterEdge\Base\Api\SiteStatusRepositoryInterface;
 use OuterEdge\Base\Console\Command\ConfigChanged;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
+
 
 class SiteStatusRepository implements SiteStatusRepositoryInterface
 {
@@ -54,21 +56,23 @@ class SiteStatusRepository implements SiteStatusRepositoryInterface
             }
 
             $return = [
-                'indexer' => $this->parseOutput($this->consoleOutputIndexer->fetch()),
-                'configs' => $this->parseOutput($this->consoleOutputConfig->fetch())
+                'indexer' => $this->parseConsoleOutput($this->consoleOutputIndexer->fetch()),
+                'configs' => $this->parseConsoleOutput($this->consoleOutputConfig->fetch())
             ];
 
-        } catch (\Exception $e) {
-            return json_encode(['success' => false, 'message' => $e->getMessage()]);
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
         }
-        return json_encode(['success' => true, 'message' => $return]);
+
+        return ['success' => true, 'message' => $return];
     }
 
-    private function parseOutput($output)
+    private function parseConsoleOutput($output)
     {
         $rawLines = explode(PHP_EOL, $output);
         $data = $headers = [];
         $i = 0;
+
         foreach ($rawLines as $rowKey => $rawLine) {
             if (str_contains($rawLine, '+-')) {
                 continue;

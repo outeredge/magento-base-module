@@ -7,7 +7,7 @@
                     <resource id="OuterEdge_Base::create_order" title="Quick Create Sales Order Button" sortOrder="1"></resource>
                     <resource id="OuterEdge_Base::create_product" title="Quick Create Product Button" sortOrder="2"></resource>
                     <resource id="OuterEdge_Base::site_status" title="Site Status Monitoring API" sortOrder="3"></resource>
-                </resource>                
+                </resource>
             </resource>
         </resources>
     </acl>
