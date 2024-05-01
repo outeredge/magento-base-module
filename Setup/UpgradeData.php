@@ -15,9 +15,9 @@ class UpgradeData implements UpgradeDataInterface
     {
         $this->integrationManager = $integrationManager;
     }
-    
+
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
-        $this->integrationManager->processIntegrationConfig(['remoteSiteStatus']);
+        $this->integrationManager->processIntegrationConfig(['outer/edge']);
     }
 }

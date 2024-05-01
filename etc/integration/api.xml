@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <integrations>
-    <integration name="remoteSiteStatus">
+    <integration name="outer/edge">
         <resources>
-            <resource name="OuterEdge_Base::site_status"></resource>
+            <resource name="OuterEdge_Base::site_status"/>
         </resources>
     </integration>
 </integrations>
