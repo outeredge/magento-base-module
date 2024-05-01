@@ -7,8 +7,7 @@
                     <resource id="OuterEdge_Base::create_order" title="OE Create Sales Orders" sortOrder="1" ></resource>
                     <resource id="OuterEdge_Base::create_product" title="OE Create Product" sortOrder="2" ></resource>
                 </resource>
-                <resource id="OuterEdge_Base::site_status" title="OE API - site status monitoring" translate="title" sortOrder="110">
-                </resource>
+                <resource id="OuterEdge_Base::site_status" title="OE API - Site Status Monitoring" translate="title" sortOrder="110"></resource>
             </resource>
         </resources>
     </acl>
