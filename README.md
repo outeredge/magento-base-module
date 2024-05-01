@@ -33,6 +33,10 @@ This module provides the following useful features for Magento 2:
   - Cookiebot declaration template for use on cookie policy CMS page
   - Import Termly generated Cookie Policy for use on cookie policy CMS page
 
+## API
+
+ - `/rest/V1/site_status/get` - To remotely obtain recent config changes and indexer statuses
+
 ## Developer Tools
 
 * Helper classes:

@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="OuterEdge_Base" setup_version="0.0.4">
+    <module name="OuterEdge_Base" setup_version="1.0.0">
         <sequence>
             <module name="Magento_Widget"/>
             <module name="Magento_Pagebuilder"/>
+            <module name="Magento_Integration"/>
         </sequence>
     </module>
 </config>

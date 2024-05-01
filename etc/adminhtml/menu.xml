@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <remove id="Magento_Marketplace::partners"/>
-        <add id="OuterEdge_Base::create" title="Create" module="OuterEdge_Base" sortOrder="11" resource="OuterEdge_Base::create"/>
+        <add id="OuterEdge_Base::create" title="Create" module="OuterEdge_Base" sortOrder="11" resource="OuterEdge_Base::base"/>
 
         <add id="OuterEdge_Base::create_order"
             title="Create Sales Orders"

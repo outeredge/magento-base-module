@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<integrations>
+    <integration name="outer/edge">
+        <email>support@outeredge.agency</email>
+    </integration>
+</integrations>
