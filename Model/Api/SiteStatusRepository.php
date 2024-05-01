@@ -9,7 +9,6 @@ use OuterEdge\Base\Console\Command\ConfigChanged;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-
 class SiteStatusRepository implements SiteStatusRepositoryInterface
 {
     private $consoleOutputIndexer;
@@ -70,13 +69,14 @@ class SiteStatusRepository implements SiteStatusRepositoryInterface
     private function parseConsoleOutput($output)
     {
         $rawLines = explode(PHP_EOL, $output);
-        $data = $headers = [];
-        $i = 0;
+        $data     = $headers = [];
+        $i        = 0;
 
         foreach ($rawLines as $rowKey => $rawLine) {
             if (str_contains($rawLine, '+-')) {
                 continue;
             }
+
             if ($rowKey == 1) {
                 $headers = explode('|', $rawLine);
                 continue;
