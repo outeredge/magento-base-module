@@ -3,11 +3,11 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="OuterEdge_Base::create" title="OE Create" sortOrder="1" >
-                    <resource id="OuterEdge_Base::create_order" title="OE Create Sales Orders" sortOrder="1" ></resource>
-                    <resource id="OuterEdge_Base::create_product" title="OE Create Product" sortOrder="2" ></resource>
-                </resource>
-                <resource id="OuterEdge_Base::site_status" title="OE API - Site Status Monitoring" translate="title" sortOrder="110"></resource>
+                <resource id="OuterEdge_Base::base" title="outer/edge" sortOrder="1">
+                    <resource id="OuterEdge_Base::create_order" title="Quick Create Sales Order Button" sortOrder="1"></resource>
+                    <resource id="OuterEdge_Base::create_product" title="Quick Create Product Button" sortOrder="2"></resource>
+                    <resource id="OuterEdge_Base::site_status" title="Site Status Monitoring API" sortOrder="3"></resource>
+                </resource>                
             </resource>
         </resources>
     </acl>
