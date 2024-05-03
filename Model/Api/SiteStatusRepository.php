@@ -35,35 +35,30 @@ class SiteStatusRepository implements SiteStatusRepositoryInterface
      */
     public function getData()
     {
-        try {
-            //get indexer status
-            $exitCode = $this->indexerStatusCommand->run($this->consoleInputIndexer, $this->consoleOutputIndexer);
+        //get indexer status
+        $exitCode = $this->indexerStatusCommand->run($this->consoleInputIndexer, $this->consoleOutputIndexer);
 
-            if ($exitCode) {
-                throw new \RuntimeException(
-                    sprintf('Command "%s" failed', 'indexer:status')
-                );
-            }
-
-            //get config changed status
-            $exitCode = $this->configChanged->run($this->consoleInputConfig, $this->consoleOutputConfig);
-
-            if ($exitCode) {
-                throw new \RuntimeException(
-                    sprintf('Command "%s" failed', 'outeredge:config')
-                );
-            }
-
-            $return = [
-                'indexer' => $this->parseConsoleOutput($this->consoleOutputIndexer->fetch()),
-                'configs' => $this->parseConsoleOutput($this->consoleOutputConfig->fetch())
-            ];
-
-        } catch (Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+        if ($exitCode) {
+            throw new \RuntimeException(
+                sprintf('Command "%s" failed', 'indexer:status')
+            );
         }
 
-        return ['success' => true, 'message' => $return];
+        //get config changed status
+        $exitCode = $this->configChanged->run($this->consoleInputConfig, $this->consoleOutputConfig);
+
+        if ($exitCode) {
+            throw new \RuntimeException(
+                sprintf('Command "%s" failed', 'outeredge:config')
+            );
+        }
+
+        $return = [
+            'indexer' => $this->parseConsoleOutput($this->consoleOutputIndexer->fetch()),
+            'configs' => $this->parseConsoleOutput($this->consoleOutputConfig->fetch())
+        ];
+
+        return [['success' => true, 'message' => $return]];
     }
 
     private function parseConsoleOutput($output)
