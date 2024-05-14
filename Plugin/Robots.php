@@ -14,7 +14,7 @@ class Robots
         'cat',
         'product_list_order',
         '___from_store', 
-        '__store',
+        '___store',
         'referer'
     ];
 
