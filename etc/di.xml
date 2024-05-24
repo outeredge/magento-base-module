@@ -33,6 +33,8 @@
             </argument>
         </arguments>
     </type>
+
+    <virtualType name="Magento\Csp\Helper\CspNonceProvider" type="OuterEdge\Base\Helper\BypassMagentoCsp"></virtualType>
     <!--API-->
     <preference for="OuterEdge\Base\Api\SiteStatusRepositoryInterface" type="OuterEdge\Base\Model\Api\SiteStatusRepository"/>
 </config>
