@@ -5,7 +5,7 @@ namespace OuterEdge\Base\Api;
 interface SiteStatusRepositoryInterface
 {
     /**
-     * @return array
+     * @return mixed[]
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getData();
