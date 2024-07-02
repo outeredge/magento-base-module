@@ -11,6 +11,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 
     private $loadedData;
 
+    protected $collection;
+
     public function __construct(
         $name,
         $primaryFieldName,
@@ -22,6 +24,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         array $data = []
     ) {
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
+        $this->collection = $collectionFactory->create();
     }
 
     /**
