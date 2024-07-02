@@ -11,40 +11,16 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 
     private $loadedData;
 
-    /**
-     * @var \Magento\Framework\App\Request\DataPersistorInterface
-     */
-    private $dataPersistor;
-
-    /**
-     * @var Magento\Cms\Model\ResourceModel\Page\CollectionFactory
-     */
-    public $collection;
-
-    /**
-     * Constructor
-     *
-     * @param string $name
-     * @param string $primaryFieldName
-     * @param string $requestFieldName
-     * @param CollectionFactory $blockCollectionFactory
-     * @param DataPersistorInterface $dataPersistor
-     * @param array $meta
-     * @param array $data
-     */
     public function __construct(
         $name,
         $primaryFieldName,
         $requestFieldName,
-        CollectionFactory $collectionFactory,
-        DataPersistorInterface $dataPersistor,
-        StoreManagerInterface $storeManager,
+        protected CollectionFactory $collectionFactory,
+        protected DataPersistorInterface $dataPersistor,
+        protected StoreManagerInterface $storeManager,
         array $meta = [],
         array $data = []
     ) {
-        $this->collection = $collectionFactory->create();
-        $this->dataPersistor = $dataPersistor;
-        $this->storeManager = $storeManager;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
 
