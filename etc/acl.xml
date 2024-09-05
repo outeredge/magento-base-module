@@ -4,7 +4,7 @@
         <resources>
             <resource id="Magento_Backend::admin">
                 <resource id="OuterEdge_Base::base" title="outer/edge" sortOrder="1">
-                    <resource id="OuterEdge_Base::CookiebotFeatures" title="Cookie Restriction Features" sortOrder="1"></resource>
+                    <resource id="OuterEdge_Base::cookie_features" title="Cookie Restriction Features" sortOrder="1"></resource>
                     <resource id="OuterEdge_Base::site_status" title="Site Status Monitoring API" sortOrder="2"></resource>
                 </resource>
             </resource>
