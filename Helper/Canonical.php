@@ -10,6 +10,7 @@ use Magento\Store\Model\ScopeInterface;
 class Canonical extends AbstractHelper
 {
     public const CONFIG_BASE_URL = 'web/unsecure/base_url';
+    public const CONFIG_HOMEPAGE = 'web/default/cms_home_page';
 
     /**
      * @var Page
@@ -38,8 +39,13 @@ class Canonical extends AbstractHelper
             self::CONFIG_BASE_URL,
             ScopeInterface::SCOPE_STORE
         );
+        
+        $homePage = $this->scopeConfig->getValue(
+            self::CONFIG_HOMEPAGE,
+            ScopeInterface::SCOPE_STORE
+        );
 
-        if ($this->scopeConfig->getValue('web/default/cms_home_page') == $this->cmsPage->getIdentifier()) {
+        if ($homePage == $this->cmsPage->getIdentifier()) {
             return '<link rel="canonical" href="' . rtrim($baseUrl,'/') . '" />';
         } elseif ($this->cmsPage->getId()) {
             return '<link rel="canonical" href="' . $baseUrl . $this->cmsPage->getIdentifier() . '" />';
