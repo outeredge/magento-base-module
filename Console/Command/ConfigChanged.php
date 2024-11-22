@@ -70,9 +70,8 @@ class ConfigChanged extends Command
 
         try {
             //Read core config data from db
+            $table = $this->resourceConnection->getTableName('core_config_data');
             $connection = $this->resourceConnection->getConnection();
-            $table = $connection->getTableName('core_config_data');
-
             $query = "SELECT * FROM $table WHERE updated_at > now() - interval $hours hour ORDER BY updated_at DESC LIMIT $lines";
             $dbConfigData = $connection->fetchAll($query);
 
