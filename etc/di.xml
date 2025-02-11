@@ -15,6 +15,9 @@
     <type name="Magento\Ui\Component\Wysiwyg\ConfigInterface">
         <plugin name="outeredge_wysiwyg" type="OuterEdge\Base\Plugin\Wysiwyg\Config" sortOrder="10"/>
     </type>
+    <type name="Magento\Eav\Model\Config">
+        <plugin name="outeredge_prevent_eav_errors" type="OuterEdge\Base\Plugin\PreventEavErrors" sortOrder="10"/>
+    </type>
     <preference for="Magento\Framework\App\Cache\StateInterface" type="OuterEdge\Base\Framework\App\Cache\State" />
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
