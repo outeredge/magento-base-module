@@ -22,7 +22,7 @@
         "outeredge/magento-language-en_gb-module": "^1.0",
         "outeredge/magento-layout-module": "^3.4",
         "outeredge/magento-limitrole-module": "^1.0",
-        "outeredge/magento-newsletter-disable-email": "^1.1",
+        "outeredge/magento-newsletter-disable-email": "^1.2",
         "outeredge/magento-opentelemetry-module": "^1.0"        
     },
     "suggest": {
