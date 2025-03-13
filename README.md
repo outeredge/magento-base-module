@@ -53,7 +53,7 @@ This module provides the following useful features for Magento 2:
 
 | Command | Description |
 |---|---|
-| `$ bin/magento outeredge:config` | Show recent `core_config_data` changes |
+| `$ bin/magento outeredge:config` | Show recent `core_config_data` changes (use `--save` to save differences shown to config.php and `--force` to overwrite any existing config) |
 | `$ bin/magento outeredge:nuke`   | Remove generated + static files and flushes cache) |
 | `$ bin/magento outeredge:eav-clean` | Removes non-existent types from EAV attributes |
 
