@@ -11,16 +11,20 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\App\DeploymentConfig\Writer;
 
 class ConfigChanged extends Command
 {
     private const HOURS = 'hours';
     private const LINES = 'lines';
+    private const SAVE  = 'save';
+    private const FORCE = 'force';
 
     protected $resourceConnection;
 
     public function __construct(
         ResourceConnection $resourceConnection,
+        protected Writer $writer,
         string $name = null
     ) {
         parent::__construct($name);
@@ -48,6 +52,20 @@ class ConfigChanged extends Command
             100
         );
 
+        $this->addOption(
+            self::SAVE,
+            null,
+            InputOption::VALUE_NONE,
+            'Save any values not currently in config.php'
+        );
+
+        $this->addOption(
+            self::FORCE,
+            null,
+            InputOption::VALUE_NONE,
+            'Override any existing values in config.php'
+        );
+
         parent::configure();
     }
 
@@ -62,11 +80,13 @@ class ConfigChanged extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $exitCode = 0;
-        $existInEnvFile = false;
-        $differentFromEnvFile = false;
+        $existInEnvFile = $differentFromEnvFile = $configDataToOverwrite = false;
+        $saveToConfigFile = [];
 
         $hours = $input->getOption(self::HOURS);
         $lines = $input->getOption(self::LINES);
+        $save  = $input->getOption(self::SAVE);
+        $force = $input->getOption(self::FORCE);
 
         try {
             //Read core config data from db
@@ -115,9 +135,17 @@ class ConfigChanged extends Command
                 }
 
                 if ($differentFromEnvFile) {
+                    if ($force) {
+                        $arrayWithValue = $this->convertToArray($dbPath, $dbConfig);
+                        $saveToConfigFile = array_merge_recursive($saveToConfigFile, $arrayWithValue);
+                    }
+
                     $dbPath = '<comment>' . $dbPath . '</comment>';
                 } elseif ($existInEnvFile) {
                     $dbPath = '<info>' . $dbPath . '</info>';
+                } elseif ($save) {
+                    $arrayWithValue = $this->convertToArray($dbPath, $dbConfig);
+                    $saveToConfigFile = array_merge_recursive($saveToConfigFile, $arrayWithValue);
                 }
 
                 $table->addRow([
@@ -126,8 +154,13 @@ class ConfigChanged extends Command
                     ($fileConfigSelectedValue ?? 'null')
                 ]);
             }
-
+            
             $table->render();
+
+            if ($save || $force) {
+                $this->saveToConfig($output, $saveToConfigFile);
+                $output->writeln("💾 Saved to config.php");
+            }
         } catch (LocalizedException $e) {
             $output->writeln(sprintf(
                 '<error>%s</error>',
@@ -149,5 +182,24 @@ class ConfigChanged extends Command
             }
         }
         return $result;
+    }
+
+    private function convertToArray($dbPath, $dbConfig) {
+        $arrayToConvert[$dbPath] = $dbConfig['value'];
+
+        $result = array();
+        foreach($arrayToConvert as $path => $value) {
+            $temp =& $result;
+            foreach(explode('/', $path) as $key) {
+                $temp =& $temp[$key];
+            }
+            $temp = $value;
+        }
+        return $result;
+    }
+
+    private function saveToConfig($output, $saveToConfigFile) {
+        $dump['system'] = ['default' => $saveToConfigFile];
+        $this->writer->saveConfig(['app_config' => $dump], false);
     }
 }
