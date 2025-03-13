@@ -17,15 +17,15 @@ class EavAttributeCheck extends Command
 
     public function __construct(
         protected ResourceConnection $resourceConnection,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
     }
 
     protected function configure(): void
     {
-        $this->setName('outeredge:eav_check');
-        $this->setDescription('Prevent errors when eav attribute models dont exist');
+        $this->setName('outeredge:eav-clean');
+        $this->setDescription('Prevent errors when eav attribute models no longer exist');
 
         parent::configure();
     }
@@ -43,7 +43,7 @@ class EavAttributeCheck extends Command
         $exitCode = 0;
 
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion('Continue with this action? ', false);
+        $question = new ConfirmationQuestion('Are you sure you want to continue? ', false);
 
         try {
             $deleteArray = [];
@@ -58,22 +58,22 @@ class EavAttributeCheck extends Command
                     $class = $data[$column];
                     if (!is_null($class)) {
                         if (!class_exists($class)) {
-                            $output->writeln(sprintf("<comment>☢️ Class '%s' don't exist, will be removed from attribute code '%s' ☢️</comment>", $class, $attributeCode));
-                            $deleteArray[] = compact('column', 'attributeId');   
+                            $output->writeln(sprintf("<comment>❌ The type '%s' doesn't exist and will be removed from attribute '%s'</comment>", $class, $attributeCode));
+                            $deleteArray[] = compact('column', 'attributeId');
                         }
                     }
                 }
             }
 
-            if ($helper->ask($input, $output, $question)) {     
+            if (!empty($deleteArray) && $helper->ask($input, $output, $question)) {
                 foreach($deleteArray as $row) {
                     $column = $row['column'];
                     $attributeId = $row['attributeId'];
                     $connection->query("UPDATE $table SET $column = NULL WHERE attribute_id = $attributeId");
                 }
-                $output->writeln('<comment>☢️ Eav table was cleaned for not existing class ☢️</comment>');
+                $output->writeln('<comment>EAV table cleanup complete! ✅</comment>');
             } else {
-                $output->writeln("<comment>☢️ Eav table wasn't changed ☢️</comment>");
+                $output->writeln("<comment>No changes required!</comment>");
             }
         } catch (LocalizedException $e) {
             $output->writeln(sprintf(
