@@ -55,17 +55,15 @@ class ConfigChanged extends Command
         $this->addOption(
             self::SAVE,
             null,
-            InputOption::VALUE_REQUIRED,
-            'Save any values not currently in config.php',
-            false
+            InputOption::VALUE_NONE,
+            'Save any values not currently in config.php'
         );
 
         $this->addOption(
             self::FORCE,
             null,
-            InputOption::VALUE_REQUIRED,
-            'Override any existing values in config.php',
-            false
+            InputOption::VALUE_NONE,
+            'Override any existing values in config.php'
         );
 
         parent::configure();
@@ -156,13 +154,13 @@ class ConfigChanged extends Command
                     ($fileConfigSelectedValue ?? 'null')
                 ]);
             }
+            
+            $table->render();
 
             if ($save || $force) {
                 $this->saveToConfig($output, $saveToConfigFile);
-                $output->writeln("Save changes to config.php");
+                $output->writeln("💾 Saved to config.php");
             }
-            
-            $table->render();
         } catch (LocalizedException $e) {
             $output->writeln(sprintf(
                 '<error>%s</error>',
