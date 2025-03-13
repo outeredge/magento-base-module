@@ -55,6 +55,7 @@ This module provides the following useful features for Magento 2:
 |---|---|
 | `$ bin/magento outeredge:config` | Show recent `core_config_data` changes |
 | `$ bin/magento outeredge:nuke`   | Remove generated + static files and flushes cache) |
+| `$ bin/magento outeredge:eav-clean` | Removes non-existent types from EAV attributes |
 
 ### Cookiebot Declaration
 
