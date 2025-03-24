@@ -138,6 +138,10 @@ class JsFooterPlugin
 
         while ($iframeOpenPos !== false) {
             $scriptClosePos = strpos($content, $iframeClose, $iframeOpenPos);
+            if ($scriptClosePos === false) {
+                $scriptClosePos = strpos($content, '/>', $iframeOpenPos);
+            }
+
             $iframe = substr($content, $iframeOpenPos, $scriptClosePos - $iframeOpenPos + strlen($iframeClose));
 
             $skipScript = (
