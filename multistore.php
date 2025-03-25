@@ -29,8 +29,13 @@ if (!isset($_SERVER['REQUEST_URI'])) {
     return;
 }
 
+if ($_SERVER['SCRIPT_NAME'] == '/static.php' && !empty($_SERVER['HTTP_REFERER'])) {
+    $requestUri = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);   
+} else {
+    $requestUri = $_SERVER['REQUEST_URI'];
+}
+
 // Determine the store view code from the URL
-$requestUri = $_SERVER['REQUEST_URI'];
 $paths = explode('/', ltrim($requestUri, '/'));
 $pathsFiltered = array_filter($paths);
 $storeCode = reset($pathsFiltered);
