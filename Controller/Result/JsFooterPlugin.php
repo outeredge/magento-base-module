@@ -151,7 +151,7 @@ class JsFooterPlugin
             );
 
             if ($skipScript) {
-                $iframeOpenPos = strpos($content, $iframeOpen, $scriptClosePos);
+                $iframeOpenPos = strpos($content, $iframeOpen, $scriptClosePos + 1);
                 continue;
             }
 
@@ -162,9 +162,7 @@ class JsFooterPlugin
             }
 
             $content = str_replace($iframe, $newIframe, $content);
-            $iframeOpenPos = strpos($content, $iframeOpen); // get new open pos with updated content
-            // Script cut out, continue search from its position.
-            $iframeOpenPos = strpos($content, $iframeOpen, $iframeOpenPos);
+            $iframeOpenPos = strpos($content, $iframeOpen, $scriptClosePos + 1);
         }
 
         return $content;
