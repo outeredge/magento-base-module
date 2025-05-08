@@ -20,7 +20,7 @@ class Nuke extends Command
     public function __construct(
         CleanupFiles $cleanupFiles,
         Pool $cacheFrontendPool,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
         $this->cleanupFiles = $cleanupFiles;
