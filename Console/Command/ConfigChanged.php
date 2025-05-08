@@ -25,7 +25,7 @@ class ConfigChanged extends Command
     public function __construct(
         ResourceConnection $resourceConnection,
         protected Writer $writer,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
         $this->resourceConnection = $resourceConnection;
