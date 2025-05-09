@@ -22,8 +22,8 @@ class SiteStatusRepository implements SiteStatusRepositoryInterface
     public function __construct(
         protected IndexerStatusCommand $indexerStatusCommand,
         protected ConfigChanged $configChanged,
-        BufferedOutput $consoleOutput = null,
-        ArrayInput $consoleInput = null
+        ?BufferedOutput $consoleOutput = null,
+        ?ArrayInput $consoleInput = null
     ) {
         $this->consoleInputConfig = $this->consoleInputIndexer = $consoleInput ? $consoleInput : new ArrayInput([]);
         $this->consoleOutputConfig = $consoleOutput ? $consoleOutput : new BufferedOutput();

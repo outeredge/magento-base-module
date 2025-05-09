@@ -15,8 +15,8 @@ class Writer extends DeploymentConfig\Writer
         Filesystem $filesystem,
         ConfigFilePool $configFilePool,
         DeploymentConfig $deploymentConfig,
-        DeploymentConfig\Writer\FormatterInterface $formatter = null,
-        DeploymentConfig\CommentParser $commentParser = null
+        ?DeploymentConfig\Writer\FormatterInterface $formatter = null,
+        ?DeploymentConfig\CommentParser $commentParser = null
     ) {
         $this->configReader = $reader;
 
