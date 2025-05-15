@@ -48,6 +48,7 @@ This module provides the following useful features for Magento 2:
   - `outeredge:config` lists all recent config changes
 * Adds support for newer version of MariaDB
 * Disables jQuery mutate console messages
+* Forces the first encryption key to always be used for media assets
 
 ### Console Commands
 

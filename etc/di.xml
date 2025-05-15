@@ -34,6 +34,11 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Catalog\Model\View\Asset\Image">
+        <arguments>
+            <argument name="encryptor" xsi:type="object">OuterEdge\Base\Framework\App\Encryption\FirstKeyForMediaEncryptor</argument>
+        </arguments>
+    </type>
     <!--API-->
     <preference for="OuterEdge\Base\Api\SiteStatusRepositoryInterface" type="OuterEdge\Base\Model\Api\SiteStatusRepository"/>
 </config>
