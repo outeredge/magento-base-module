@@ -13,6 +13,7 @@ class Robots
         'limit',
         'order',
         'cat',
+        'product_list_mode',
         'product_list_dir',
         'product_list_limit',
         'product_list_order',
