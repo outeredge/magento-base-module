@@ -89,7 +89,7 @@ class Csp
             $result[] = new FetchPolicy(
                 'img-src',
                 false,
-                ['*.cdn.edge-servers.com']
+                ['cdn.edge-servers.com']
             );
         }
 
