@@ -5,7 +5,7 @@
             <block name="google.scripts" template="OuterEdge_Base::html/header/google-scripts.phtml"/>
         </referenceBlock>
         <referenceBlock name="before.body.end">
-            <block ifconfig="oe_base/cmp/termly_cookie_policy" name="termly.preferences" template="OuterEdge_Base::termly/preference-link.phtml" before="copyright" />
+            <block ifconfig="oe_base_cookierestriction/cmp/termly_cookie_policy" name="termly.preferences" template="OuterEdge_Base::termly/preference-link.phtml" before="copyright" />
         </referenceBlock>
     </body>
 </page>

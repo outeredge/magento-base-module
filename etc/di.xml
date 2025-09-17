@@ -45,4 +45,8 @@
         </arguments>
     </type>
     <preference for="OuterEdge\Base\Api\SiteStatusRepositoryInterface" type="OuterEdge\Base\Model\Api\SiteStatusRepository"/>
+
+    <type name="Magento\Csp\Model\CompositePolicyCollector">
+        <plugin name="OuterEdge_Base::cspPolicy" type="OuterEdge\Base\Plugin\Csp" sortOrder="100"/>
+    </type>
 </config>
