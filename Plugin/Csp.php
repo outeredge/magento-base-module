@@ -4,6 +4,7 @@ namespace OuterEdge\Base\Plugin;
 
 use AuroraExtensions\GoogleCloudStorage\Model\File\Storage as Gcs;
 use Magento\Csp\Api\PolicyCollectorInterface;
+use Magento\Csp\Model\Collector\MergerInterface;
 use Magento\Csp\Model\Policy\FetchPolicy;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\MediaStorage\Model\File\Storage;
@@ -21,11 +22,20 @@ class Csp
     private $scopeConfig;
 
     /**
-     * @param ScopeConfigInterface $scopeConfig
+     * @var MergerInterface
      */
-    public function __construct(ScopeConfigInterface $scopeConfig)
-    {
+    private $merger;
+
+    /**
+     * @param ScopeConfigInterface $scopeConfig
+     * @param MergerInterface $merger
+     */
+    public function __construct(
+        ScopeConfigInterface $scopeConfig,
+        MergerInterface $merger
+    ) {
         $this->scopeConfig = $scopeConfig;
+        $this->merger = $merger;
     }
 
     /**
@@ -42,6 +52,7 @@ class Csp
             ScopeInterface::SCOPE_STORE
         );
 
+        $cmpWhitelist = null;
         switch ($cmpProvider) {
             case CmpProvider::CMP_COOKIEBOT:
                 $cmpWhitelist = "*.cookiebot.com";
@@ -49,35 +60,16 @@ class Csp
             case CmpProvider::CMP_TERMLY:
                 $cmpWhitelist = "*.termly.io";
                 break;
-            default:
-                $cmpWhitelist = null;
-                break;
         }
 
         if ($cmpWhitelist) {
-            $result[] = new FetchPolicy(
-                'connect-src',
-                false,
-                [$cmpWhitelist]
-            );
-
-            $result[] = new FetchPolicy(
-                'script-src',
-                false,
-                [$cmpWhitelist]
-            );
-
-            $result[] = new FetchPolicy(
-                'img-src',
-                false,
-                [$cmpWhitelist]
-            );
-
-            $result[] = new FetchPolicy(
-                'frame-src',
-                false,
-                [$cmpWhitelist]
-            );
+            $policies = [
+                new FetchPolicy('connect-src', false, [$cmpWhitelist], [], true),
+                new FetchPolicy('script-src', false, [$cmpWhitelist], [], true),
+                new FetchPolicy('img-src', false, [$cmpWhitelist], [], true),
+                new FetchPolicy('frame-src', false, [$cmpWhitelist], [], true)
+            ];
+            $result = $this->mergePolicies($result, $policies);
         }
 
         $mediaStorage = $this->scopeConfig->getValue(
@@ -86,13 +78,35 @@ class Csp
         );
 
         if ($mediaStorage == Gcs::STORAGE_MEDIA_GCS) {
-            $result[] = new FetchPolicy(
-                'img-src',
-                false,
-                ['cdn.edge-servers.com']
-            );
+            $policies = [new FetchPolicy('img-src', false, ['cdn.edge-servers.com'], [], true)];
+            $result = $this->mergePolicies($result, $policies);
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $original
+     * @param array $newPolicies
+     * @return array
+     */
+    private function mergePolicies(array $original, array $newPolicies): array
+    {
+        $originalById = [];
+        foreach ($original as $policy) {
+            $originalById[$policy->getId()] = $policy;
+        }
+
+        foreach ($newPolicies as $newPolicy) {
+            $id = $newPolicy->getId();
+            if (isset($originalById[$id])) {
+                if ($this->merger->canMerge($originalById[$id], $newPolicy)) {
+                    $originalById[$id] = $this->merger->merge($originalById[$id], $newPolicy);
+                }
+            } else {
+                $originalById[$id] = $newPolicy;
+            }
+        }
+        return array_values($originalById);
     }
 }
