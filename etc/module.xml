@@ -5,6 +5,7 @@
             <module name="Magento_Widget"/>
             <module name="Magento_Pagebuilder"/>
             <module name="Magento_Integration"/>
+            <module name="Sirv_Magento2"/>
         </sequence>
     </module>
 </config>
