@@ -7,5 +7,8 @@
         <route id="sales_rule" frontName="sales_rule">
             <module name="OuterEdge_Base" before="Magento_SalesRule"/>
         </route>
+        <route id="catalog_rule" frontName="catalog_rule">
+            <module name="OuterEdge_Base" before="Magento_CatalogRule"/>
+        </route>
     </router>
 </config>

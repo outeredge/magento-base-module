@@ -13,6 +13,7 @@ This module provides the following useful features for Magento 2:
   - Create new order
   - Create product
 * Enforces media URL seen by the admin to be NULL always (i.e. so CDN isn't used)
+* Adds bulk actions to Cart Price Rules
 
 ## SEO
 
