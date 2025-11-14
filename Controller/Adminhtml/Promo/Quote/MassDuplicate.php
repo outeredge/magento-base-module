@@ -1,33 +1,29 @@
 <?php
 
-namespace OuterEdge\Base\Controller\Adminhtml\Promo\Catalog;
+namespace OuterEdge\Base\Controller\Adminhtml\Promo\Quote;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\CatalogRule\Api\CatalogRuleRepositoryInterface;
-use Magento\CatalogRule\Api\Data\RuleInterfaceFactory;
-use Magento\CatalogRule\Model\Flag;
+use Magento\SalesRule\Model\RuleFactory;
+use Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\CatalogRule\Model\ResourceModel\Rule\CollectionFactory;
 
 /**
- * Mass Duplicate catalog price rules
+ * Mass Duplicate sales rules
  */
 class MassDuplicate extends Action implements HttpPostActionInterface
 {
     /**
      * Authorization level
      */
-    const ADMIN_RESOURCE = 'Magento_CatalogRule::promo_catalog';
+    const ADMIN_RESOURCE = 'Magento_SalesRule::promo_quote';
 
     public function __construct(
         Context $context,
         protected CollectionFactory $collectionFactory,
-        protected CatalogRuleRepositoryInterface $ruleRepository,
-        protected RuleInterfaceFactory $ruleFactory,
-        protected Flag $flag
+        protected RuleFactory $ruleFactory
     ) {
         parent::__construct($context);
     }
@@ -74,8 +70,12 @@ class MassDuplicate extends Action implements HttpPostActionInterface
                             $newRule->getConditions()->loadArray($rule->getConditions()->asArray());
                         }
 
+                        if ($rule->getActions()) {
+                            $newRule->getActions()->loadArray($rule->getActions()->asArray());
+                        }
+
                         // Save the new rule
-                        $this->ruleRepository->save($newRule);
+                        $newRule->save();
                         $duplicatedCount++;
                     } catch (LocalizedException $e) {
                         $this->messageManager->addErrorMessage(
@@ -89,7 +89,6 @@ class MassDuplicate extends Action implements HttpPostActionInterface
                 }
 
                 if ($duplicatedCount > 0) {
-                    $this->flag->loadSelf()->setState(1)->save();
                     $this->messageManager->addSuccessMessage(
                         __('A total of %1 record(s) have been duplicated.', $duplicatedCount)
                     );
@@ -106,6 +105,6 @@ class MassDuplicate extends Action implements HttpPostActionInterface
 
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        return $resultRedirect->setPath('catalog_rule/promo_catalog/index');
+        return $resultRedirect->setPath('sales_rule/promo_quote/index');
     }
 }

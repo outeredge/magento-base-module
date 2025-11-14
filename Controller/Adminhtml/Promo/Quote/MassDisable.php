@@ -1,31 +1,27 @@
 <?php
 
-namespace OuterEdge\Base\Controller\Adminhtml\Promo\Catalog;
+namespace OuterEdge\Base\Controller\Adminhtml\Promo\Quote;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\CatalogRule\Api\CatalogRuleRepositoryInterface;
-use Magento\CatalogRule\Model\Flag;
+use Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\CatalogRule\Model\ResourceModel\Rule\CollectionFactory;
 
 /**
- * Mass Disable catalog price rules
+ * Mass Disable sales rules
  */
 class MassDisable extends Action implements HttpPostActionInterface
 {
     /**
      * Authorization level
      */
-    const ADMIN_RESOURCE = 'Magento_CatalogRule::promo_catalog';
+    const ADMIN_RESOURCE = 'Magento_SalesRule::promo_quote';
 
     public function __construct(
         Context $context,
-        protected CollectionFactory $collectionFactory,
-        protected CatalogRuleRepositoryInterface $ruleRepository,
-        protected Flag $flag
+        protected CollectionFactory $collectionFactory
     ) {
         parent::__construct($context);
     }
@@ -50,7 +46,7 @@ class MassDisable extends Action implements HttpPostActionInterface
                 foreach ($collection as $rule) {
                     try {
                         $rule->setIsActive(0);
-                        $this->ruleRepository->save($rule);
+                        $rule->save();
                         $disabledCount++;
                     } catch (LocalizedException $e) {
                         $this->messageManager->addErrorMessage(
@@ -64,7 +60,6 @@ class MassDisable extends Action implements HttpPostActionInterface
                 }
 
                 if ($disabledCount > 0) {
-                    $this->flag->loadSelf()->setState(1)->save();
                     $this->messageManager->addSuccessMessage(
                         __('A total of %1 record(s) have been disabled.', $disabledCount)
                     );
@@ -81,6 +76,6 @@ class MassDisable extends Action implements HttpPostActionInterface
 
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        return $resultRedirect->setPath('catalog_rule/promo_catalog/index');
+        return $resultRedirect->setPath('sales_rule/promo_quote/index');
     }
 }

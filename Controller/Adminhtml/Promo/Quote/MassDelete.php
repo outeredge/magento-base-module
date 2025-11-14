@@ -1,31 +1,27 @@
 <?php
 
-namespace OuterEdge\Base\Controller\Adminhtml\Promo\Catalog;
+namespace OuterEdge\Base\Controller\Adminhtml\Promo\Quote;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\CatalogRule\Api\CatalogRuleRepositoryInterface;
-use Magento\CatalogRule\Model\Flag;
+use Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\CatalogRule\Model\ResourceModel\Rule\CollectionFactory;
 
 /**
- * Mass Delete catalog price rules
+ * Mass Delete sales rules
  */
 class MassDelete extends Action implements HttpPostActionInterface
 {
     /**
      * Authorization level
      */
-    const ADMIN_RESOURCE = 'Magento_CatalogRule::promo_catalog';
+    const ADMIN_RESOURCE = 'Magento_SalesRule::promo_quote';
 
     public function __construct(
         Context $context,
-        protected CollectionFactory $collectionFactory,
-        protected CatalogRuleRepositoryInterface $ruleRepository,
-        protected Flag $flag
+        protected CollectionFactory $collectionFactory
     ) {
         parent::__construct($context);
     }
@@ -49,7 +45,7 @@ class MassDelete extends Action implements HttpPostActionInterface
 
                 foreach ($collection as $rule) {
                     try {
-                        $this->ruleRepository->delete($rule);
+                        $rule->delete();
                         $deletedCount++;
                     } catch (LocalizedException $e) {
                         $this->messageManager->addErrorMessage(
@@ -63,7 +59,6 @@ class MassDelete extends Action implements HttpPostActionInterface
                 }
 
                 if ($deletedCount > 0) {
-                    $this->flag->loadSelf()->setState(1)->save();
                     $this->messageManager->addSuccessMessage(
                         __('A total of %1 record(s) have been deleted.', $deletedCount)
                     );
@@ -80,6 +75,6 @@ class MassDelete extends Action implements HttpPostActionInterface
 
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        return $resultRedirect->setPath('catalog_rule/promo_catalog/index');
+        return $resultRedirect->setPath('sales_rule/promo_quote/index');
     }
 }
