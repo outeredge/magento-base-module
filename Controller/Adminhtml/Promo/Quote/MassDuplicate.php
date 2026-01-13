@@ -53,8 +53,15 @@ class MassDuplicate extends Action implements HttpPostActionInterface
                         // Copy all data from the original rule
                         $data = $rule->getData();
 
-                        // Remove the rule_id to create a new rule
+                        // Remove fields that should not be copied to prevent affecting the original rule
                         unset($data['rule_id']);
+                        unset($data['coupon_code']);
+                        unset($data['times_used']);
+                        
+                        // If the rule uses auto-generated coupons, create a new code prefix
+                        if (!empty($data['use_auto_generation']) && !empty($data['coupon_code'])) {
+                            $data['coupon_code'] = $data['coupon_code'] . '_copy';
+                        }
 
                         // Modify the name to indicate it's a duplicate
                         $data['name'] = $data['name'] . ' (Copy)';

@@ -5,6 +5,7 @@ namespace OuterEdge\Base\Controller\Adminhtml\Promo\Quote;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory;
+use Magento\SalesRule\Model\ResourceModel\Rule as RuleResource;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
@@ -21,7 +22,8 @@ class MassDisable extends Action implements HttpPostActionInterface
 
     public function __construct(
         Context $context,
-        protected CollectionFactory $collectionFactory
+        protected CollectionFactory $collectionFactory,
+        protected RuleResource $ruleResource
     ) {
         parent::__construct($context);
     }
@@ -45,8 +47,13 @@ class MassDisable extends Action implements HttpPostActionInterface
 
                 foreach ($collection as $rule) {
                     try {
-                        $rule->setIsActive(0);
-                        $rule->save();
+                        // Use resource model to update only is_active field without triggering full save
+                        // This prevents coupon codes from being deleted
+                        $this->ruleResource->getConnection()->update(
+                            $this->ruleResource->getMainTable(),
+                            ['is_active' => 0],
+                            ['rule_id = ?' => $rule->getId()]
+                        );
                         $disabledCount++;
                     } catch (LocalizedException $e) {
                         $this->messageManager->addErrorMessage(
