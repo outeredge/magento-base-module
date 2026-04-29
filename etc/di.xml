@@ -22,6 +22,7 @@
                 <item name="check_config_changed_command" xsi:type="object">OuterEdge\Base\Console\Command\ConfigChanged</item>
                 <item name="nuke_command" xsi:type="object">OuterEdge\Base\Console\Command\Nuke</item>
                 <item name="eav_check_command" xsi:type="object">OuterEdge\Base\Console\Command\EavAttributeCheck</item>
+                <item name="convert_quote_command" xsi:type="object">OuterEdge\Base\Console\Command\ConvertQuoteCommand</item>
             </argument>
         </arguments>
     </type>
