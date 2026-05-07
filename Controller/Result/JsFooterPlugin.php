@@ -13,15 +13,19 @@ use OuterEdge\Base\Model\Config\Source\CmpProvider;
 /**
  * Plugin for putting all JavaScript tags to the end of body.
  */
-class JsFooterPlugin
+class JsFooterPlugin extends \Magento\Theme\Controller\Result\JsFooterPlugin
 {
     const XML_PATH_CMPPROVIDER = 'oe_base/cmp/provider';
 
     private const XML_PATH_DEV_MOVE_JS_TO_BOTTOM = 'dev/js/move_script_to_bottom';
 
-    public function __construct(private readonly ScopeConfigInterface $scopeConfig)
-    {
-    }
+    private $oeScopeConfig;
+
+    public function __construct(ScopeConfigInterface $scopeConfig)
+     {
+        $this->oeScopeConfig = $scopeConfig;
+        parent::__construct($scopeConfig);
+     }
 
     /**
      * Moves all JavaScript tags to the end of body if this feature is enabled.
@@ -110,7 +114,7 @@ class JsFooterPlugin
      */
     private function isDeferEnabled(): bool
     {
-        return $this->scopeConfig->isSetFlag(
+        return $this->oeScopeConfig->isSetFlag(
             self::XML_PATH_DEV_MOVE_JS_TO_BOTTOM,
             ScopeInterface::SCOPE_STORE
         );
@@ -118,7 +122,7 @@ class JsFooterPlugin
 
     private function getCmpPlatform(): ?string
     {
-        return $this->scopeConfig->getValue(
+        return $this->oeScopeConfig->getValue(
             self::XML_PATH_CMPPROVIDER,
             ScopeInterface::SCOPE_STORE
         );
