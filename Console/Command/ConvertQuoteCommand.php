@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace OuterEdge\Base\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -46,7 +49,7 @@ class ConvertQuoteCommand extends Command
         CartRepositoryInterface $quoteRepository,
         CartManagementInterface $quoteManagement,
         ResourceConnection $resource,
-        string $name = null
+        ?string $name = null
     ) {
         $this->appState = $appState;
         $this->quoteRepository = $quoteRepository;
@@ -55,7 +58,7 @@ class ConvertQuoteCommand extends Command
         parent::__construct($name);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('outeredge:convert-quote')
             ->setDescription('Convert a stuck quote into an order')
@@ -67,7 +70,7 @@ class ConvertQuoteCommand extends Command
         parent::configure();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->appState->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
