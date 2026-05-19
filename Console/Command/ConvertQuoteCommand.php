@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace OuterEdge\Base\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
