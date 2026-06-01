@@ -16,6 +16,8 @@ foreach ($files as $file) {
 if (empty($_SERVER['MAGE_RUN_CODE'])
     && stristr($_SERVER['PHP_SELF'], 'bin/magento')
     && php_sapi_name() === 'cli'
+    && defined('STDIN') 
+    && stream_isatty(STDIN)
 ) {
     $input = readline('Select store (' . implode(', ', $validStores) . '): ');
     if (!empty($validStores[$input])) {
