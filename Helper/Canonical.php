@@ -40,12 +40,22 @@ class Canonical extends AbstractHelper
             ScopeInterface::SCOPE_STORE
         );
         
-        $homePage = $this->scopeConfig->getValue(
+        $homePage = (string) $this->scopeConfig->getValue(
             self::CONFIG_HOMEPAGE,
             ScopeInterface::SCOPE_STORE
         );
 
-        if ($homePage == $this->cmsPage->getIdentifier()) {
+        $homePageId = null;
+        $homePageDelimiterPosition = strrpos($homePage, '|');
+        if ($homePageDelimiterPosition !== false) {
+            $homePageId = substr($homePage, $homePageDelimiterPosition + 1);
+            $homePage = substr($homePage, 0, $homePageDelimiterPosition);
+        }
+
+        $isHomePage = $homePage === $this->cmsPage->getIdentifier()
+            && ($homePageId === null || $homePageId === (string) $this->cmsPage->getId());
+
+        if ($isHomePage) {
             return '<link rel="canonical" href="' . rtrim($baseUrl,'/') . '" />';
         } elseif ($this->cmsPage->getId()) {
             return '<link rel="canonical" href="' . $baseUrl . $this->cmsPage->getIdentifier() . '" />';
