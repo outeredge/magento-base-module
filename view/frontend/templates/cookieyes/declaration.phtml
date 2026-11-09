@@ -1,0 +1,11 @@
+<?php
+
+/** @var \OuterEdge\Base\Block\Cmp $block */
+
+$cookieyesId = (string) $block->getConfigValue('oe_base_cookierestriction/cmp/cookieyes_id');
+
+?>
+<?php if ($cookieyesId !== ''): ?>
+<div id="cookieyes-cookie-declaration"></div>
+<script id="cookieyes-cookie-declaration" type="text/javascript" src="https://cdn-cookieyes.com/client_data/<?= $block->escapeHtmlAttr($cookieyesId) ?>/cookie-declaration.js"></script>
+<?php endif; ?>

@@ -60,6 +60,9 @@ class Csp
             case CmpProvider::CMP_TERMLY:
                 $cmpWhitelist = "*.termly.io";
                 break;
+            case CmpProvider::CMP_COOKIEYES:
+                $cmpWhitelist = "*.cdn-cookieyes.com";
+                break;
         }
 
         if ($cmpWhitelist) {

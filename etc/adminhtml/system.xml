@@ -27,6 +27,13 @@
                         <field id="provider">termly</field>
                     </depends>
                 </field>
+                <field id="cookieyes_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>CookieYes Website ID</label>
+                    <comment>Copy the Website ID from your CookieYes account - the value in the client_data URL part of the embed snippet, e.g. abc123def456 in https://cdn-cookieyes.com/client_data/abc123def456/script.js</comment>
+                    <depends>
+                        <field id="provider">cookieyes</field>
+                    </depends>
+                </field>
             </group>
         </section>
     </system>
