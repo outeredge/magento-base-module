@@ -1,6 +1,10 @@
 <?php
-$cookiebotDomainGroupId = $this->helper('OuterEdge\Base\Helper\Config')->getConfig('oe_base_cookierestriction/cmp/cookiebot_domain_group_id');
-$src = 'https://consent.cookiebot.com/'.$cookiebotDomainGroupId.'/cd.js';
-?>
 
+/** @var \OuterEdge\Base\Block\Cmp $block */
+
+$cookiebotDomainGroupId = (string) $block->getConfigValue('oe_base_cookierestriction/cmp/cookiebot_domain_group_id');
+$src = 'https://consent.cookiebot.com/'. $cookiebotDomainGroupId .'/cd.js';
+?>
+<?php if ($cookiebotDomainGroupId !== ''): ?>
 <script id="CookieDeclaration" src="<?= $src ?>" type="text/javascript" async></script>
+<?php endif; ?>

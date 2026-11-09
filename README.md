@@ -67,7 +67,7 @@ The CMP provider (Cookiebot / Termly / CookieYes) can be selected in `Stores > C
 To add the Cookiebot cookie declaration form into your cookie policy CMS page, add the following snippet into the CMS page in the Magento admin:
 
 ```
-{{block class="Magento\Framework\View\Element\Template" template="OuterEdge_Base::cookiebot/declaration.phtml"}}
+{{block class="OuterEdge\\Base\\Block\\Cmp" template="OuterEdge_Base::cookiebot/declaration.phtml"}}
 ```
 
 ### Termly Cookie Policy
@@ -75,7 +75,7 @@ To add the Cookiebot cookie declaration form into your cookie policy CMS page, a
 To add the Termly cookie policy into your cookie policy CMS page, add the following snippet into the CMS page in the Magento admin:
 
 ```
-{{block class="Magento\Framework\View\Element\Template" template="OuterEdge_Base::termly/cookie-policy.phtml"}}
+{{block class="OuterEdge\\Base\\Block\\Cmp" template="OuterEdge_Base::termly/cookie-policy.phtml"}}
 ```
 
 ### CookieYes Cookie Declaration
@@ -83,7 +83,7 @@ To add the Termly cookie policy into your cookie policy CMS page, add the follow
 To add the CookieYes cookie declaration into your cookie policy CMS page, add the following snippet into the CMS page in the Magento admin:
 
 ```
-{{block class="Magento\Framework\View\Element\Template" template="OuterEdge_Base::cookieyes/declaration.phtml"}}
+{{block class="OuterEdge\\Base\\Block\\Cmp" template="OuterEdge_Base::cookieyes/declaration.phtml"}}
 ```
 
 ### Multistore projects

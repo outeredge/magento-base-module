@@ -1,14 +1,17 @@
 <?php
+
+/** @var \OuterEdge\Base\Block\Cmp $block */
+
 $termlyCookiePolicyDataId = str_replace(
     [
         'https://app.termly.io/document/cookie-policy/',
         'https://app.termly.io/policy-viewer/policy.html?policyUUID='
     ],
     '',
-    $this->helper('OuterEdge\Base\Helper\Config')->getConfig('oe_base_cookierestriction/cmp/termly_cookie_policy') ?: ''
+    (string) $block->getConfigValue('oe_base_cookierestriction/cmp/termly_cookie_policy')
 );
 ?>
-
+<?php if ($termlyCookiePolicyDataId !== ''): ?>
 <div name="termly-embed" data-id="<?= $termlyCookiePolicyDataId ?>"></div>
 <script type="text/javascript">(function(d, s, id) {
   var js, tjs = d.getElementsByTagName(s)[0];
@@ -17,3 +20,4 @@ $termlyCookiePolicyDataId = str_replace(
   js.src = "https://app.termly.io/embed-policy.min.js";
   tjs.parentNode.insertBefore(js, tjs);
 }(document, 'script', 'termly-jssdk'));</script>
+<?php endif; ?>
