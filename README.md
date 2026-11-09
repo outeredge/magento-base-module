@@ -27,12 +27,15 @@ This module provides the following useful features for Magento 2:
 * Forces a 404 HTTP response for placeholder images
 * Adds preconnect headers for google.com/gstatic.com
 
-## Cookiebot & Termly
+## Cookiebot, Termly & CookieYes
 
-  - Don't move cookiebot tags to footer when move JS to footer is enabled
+The CMP provider (Cookiebot / Termly / CookieYes) can be selected in `Stores > Configuration > outer/edge > Cookie Restriction Features > Cookie Restriction`. Configuration is website-scoped so different CMP accounts can be used per website.
+
+  - Don't move CMP tags to footer when move JS to footer is enabled
   - Block YouTube cookies unless Cookiebot has given consent (*Enabled by default*)
   - Cookiebot declaration template for use on cookie policy CMS page
   - Import Termly generated Cookie Policy for use on cookie policy CMS page
+  - Automatically injects the CookieYes banner script via the configured Website ID (relies on CookieYes auto-blocking for script/iframe consent)
 
 ## API
 
@@ -73,6 +76,14 @@ To add the Termly cookie policy into your cookie policy CMS page, add the follow
 
 ```
 {{block class="Magento\Framework\View\Element\Template" template="OuterEdge_Base::termly/cookie-policy.phtml"}}
+```
+
+### CookieYes Cookie Declaration
+
+To add the CookieYes cookie declaration into your cookie policy CMS page, add the following snippet into the CMS page in the Magento admin:
+
+```
+{{block class="Magento\Framework\View\Element\Template" template="OuterEdge_Base::cookieyes/declaration.phtml"}}
 ```
 
 ### Multistore projects

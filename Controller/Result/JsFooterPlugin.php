@@ -15,7 +15,7 @@ use OuterEdge\Base\Model\Config\Source\CmpProvider;
  */
 class JsFooterPlugin extends \Magento\Theme\Controller\Result\JsFooterPlugin
 {
-    const XML_PATH_CMPPROVIDER = 'oe_base/cmp/provider';
+    const XML_PATH_CMPPROVIDER = 'oe_base_cookierestriction/cmp/provider';
 
     private const XML_PATH_DEV_MOVE_JS_TO_BOTTOM = 'dev/js/move_script_to_bottom';
 
@@ -47,7 +47,8 @@ class JsFooterPlugin extends \Magento\Theme\Controller\Result\JsFooterPlugin
         $bodyEndTagFound = strrpos($content, $bodyEndTag) !== false;
 
         if ($bodyEndTagFound) {
-            if ($this->getCmpPlatform() !== null) {
+            //outer/edge - CookieYes handles its own auto-blocking (post-scan) so manual iframe rewriting is skipped
+            if ($this->getCmpPlatform() !== null && $this->getCmpPlatform() !== CmpProvider::CMP_COOKIEYES) {
                 $content = $this->applyIframeCookieRestriction($content, 'youtube');
                 $content = $this->applyLiteYouTubeCookieRestriction($content, 'lite-youtube');
             }
@@ -86,8 +87,9 @@ class JsFooterPlugin extends \Magento\Theme\Controller\Result\JsFooterPlugin
 
             //outer/edge skip Lazysizes & Cookiebot
             $skipScript = (
-                str_contains($script, 'lazysizes') 
+                str_contains($script, 'lazysizes')
                 || str_contains($script, 'cookiebot')
+                || str_contains($script, 'cookieyes')
                 || str_contains($script, 'termly')
                 || str_contains($script, 'data-head')
             );
@@ -96,7 +98,7 @@ class JsFooterPlugin extends \Magento\Theme\Controller\Result\JsFooterPlugin
                 $scriptOpenPos = strpos($content, $scriptOpen, $scriptClosePos);
                 continue;
             }
-            //outer/edge skip Lazysizes & Cookiebot
+            //outer/edge skip Lazysizes & Cookiebot & CookieYes
 
             $scripts .= "\n" . $script;
             $content = str_replace($script, '', $content);

@@ -1,0 +1,8 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+
+$cookieyesId = $block->helper('OuterEdge\Base\Helper\Config')->getConfig('oe_base_cookierestriction/cmp/cookieyes_id');
+?>
+<?php if ($cookieyesId): ?>
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/<?= $block->escapeHtmlAttr($cookieyesId) ?>/script.js"></script>
+<?php endif; ?>
