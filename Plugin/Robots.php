@@ -3,7 +3,6 @@ namespace OuterEdge\Base\Plugin;
 
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\View\Page\Config as PageConfig;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Page\Config\Renderer;
 
 class Robots
@@ -33,11 +32,6 @@ class Robots
     protected $request;
 
     /**
-     * @var Registry
-     */
-    protected $registry;
-
-    /**
      *
      * @param PageConfig $pageConfig
      * @param Http $request
@@ -45,11 +39,9 @@ class Robots
     public function __construct(
         PageConfig $pageConfig,
         Http $request,
-        Registry $registry,
     ) {
         $this->pageConfig = $pageConfig;
         $this->request = $request;
-        $this->registry = $registry;
     }
 
     /**
@@ -71,11 +63,7 @@ class Robots
         }
 
         if ($control) {
-            $this->pageConfig->setRobots('NOINDEX,NOFOLLOW');
-
-            if ($category = $this->registry->registry('current_category')) {
-                $this->pageConfig->getAssetCollection()->remove($category->getUrl());
-            }
+            $this->pageConfig->setRobots('NOINDEX,FOLLOW');
         }
     }
 }
