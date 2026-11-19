@@ -20,7 +20,7 @@ This module provides the following useful features for Magento 2:
 * Canonical URL improvements
   - Add canonical URL for all CMS pages
   - Include pagination in category canonical URLs as per [Google Recommendation](https://developers.google.com/search/docs/specialty/ecommerce/pagination-and-incremental-page-loading#use-urls-correctly)
-* Set robots meta tag to `NOINDEX/NOFOLLOW` for:
+* Set robots meta tag to `NOINDEX/FOLLOW` for:
   - [Common query strings](https://github.com/outeredge/magento-base-module/blob/master/Plugin/Robots.php#L10) such as list ordering, limit, store codes etc
   - Search results
   - Product review list
